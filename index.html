@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="На автомате — ИИ-помощники для бизнеса под ключ. Александр Костюхов собирает ИИ-агентов для малого бизнеса: салонов, магазинов, сервисов. Ответы на заявки, разбор почты, отчёты, протоколы созвонов, сторож цен. Начало — бесплатный письменный разбор вашего сайта, потом пробный запуск одной задачи за 2 недели, 25 000 ₽. Связь — Telegram-бот @naavtomate_ai_bot.">
+<meta name="description" content="На автомате — ИИ-помощники для бизнеса под ключ. Александр Костюхов собирает ИИ-агентов для малого бизнеса: салонов, магазинов, сервисов. Ответы на заявки, разбор почты, отчёты, протоколы созвонов, сторож цен. Начало — бесплатный письменный разбор вашего сайта. Связь — Telegram-бот @naavtomate_ai_bot.">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"На автомате","alternateName":"Na Avtomate",
-"description":"Внедряю ИИ-агентов в малый бизнес: заявки, почта, отчёты, протоколы созвонов, закупки и платежи, сторож цен конкурентов. EN: AI agents for small businesses — leads, email, reports, call notes; trial launch of one task in 2 weeks for 25,000 RUB.",
+"description":"Внедряю ИИ-агентов в малый бизнес: заявки, почта, отчёты, протоколы созвонов, закупки и платежи, сторож цен конкурентов. EN: AI agents for small businesses — leads, email, reports, call notes.",
 "founder":{"@type":"Person","name":"Александр Костюхов"},"areaServed":["RU","Worldwide"],"availableLanguage":["ru","en"],
 "url":"https://t.me/naavtomate_ai_bot?start=site","sameAs":["https://t.me/xanderexe","https://github.com/xndrexe"],
 "hasOfferCatalog":{"@type":"OfferCatalog","name":"Как начать работу","itemListElement":[
@@ -17,15 +17,22 @@
 {"@type":"Offer","itemOffered":{"@type":"Service","name":"Карта бизнеса","description":"Разбор всего бизнеса за 1–2 недели: что автоматизировать и в каком порядке."},"price":"30000","priceCurrency":"RUB"}]}}
 </script>
 <title>На автомате · ИИ-помощники для бизнеса под ключ: заявки, почта, отчёты</title>
+<script>(()=>{try{const t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}})()</script>
 <style>
 :root{
   --bg:#fff; --soft:#f4f6f9; --ink:#0b1220; --muted:#566070; --line:#dfe3ea;
-  --accent:#145aff; --accent-ink:#fff; --bad:#c62828; --ok:#1b7a3a;
+  --accent:#145aff; --accent-ink:#fff; --btn:#145aff; --btn-hover:#0a47d6; --bad:#c62828; --ok:#1b7a3a;
   /* алиасы для разметки, которую собирает JS */
   --text:var(--ink); --bg2:var(--soft); --panel:var(--bg); --panel2:var(--soft); --warn:var(--ink);
   --s:14px; --b:17px; --m:20px; --l:28px; --xl:44px; --xxl:72px;
   --gap:112px;
   --font:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+/* тёмная тема: те же переменные, другие значения */
+:root[data-theme=dark]{
+  --bg:#0d1117; --soft:#161b24; --ink:#e8ecf2; --muted:#9aa4b4; --line:#2a313d;
+  --accent:#4d84ff; --accent-ink:#fff; --btn:#2d64e6; --btn-hover:#1f52c9; --bad:#ff6b6b; --ok:#4cc27a; --hdr:rgba(13,17,23,.94); --chip:rgba(13,17,23,.94);
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -42,16 +49,17 @@ h3{font-size:var(--l);font-weight:600;line-height:1.2}
 .note,.small{color:var(--muted);font-size:var(--s)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 var(--b)/1 var(--font);text-decoration:none;cursor:pointer;transition:background .15s,border-color .15s}
 .btn:hover{border-color:var(--ink)}
-.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.btn.primary:hover{background:#0a47d6;border-color:#0a47d6}
+.btn.primary{background:var(--btn);color:var(--accent-ink);border-color:var(--btn)}
+.btn.primary:hover{background:var(--btn-hover);border-color:var(--btn-hover)}
 .btn.quiet{border-color:transparent;background:transparent;color:var(--ink)}
 .btn.quiet:hover{background:var(--soft);border-color:transparent}
+.theme{min-width:44px;padding:0 10px;font-size:20px}
 .btn.small{min-height:44px;padding:0 20px;font-size:var(--s)}
 .btn[disabled]{opacity:.45;cursor:default}
 .btn:focus-visible,.tab:focus-visible,.chip:focus-visible,input:focus-visible,summary:focus-visible,.tile-h:focus-visible,.shot:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* шапка */
-header.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top{position:sticky;top:0;z-index:20;background:var(--hdr,rgba(255,255,255,.94));backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 header.top .wrap{display:flex;align-items:center;gap:24px;min-height:64px;padding-block:8px}
 .brand{display:flex;align-items:center;min-height:44px;font-weight:600;font-size:var(--b);line-height:1.25;flex:1;min-width:0;text-decoration:none;color:var(--ink)}
 nav.menu{display:flex;gap:8px}
@@ -115,12 +123,12 @@ nav.menu a:hover{color:var(--ink);background:var(--soft)}
 
 .shot{display:block;position:relative;width:100%;padding:0;border:0;overflow:hidden;background:var(--soft);cursor:zoom-in;aspect-ratio:16/9}
 .shot img{display:block;width:100%;height:100%;object-fit:cover}
-.shot .zoom{position:absolute;right:12px;bottom:12px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.94);color:var(--ink);font:600 var(--s) var(--font)}
+.shot .zoom{position:absolute;right:12px;bottom:12px;padding:8px 16px;border-radius:999px;background:var(--chip,rgba(255,255,255,.94));color:var(--ink);font:600 var(--s) var(--font)}
 .lightbox{position:fixed;inset:0;z-index:100;background:rgba(11,18,32,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:16px;cursor:zoom-out}
 .lightbox[hidden],.lightbox [hidden]{display:none}
 .lightbox img,.lightbox video{max-width:96vw;max-height:84vh;object-fit:contain;border-radius:12px;background:#000}
 .lightbox p{margin:0;max-width:900px;text-align:center;color:#d6dbe4;font-size:var(--s)}
-.lb-close{position:absolute;top:12px;right:14px;width:48px;height:48px;border-radius:999px;border:0;background:#fff;color:var(--ink);font-size:28px;line-height:1;cursor:pointer}
+.lb-close{position:absolute;top:12px;right:14px;width:48px;height:48px;border-radius:999px;border:0;background:#fff;color:#0b1220;font-size:28px;line-height:1;cursor:pointer}
 
 /* демо */
 #demo{background:var(--soft)}
@@ -128,9 +136,10 @@ nav.menu a:hover{color:var(--ink);background:var(--soft)}
 .tab{min-height:52px;padding:0 24px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 var(--b)/1 var(--font);cursor:pointer}
 .tab:hover{border-color:var(--ink)}
 .democta{margin-top:24px}
+.democta .btn{line-height:1.25;text-align:center;padding-top:10px;padding-bottom:10px}
 .inc{margin:12px 0 0;padding-left:20px}
 .inc li{margin:4px 0}
-.tab[aria-selected=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.tab[aria-selected=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 .demo[hidden]{display:none}
 .demo h3{margin-bottom:8px}
 .demo .sub{color:var(--muted);margin-bottom:24px;max-width:62ch}
@@ -206,13 +215,14 @@ input[type=range]{width:100%;accent-color:var(--accent);height:32px}
 .map .row{margin:16px 0}
 .map .top{display:flex;justify-content:space-between;gap:16px;font-size:var(--b);margin-bottom:8px}
 .map .top span:last-child{font-weight:600;color:var(--accent);flex:none}
+.map .top span.firstbadge{color:var(--accent-ink)}
 .track{height:12px;border-radius:999px;background:var(--line);overflow:hidden}
 .fill{height:100%;background:var(--accent);border-radius:999px;transition:width .5s ease}
 .row.weak .fill{background:#9aa3b2}
 .row.weak .top span:last-child{color:var(--muted)}
 .total{margin-top:24px;font-size:var(--b)}
 .total b{font-size:var(--l);color:var(--accent)}
-.firstbadge{font-size:var(--s);padding:0 12px;border-radius:999px;background:var(--accent);color:#fff;margin-left:8px;font-weight:600;white-space:nowrap}
+.firstbadge{font-size:var(--s);padding:0 12px;border-radius:999px;background:var(--btn);color:var(--accent-ink);margin-left:8px;font-weight:600;white-space:nowrap}
 
 .chartbox{position:relative}
 .chartbox svg{display:block;width:100%;height:auto}
@@ -266,6 +276,10 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
   .brand-tag{display:none}
   .cta .btn{width:100%}
   .brand{font-size:var(--s)}
+  header.top .wrap{gap:8px}
+  .brand{min-width:min-content}
+  header.top .btn.small{padding:0 12px}
+  .theme{min-width:40px;padding:0 8px}
   .ask{flex-direction:column}
   .tab{flex:1 1 auto;padding:0 16px}
   .cases-head{margin-bottom:48px}
@@ -294,6 +308,7 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
       <a href="#demo">Демо</a>
       <a href="#how">Как работаем</a>
     </nav>
+    <button type="button" class="btn small quiet theme" id="themeBtn" aria-label="Тёмная тема" title="Тёмная тема">◐</button>
     <button type="button" class="btn small quiet lang" id="langBtn" aria-label="Switch to English">EN</button>
     <a class="btn small quiet" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener" data-en="Message">Написать</a>
   </div>
@@ -306,7 +321,7 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
     <div>
       <p class="kicker" data-en="Turnkey AI assistants for business">ИИ-помощники для бизнеса под ключ</p>
       <h1 data-en="Your business runs. AI takes the routine">Бизнес работает, рутину берёт ИИ</h1>
-      <p class="lead" data-en="Leads don't get lost, reports build themselves, calls turn into tasks. I connect AI agents to your tools. Trial: one task in 2 weeks, 25,000 RUB, prepaid. The page is in Russian — write to the bot in English, I reply in English.">Заявки не теряются, отчёты собираются сами, созвоны превращаются в задачи. Подключаю ИИ-агентов к вашим инструментам. Начать можно с пробного запуска: одна задача за 2 недели, 25 000 ₽.</p>
+      <p class="lead" data-en="Leads don't get lost, reports build themselves, calls turn into tasks. I connect AI agents to your tools. The page is in Russian — write to the bot in English, I reply in English.">Заявки не теряются, отчёты собираются сами, созвоны превращаются в задачи. Подключаю ИИ-агентов к вашим инструментам.</p>
       <div class="cta">
         <a class="btn primary" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener" data-en="Message on Telegram">Прислать сайт на разбор</a>
         <a class="btn quiet" href="#demo" data-en="Try the demos">Протестировать демо</a>
@@ -519,6 +534,10 @@ const TG_LINK = 'https://t.me/naavtomate_ai_bot?start=site';
 document.querySelectorAll('[data-brand]').forEach(e => { e.textContent = BRAND_NAME; });
 document.querySelectorAll('[data-tg]').forEach(e => { e.href = TG_LINK; });
 /* Английский — только первый экран: иностранцу хватит, чтобы понять и написать */
+(() => { const b = document.getElementById('themeBtn'), r = document.documentElement;
+  const set = d => { if (d) r.dataset.theme = 'dark'; else delete r.dataset.theme; const t = d ? 'Светлая тема' : 'Тёмная тема'; b.setAttribute('aria-label', t); b.title = t; };
+  set(r.dataset.theme === 'dark');
+  b.addEventListener('click', () => { const d = r.dataset.theme !== 'dark'; set(d); try { localStorage.setItem('theme', d ? 'dark' : 'light'); } catch (e) {} }); })();
 (() => { const b = document.getElementById('langBtn'); const els = [...document.querySelectorAll('[data-en]')]; els.forEach(e => { e.dataset.ru = e.textContent; }); let en = false;
   b.addEventListener('click', () => { en = !en; els.forEach(e => { e.textContent = en ? e.dataset.en : e.dataset.ru; }); document.documentElement.lang = en ? 'en' : 'ru'; b.textContent = en ? 'RU' : 'EN'; b.setAttribute('aria-label', en ? 'Переключить на русский' : 'Switch to English'); }); })();
 
@@ -657,7 +676,6 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     A.innerHTML = r.html;
     draw(r.hl);
   }
-  const MG = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
   $('#buyToday').textContent = `${+TODAY.slice(8)} ${['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'][CUR]}`;
   const chips = [`Сколько платим в ${MN[CUR]}?`, 'Какие заказы просрочены?', `Сколько платим в ${MN[NXT]}?`, 'Какой ближайший платёж?', 'Сколько должны Лидер Косметик?', `Что приедет в ${MN[NXT]}?`, 'Сколько мы всего должны?'];
   chips.forEach(c => { const b = el('button', 'chip', c); b.type = 'button'; b.addEventListener('click', () => ask(c)); $('#buyChips').appendChild(b); });
@@ -673,7 +691,7 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
   const L = [
     ['n1', 'news', 'Школа продавца', 'Вебинар «Как расти на маркетплейсах в 2026»', 'Приглашение на вебинар. Запись будет доступна всем участникам.', 'рассылка: «отписаться» в конце письма'],
     ['u1', 'urgent', 'Площадка · Кабинет №4', 'Аккаунт приостановлен, ответьте в течение 48 часов', 'Мы приостановили продажи в вашем кабинете. Чтобы вернуть доступ, отправьте план действий.', 'слова «приостановлен», «в течение 48 часов»'],
-    ['c1', 'cab', 'Площадка · Кабинет №5', 'Ежемесячный отчёт по комиссиям готов', 'Отчёт за февраль доступен в кабинете.', 'кабинет №5, плановый отчёт'],
+    ['c1', 'cab', 'Площадка · Кабинет №5', 'Ежемесячный отчёт по комиссиям готов', 'Отчёт за прошлый месяц доступен в кабинете.', 'кабинет №5, плановый отчёт'],
     ['s1', 'spam', 'prize-center', 'Вы выиграли поездку! Заберите приз сегодня', 'Перейдите по ссылке и введите данные карты.', 'просит данные карты, левый отправитель'],
     ['b1', 'blog', 'Анна В.', 'Хочу в вашу партнёрскую программу', 'Здравствуйте! У меня 12 тысяч подписчиков, пишу про уход за кожей.', 'заявка блогера'],
     ['u2', 'urgent', 'Площадка · Кабинет №7', 'Жалоба покупателя на товар «Крем для рук»', 'Покупатель сообщает о повреждённой упаковке. Нужен ответ до пятницы.', 'слово «жалоба», срок до пятницы'],
@@ -681,7 +699,7 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     ['n2', 'news', 'Аналитика Про', 'Скидка 30% на инструмент анализа ключевых слов', 'Только до конца недели.', 'рассылка, акция'],
     ['c2', 'cab', 'Площадка · Кабинет №9', 'Изменение тарифов на хранение со следующего месяца', 'Подробности в разделе новостей кабинета.', 'кабинет №9, информационное'],
     ['b2', 'blog', 'Дмитрий К.', 'Вопрос про выплату баллов', 'Не вижу начисление за прошлую неделю, подскажите?', 'письмо от участника программы'],
-    ['u3', 'urgent', 'Площадка · Кабинет №2', 'Запрос документов на проверку товара', 'Загрузите сертификаты до 20 марта, иначе листинг будет скрыт.', 'слова «проверка», «будет скрыт»'],
+    ['u3', 'urgent', 'Площадка · Кабинет №2', 'Запрос документов на проверку товара', 'Загрузите сертификаты до 20-го числа, иначе листинг будет скрыт.', 'слова «проверка», «будет скрыт»'],
     ['p2', 'sup', 'Мега Лог', 'Груз по З-111 вышел со склада', 'Ожидаемая дата прибытия 22-го числа.', 'номер заказа, логистика']
   ].map(a => ({ id: a[0], f: a[1], from: a[2], subj: a[3], body: a[4], why: a[5] }));
   const order = ['urgent', 'cab', 'sup', 'blog', 'news', 'spam'];
@@ -892,17 +910,17 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     const x = i => pl + (W - pl - pr) * i / 29;
     const y = p => pt + (H - pt - pb) * (1 - (p - 18) / (28 - 18));
     let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="График цен за 30 дней">`;
-    [18, 20, 22, 24, 26, 28].forEach(g => { s += `<line x1="${pl}" x2="${W - pr}" y1="${y(g)}" y2="${y(g)}" stroke="#dfe3ea"/><text x="${pl - 8}" y="${y(g) + 4}" fill="#566070" font-size="14" text-anchor="end">${g}</text>`; });
-    [1, 10, 20, 30].forEach(d => { s += `<text x="${x(d - 1)}" y="${H - 8}" fill="#566070" font-size="14" text-anchor="${d === 30 ? 'end' : d === 1 ? 'start' : 'middle'}">день ${d}</text>`; });
+    [18, 20, 22, 24, 26, 28].forEach(g => { s += `<line x1="${pl}" x2="${W - pr}" y1="${y(g)}" y2="${y(g)}" style="stroke:var(--line)"/><text x="${pl - 8}" y="${y(g) + 4}" style="fill:var(--muted)" font-size="14" text-anchor="end">${g}</text>`; });
+    [1, 10, 20, 30].forEach(d => { s += `<text x="${x(d - 1)}" y="${H - 8}" style="fill:var(--muted)" font-size="14" text-anchor="${d === 30 ? 'end' : d === 1 ? 'start' : 'middle'}">день ${d}</text>`; });
     s += `<line x1="${pl}" x2="${W - pr}" y1="${y(OWN)}" y2="${y(OWN)}" stroke="#145aff" stroke-width="2"/>`;
     const n = Math.min(day, 30);
     if (n > 0) {
       const pts = comp.slice(0, n).map((p, i) => `${x(i)},${y(p)}`).join(' ');
-      s += `<polyline points="${pts}" fill="none" stroke="#0b1220" stroke-width="2.5" stroke-linejoin="round"/>`;
+      s += `<polyline points="${pts}" fill="none" style="stroke:var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>`;
       const ns = Object.keys(newS).map(Number).filter(i => i < n);
       if (ns.length) s += `<polyline points="${ns.map(i => `${x(i)},${y(newS[i])}`).join(' ')}" fill="none" stroke="#c62828" stroke-width="2.5"/>`;
     }
-    evs.filter(e => e.d <= n).forEach(e => { s += `<circle cx="${x(e.d - 1)}" cy="${y(e.p)}" r="6" fill="#fff" stroke="#c62828" stroke-width="2.5"/>`; });
+    evs.filter(e => e.d <= n).forEach(e => { s += `<circle cx="${x(e.d - 1)}" cy="${y(e.p)}" r="6" style="fill:var(--bg);stroke:var(--bad)" stroke-width="2.5"/>`; });
     host.innerHTML = s + '</svg>';
   }
 
@@ -1016,7 +1034,7 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     const d = el('article', 'case');
     d.innerHTML = `${mediaHtml(c)}<p class="cat">${CAT[c.n] || ''} · ${c.tag}</p><h3>${c.t}</h3>
       <p><b>Что делает.</b> ${m.does}</p>
-      <p class="res"><b>Было:</b> ${m.was} <b>Стало:</b> ${m.now}</p>`;
+      <p class="res"><b>Было:</b> ${m.was}<br><b>Стало:</b> ${m.now}</p>`;
     wireShot(d, c); onePlayer(d); box.appendChild(d);
   });
 
