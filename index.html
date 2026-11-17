@@ -79,7 +79,8 @@ nav.menu a:hover{color:var(--ink);background:var(--soft)}
 /* кейсы */
 .cases-head{margin-bottom:64px}
 .big-cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px 48px}
-.case h3{margin:24px 0 8px}
+.case .cat{margin:24px 0 0;font-size:var(--s);color:var(--muted)}
+.case h3{margin:8px 0 8px}
 .case p{max-width:62ch}
 .case .res{margin-top:8px}
 .media{position:relative;border-radius:12px;overflow:hidden;background:#0b1220;aspect-ratio:16/9}
@@ -126,6 +127,9 @@ nav.menu a:hover{color:var(--ink);background:var(--soft)}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:40px 0 32px}
 .tab{min-height:52px;padding:0 24px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 var(--b)/1 var(--font);cursor:pointer}
 .tab:hover{border-color:var(--ink)}
+.democta{margin-top:24px}
+.inc{margin:12px 0 0;padding-left:20px}
+.inc li{margin:4px 0}
 .tab[aria-selected=true]{background:var(--ink);border-color:var(--ink);color:#fff}
 .demo[hidden]{display:none}
 .demo h3{margin-bottom:8px}
@@ -301,8 +305,8 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
   <div class="wrap grid">
     <div>
       <p class="kicker" data-en="Turnkey AI assistants for business">ИИ-помощники для бизнеса под ключ</p>
-      <h1 data-en="AI agents take over your business routine">ИИ-агенты забирают рутину вашего бизнеса</h1>
-      <p class="lead" data-en="Leads, email, reports and calls of a salon, shop or service: agents handle them daily. Trial: one task in 2 weeks, 25,000 RUB, prepaid. The page is in Russian — write to the bot in English, I reply in English.">Заявки, почта, отчёты и созвоны салона, магазина или сервиса: агенты разбирают их каждый день. Начать можно с пробного запуска: одна задача за 2 недели, 25 000 ₽.</p>
+      <h1 data-en="Your business runs. AI takes the routine">Бизнес работает, рутину берёт ИИ</h1>
+      <p class="lead" data-en="Leads don't get lost, reports build themselves, calls turn into tasks. I connect AI agents to your tools. Trial: one task in 2 weeks, 25,000 RUB, prepaid. The page is in Russian — write to the bot in English, I reply in English.">Заявки не теряются, отчёты собираются сами, созвоны превращаются в задачи. Подключаю ИИ-агентов к вашим инструментам. Начать можно с пробного запуска: одна задача за 2 недели, 25 000 ₽.</p>
       <div class="cta">
         <a class="btn primary" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener" data-en="Message on Telegram">Прислать сайт на разбор</a>
         <a class="btn quiet" href="#demo" data-en="Try the demos">Протестировать демо</a>
@@ -339,7 +343,7 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
     <p class="more-sub">Нажмите на любую, чтобы открыть.</p>
     <div class="tiles" id="tiles"></div>
     <div class="mods" id="modules">
-      <span>Открытые модули на GitHub — каждый написан парой агентов на коленке примерно за полчаса, без преувеличения:</span>
+      <span>Часть инструментов открыта на GitHub — можно посмотреть код и как устроены решения, без «чёрного ящика»:</span>
       <a href="https://github.com/xndrexe/booking-bot-demo" target="_blank" rel="noopener">Бот записи</a>
       <a href="https://github.com/xndrexe/wb-report-demo" target="_blank" rel="noopener">Отчёт WB и Ozon</a>
       <a href="https://github.com/xndrexe/price-parser-demo" target="_blank" rel="noopener">Парсер каталога</a>
@@ -352,27 +356,40 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
 <section id="demo">
   <div class="wrap">
     <h2>Попробуйте сами</h2>
-    <p class="lead">Пять мини-версий того, что я собираю. Данные для примера, ничего никуда не отправляется.</p>
+    <p class="lead">Начните с прикидки, что автоматизировать первым, — дальше четыре мини-версии того, что я собираю. Данные для примера, ничего никуда не отправляется.</p>
 
     <div class="tabs" role="tablist" aria-label="Демо">
-      <button class="tab" role="tab" id="t-buy" aria-selected="true" aria-controls="d-buy">Закупки и платежи</button>
+      <button class="tab" role="tab" id="t-quiz" aria-selected="true" aria-controls="d-quiz">Что автоматизировать первым</button>
+      <button class="tab" role="tab" id="t-buy" aria-selected="false" aria-controls="d-buy">Закупки и платежи</button>
       <button class="tab" role="tab" id="t-mail" aria-selected="false" aria-controls="d-mail">Почта по полочкам</button>
       <button class="tab" role="tab" id="t-call" aria-selected="false" aria-controls="d-call">Секретарь созвонов</button>
-      <button class="tab" role="tab" id="t-quiz" aria-selected="false" aria-controls="d-quiz">Оцифровка бизнеса</button>
       <button class="tab" role="tab" id="t-price" aria-selected="false" aria-controls="d-price">Сторож цен</button>
     </div>
 
-    <div class="demo" id="d-buy" role="tabpanel" aria-labelledby="t-buy">
+    <div class="demo" id="d-quiz" role="tabpanel" aria-labelledby="t-quiz">
+      <h3>Что автоматизировать первым</h3>
+      <p class="sub">Ответьте на пять вопросов: рядом появится мини-карта, где теряется больше всего часов.</p>
+      <div class="quiz">
+        <div id="quizQ"></div>
+        <div class="map" id="quizMap" aria-live="polite"></div>
+      </div>
+      <p class="note">Это прикидка по средним допущениям, а не обещание экономии.</p>
+      <details class="more"><summary>Как считается</summary><p>Это грубая прикидка по средним допущениям, а не обещание: 22 рабочих дня в месяце, на письмо уходит минута, на итоги созвона 20 минут, доля автоматизации задана по типу рутины. Настоящая карта делается после разбора ваших заявок, писем и отчётов за 1–2 недели.</p></details>
+      <p class="democta"><a class="btn small" href="https://t.me/naavtomate_ai_bot?start=demo_quiz" rel="noopener">Хочу такое у себя — бесплатный разбор</a></p>
+    </div>
+
+    <div class="demo" id="d-buy" role="tabpanel" aria-labelledby="t-buy" hidden>
       <h3>Спросите про деньги и заказы</h3>
-      <p class="sub">Вопрос обычными словами вместо пяти таблиц. Сегодня в демо 12 марта.</p>
+      <p class="sub">Вопрос обычными словами вместо пяти таблиц. Сегодня в демо <span id="buyToday">12-е число</span>.</p>
       <form class="ask" id="buyForm" autocomplete="off">
-        <input id="buyQ" type="text" placeholder="Например: сколько платим в марте?" aria-label="Вопрос по заказам">
+        <input id="buyQ" type="text" placeholder="Например: сколько платим в этом месяце?" aria-label="Вопрос по заказам">
         <button class="btn primary" type="submit">Спросить</button>
       </form>
       <div class="chips" id="buyChips"></div>
       <div class="answer" id="buyA" aria-live="polite"><span class="typing">Выберите подсказку или напишите свой вопрос.</span></div>
       <div class="tw tall"><table id="buyT"></table></div>
       <details class="more"><summary>Чем демо отличается от рабочей версии</summary><p>В демо вопрос разбирается по ключевым словам: месяц, поставщик, «просрочено», «долг», «ближайший». В рабочей версии вопрос понимает ИИ, а данные берутся из ваших таблиц и учётной системы.</p></details>
+      <p class="democta"><a class="btn small" href="https://t.me/naavtomate_ai_bot?start=demo_buy" rel="noopener">Хочу такое у себя — бесплатный разбор</a></p>
     </div>
 
     <div class="demo" id="d-mail" role="tabpanel" aria-labelledby="t-mail" hidden>
@@ -385,6 +402,7 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
       <div class="bar" id="mailChips" aria-label="Папки"></div>
       <div class="mails" id="mails"></div>
       <details class="more"><summary>Как письма попадают в папки</summary><p>После разбора у каждого письма видно, по какому признаку оно попало в папку. Правила настраиваются под ваш бизнес.</p></details>
+      <p class="democta"><a class="btn small" href="https://t.me/naavtomate_ai_bot?start=demo_mail" rel="noopener">Хочу такое у себя — бесплатный разбор</a></p>
     </div>
 
     <div class="demo" id="d-call" role="tabpanel" aria-labelledby="t-call" hidden>
@@ -396,21 +414,13 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
         <button class="btn" id="callReset" disabled>Сначала</button>
       </div>
       <div class="call">
-        <div class="pane tr" id="callTr"><h4>Расшифровка · четверг, 12 марта</h4></div>
+        <div class="pane tr" id="callTr"><h4>Расшифровка · четверг</h4></div>
         <div class="pane proto"><h4>Протокол</h4><div class="status" id="callSt"></div><div id="callOut"><span style="color:var(--muted)">Пока пусто.</span></div></div>
       </div>
       <details class="more"><summary>Что, если срок не назван</summary><p>Агент не придумывает срок, а помечает задачу и напоминает, пока срок не появится. Нажмите на задачу, чтобы увидеть реплику, из которой она взята.</p></details>
+      <p class="democta"><a class="btn small" href="https://t.me/naavtomate_ai_bot?start=demo_call" rel="noopener">Хочу такое у себя — бесплатный разбор</a></p>
     </div>
 
-    <div class="demo" id="d-quiz" role="tabpanel" aria-labelledby="t-quiz" hidden>
-      <h3>Что автоматизировать первым</h3>
-      <p class="sub">Ответьте на пять вопросов: рядом появится мини-карта, где теряется больше всего часов.</p>
-      <div class="quiz">
-        <div id="quizQ"></div>
-        <div class="map" id="quizMap" aria-live="polite"></div>
-      </div>
-      <details class="more"><summary>Как считается</summary><p>Это грубая прикидка по средним допущениям, а не обещание: 22 рабочих дня в месяце, на письмо уходит минута, на итоги созвона 20 минут, доля автоматизации задана по типу рутины. Настоящая карта делается после разбора ваших заявок, писем и отчётов за 1–2 недели.</p></details>
-    </div>
 
     <div class="demo" id="d-price" role="tabpanel" aria-labelledby="t-price" hidden>
       <h3>Сторож цен конкурентов</h3>
@@ -426,6 +436,7 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
       <div class="legend"><span><i style="background:var(--accent)"></i>ваша цена</span><span><i style="background:var(--ink)"></i>конкурент</span><span><i style="background:var(--bad)"></i>новый продавец</span></div>
       <ul class="alerts" id="pAlerts"></ul>
       <details class="more"><summary>Что в рабочей версии</summary><p>Цены в демо — для примера. В рабочей версии сигнал приходит в ваш рабочий мессенджер в течение часа.</p></details>
+      <p class="democta"><a class="btn small" href="https://t.me/naavtomate_ai_bot?start=demo_price" rel="noopener">Хочу такое у себя — бесплатный разбор</a></p>
     </div>
   </div>
 </section>
@@ -433,11 +444,13 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
 <section id="how">
   <div class="wrap">
     <h2>Как начать работу</h2>
+    <p class="lead">Подойдёт, если рутина съедает часы каждую неделю — даже в команде из одного-двух человек: торговля, сервисы, онлайн-школы, салоны, агентства, производство.</p>
     <div class="steps">
       <div><h3>Разбор, бесплатно</h3><p>Пришлите ссылку на сайт или страницу, откуда приходят клиенты. В течение суток пишу, где теряются заявки и что отдать ИИ первым.</p></div>
-      <div><h3>Пробный запуск, 25 000 ₽</h3><p>Одна задача на ваших данных за 2 недели, предоплата. Начинаю в течение 3 рабочих дней после оплаты.</p></div>
-      <div><h3>Полный запуск и гарантия</h3><p>Понравилось — доплачиваете 25 000 ₽ (всего 50 000 ₽), и задача работает на весь ваш объём каждый день. Не понравилось — останавливаемся, сделанное остаётся у вас. 2 месяца гарантии входят в цену: чиню сбои и вношу правки, без помесячной оплаты.</p></div>
+      <div><h3>Пробный запуск, 25 000 ₽</h3><p>Одна задача на ваших данных за 2 недели, предоплата. Начинаю в течение 3 рабочих дней после оплаты.</p><ul class="inc"><li>разбираю задачу и подключаю нужные данные</li><li>настраиваю и проверяю агента</li><li>показываю результат на ваших настоящих заявках, письмах или отчётах</li></ul></div>
+      <div><h3>Полный запуск и гарантия</h3><p>Понравился результат пробного — доплачиваете 25 000 ₽ (всего 50 000 ₽). Не устроил — останавливаемся без доплаты, сделанное остаётся у вас.</p><ul class="inc"><li>задача работает на весь ваш объём каждый день</li><li>агент ставится на ваш сервер или в ваши аккаунты</li><li>2 месяца гарантии: бесплатно чиню сбои и поломки связок с вашими сервисами, делаю 5 мелких правок, без помесячной оплаты</li></ul></div>
     </div>
+    <p class="note">Нейросеть и сервер оплачиваете вы напрямую, обычно это несколько тысяч рублей в месяц, точную сумму называю до старта. В цену работы они не входят.</p>
     <details class="sample">
       <summary>Нужна карта всего бизнеса сразу? От 30 000 ₽, 1–2 недели. Как она выглядит (образец на примере салона красоты)</summary>
       <div class="in">
@@ -464,11 +477,22 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
 <section id="promise">
   <div class="wrap">
     <h2>Что я гарантирую</h2>
+    <p class="lead">Ваши данные остаются под вашим контролем.</p>
     <div class="promise">
       <div><b>Доступы у вас</b><span>Агенты работают в ваших аккаунтах и на вашем сервере.</span></div>
       <div><b>Ничего не заперто</b><span>Если расстанемся, доступы, данные и сами агенты остаются у вас.</span></div>
+      <div><b>Минимум прав</b><span>Агенту даю только те доступы, без которых задача не делается, где можно — только на чтение. Забрать доступ можно в любой момент.</span></div>
+      <div><b>Ключи не в переписке</b><span>Пароли и ключи лежат в закрытом хранилище на сервере, не в коде и не в чатах. Ваши данные используются только для вашей задачи.</span></div>
+      <div><b>После расставания</b><span>Передаю всё, что сделано, и удаляю у себя копии данных и ключи.</span></div>
       <div><b>Цена до начала работ</b><span>Пробный запуск — 25 000 ₽, полный запуск — ещё 25 000 ₽, 2 месяца гарантии входят в цену, без абонентской платы. Цену новых задач называю до старта. Работаю по предоплате.</span></div>
     </div>
+  </div>
+</section>
+
+<section id="who">
+  <div class="wrap">
+    <h2>Кто делает</h2>
+    <p class="lead">Александр Костюхов. Последние 5 месяцев строю ИИ-системы для торговой компании и для своей работы — они показаны выше и работают каждый день. Каждую задачу веду сам от разбора до сдачи, крупные делаю с командой исполнителей по договору.</p>
   </div>
 </section>
 
@@ -520,7 +544,11 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
 
 /* ---------- А. Закупки и платежи ---------- */
 (function buy() {
-  const TODAY = '2026-03-12';
+  // демо живёт в текущем месяце: даты сдвигаются от марта 2026 к сегодняшнему
+  const NOW = new Date(), SH = (NOW.getFullYear() - 2026) * 12 + NOW.getMonth() - 2;
+  const sh = d => { const [y, m, dd] = d.split('-').map(Number); const t = new Date(y, m - 1 + SH, 1); const last = new Date(t.getFullYear(), t.getMonth() + 1, 0).getDate(); return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(Math.min(dd, last)).padStart(2, '0')}`; };
+  const TODAY = sh('2026-03-12');
+  const CUR = +TODAY.slice(5, 7) - 1, NXT = (CUR + 1) % 12;
   const SUP = {
     nordic: { name: 'Nordic Pack', keys: ['nordic', 'нордик', 'норд'] },
     leader: { name: 'Лидер Косметик', keys: ['лидер'] },
@@ -543,6 +571,7 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     { id: 'З-111', s: 'mega', item: 'Фрахт партии З-103', eta: '2026-03-22', del: false, pays: [['2026-03-22', 5600, 0]] },
     { id: 'З-112', s: 'mega', item: 'Фрахт партии З-105', eta: '2026-03-01', del: true, pays: [['2026-02-28', 3900, 0]] }
   ];
+  orders.forEach(o => { o.eta = sh(o.eta); o.pays.forEach(p => { p[0] = sh(p[0]); }); });
   const rows = [];
   orders.forEach(o => o.pays.forEach(p => {
     const st = p[2] ? 'paid' : (p[0] < TODAY ? 'late' : 'wait');
@@ -569,7 +598,7 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     const t = q.toLowerCase();
     const sk = Object.keys(SUP).find(k => SUP[k].keys.some(w => t.includes(w)));
     let m = MONTHS.findIndex(re => re.test(t));
-    if (m < 0 && /этом месяце|в месяце|текущ/.test(t)) m = 2;
+    if (m < 0 && /этом месяце|в месяце|текущ/.test(t)) m = CUR;
     const mm = m >= 0 ? String(m + 1).padStart(2, '0') : null;
     const inM = d => d.slice(5, 7) === mm;
 
@@ -628,7 +657,9 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     A.innerHTML = r.html;
     draw(r.hl);
   }
-  const chips = ['Сколько платим в марте?', 'Какие заказы просрочены?', 'Сколько платим в апреле?', 'Какой ближайший платёж?', 'Сколько должны Лидер Косметик?', 'Что приедет в апреле?', 'Сколько мы всего должны?'];
+  const MG = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
+  $('#buyToday').textContent = `${+TODAY.slice(8)} ${['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'][CUR]}`;
+  const chips = [`Сколько платим в ${MN[CUR]}?`, 'Какие заказы просрочены?', `Сколько платим в ${MN[NXT]}?`, 'Какой ближайший платёж?', 'Сколько должны Лидер Косметик?', `Что приедет в ${MN[NXT]}?`, 'Сколько мы всего должны?'];
   chips.forEach(c => { const b = el('button', 'chip', c); b.type = 'button'; b.addEventListener('click', () => ask(c)); $('#buyChips').appendChild(b); });
   $('#buyForm').addEventListener('submit', e => { e.preventDefault(); ask($('#buyQ').value); });
   draw(null);
@@ -646,12 +677,12 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     ['s1', 'spam', 'prize-center', 'Вы выиграли поездку! Заберите приз сегодня', 'Перейдите по ссылке и введите данные карты.', 'просит данные карты, левый отправитель'],
     ['b1', 'blog', 'Анна В.', 'Хочу в вашу партнёрскую программу', 'Здравствуйте! У меня 12 тысяч подписчиков, пишу про уход за кожей.', 'заявка блогера'],
     ['u2', 'urgent', 'Площадка · Кабинет №7', 'Жалоба покупателя на товар «Крем для рук»', 'Покупатель сообщает о повреждённой упаковке. Нужен ответ до пятницы.', 'слово «жалоба», срок до пятницы'],
-    ['p1', 'sup', 'Nordic Pack', 'Счёт по заказу З-102', 'Во вложении счёт на 6 400 $, срок оплаты 18 марта.', 'номер заказа, счёт во вложении'],
+    ['p1', 'sup', 'Nordic Pack', 'Счёт по заказу З-102', 'Во вложении счёт на 6 400 $, срок оплаты 18-го числа.', 'номер заказа, счёт во вложении'],
     ['n2', 'news', 'Аналитика Про', 'Скидка 30% на инструмент анализа ключевых слов', 'Только до конца недели.', 'рассылка, акция'],
     ['c2', 'cab', 'Площадка · Кабинет №9', 'Изменение тарифов на хранение со следующего месяца', 'Подробности в разделе новостей кабинета.', 'кабинет №9, информационное'],
     ['b2', 'blog', 'Дмитрий К.', 'Вопрос про выплату баллов', 'Не вижу начисление за прошлую неделю, подскажите?', 'письмо от участника программы'],
     ['u3', 'urgent', 'Площадка · Кабинет №2', 'Запрос документов на проверку товара', 'Загрузите сертификаты до 20 марта, иначе листинг будет скрыт.', 'слова «проверка», «будет скрыт»'],
-    ['p2', 'sup', 'Мега Лог', 'Груз по З-111 вышел со склада', 'Ожидаемая дата прибытия 22 марта.', 'номер заказа, логистика']
+    ['p2', 'sup', 'Мега Лог', 'Груз по З-111 вышел со склада', 'Ожидаемая дата прибытия 22-го числа.', 'номер заказа, логистика']
   ].map(a => ({ id: a[0], f: a[1], from: a[2], subj: a[3], body: a[4], why: a[5] }));
   const order = ['urgent', 'cab', 'sup', 'blog', 'news', 'spam'];
   const box = $('#mails'), chips = $('#mailChips');
@@ -734,7 +765,7 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     ['Иван', 'По рекламе: на крем потратили на треть больше плана, а заказы не выросли. Предлагаю урезать бюджет на 20% до выяснения.'],
     ['Пётр', 'Согласен, режем на 20%. Иван, до понедельника пришли разбор, какие кампании не окупаются.'],
     ['Иван', 'Принял, к понедельнику будет.'],
-    ['Ольга', 'Для банка нужен отчёт по остаткам на 1 марта. Кто даст остатки?'],
+    ['Ольга', 'Для банка нужен отчёт по остаткам на первое число. Кто даст остатки?'],
     ['Мария', 'Остатки у меня в таблице, выгружу к пятнице.'],
     ['Пётр', 'Хорошо. И решим, берём ли нового поставщика коробок: Грин Лайн дорожает.'],
     ['Мария', 'Я бы запросила цены ещё у двух, тогда сравним. Но это не срочно.'],
@@ -746,11 +777,11 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     ['По поставщику коробок: сначала сравнить цены трёх, решение на следующем созвоне', [10, 11, 12]]
   ];
   const tasks = [
-    ['Мария', 'Запросить у Лидера счёт на доплату и переслать Ольге', 'сегодня, 12 марта', [4]],
-    ['Ольга', 'Провести доплату 1 200 $ за ускоренную отправку', 'до 13 марта', [2, 3]],
-    ['Иван', 'Прислать разбор: какие рекламные кампании не окупаются', 'до 16 марта', [6, 7]],
-    ['Мария', 'Выгрузить остатки на 1 марта из таблицы', 'до 13 марта', [9]],
-    ['Ольга', 'Подготовить для банка отчёт по остаткам на 1 марта', null, [8]],
+    ['Мария', 'Запросить у Лидера счёт на доплату и переслать Ольге', 'сегодня', [4]],
+    ['Ольга', 'Провести доплату 1 200 $ за ускоренную отправку', 'до завтра', [2, 3]],
+    ['Иван', 'Прислать разбор: какие рекламные кампании не окупаются', 'до понедельника', [6, 7]],
+    ['Мария', 'Выгрузить остатки на первое число из таблицы', 'до пятницы', [9]],
+    ['Ольга', 'Подготовить для банка отчёт по остаткам на первое число', null, [8]],
     ['Мария', 'Запросить цены на коробки у двух других поставщиков', null, [11]]
   ];
   const tr = $('#callTr');
@@ -948,6 +979,7 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     8: { does: 'Разбирает заявки по логам и живым замерам, отвечает клиенту и круглосуточно следит за сервисом.', was: 'о сбоях клиенты узнавали раньше команды.', now: 'сбой видят раньше клиентов, разработчикам уходит готовый разбор.' },
     4: { does: 'Следит за своими товарами и конкурентами: новый продавец, блокировка карточки, смена цены.', was: 'о проблеме узнавали через несколько дней по падению продаж.', now: 'сигнал в рабочий чат за час-два.' }
   };
+  const CAT = { 1: 'Финансы', 2: 'Почта', 3: 'Продажи', 4: 'Мониторинг', 6: 'Аналитика', 8: 'Поддержка', 9: 'Созвоны', 10: 'Заявки', 11: 'Управление' };
   const MAIN_ORDER = [2, 1, 8, 4];
   const c11 = C.find(c => c.n === 11);
   if (c11) c11.res = ['владелец видит все задачи и всех агентов в одном окне', 'Так же будет устроен ИИ-отдел у клиента.'];
@@ -982,7 +1014,7 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
   MAIN_ORDER.map(n => C.find(c => c.n === n)).forEach(c => {
     const m = MAIN[c.n];
     const d = el('article', 'case');
-    d.innerHTML = `${mediaHtml(c)}<h3>${c.t}</h3>
+    d.innerHTML = `${mediaHtml(c)}<p class="cat">${CAT[c.n] || ''} · ${c.tag}</p><h3>${c.t}</h3>
       <p><b>Что делает.</b> ${m.does}</p>
       <p class="res"><b>Было:</b> ${m.was} <b>Стало:</b> ${m.now}</p>`;
     wireShot(d, c); onePlayer(d); box.appendChild(d);
@@ -994,13 +1026,13 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
   const tiles = $('#tiles');
   rest.forEach(c => {
     const d = el('article', 'tile');
-    d.innerHTML = `<button type="button" class="tile-h" aria-expanded="false"><span class="thumb"><img src="${c.shot}" alt="Кадр: ${c.t}" loading="lazy" width="1280" height="720"></span><span class="tile-t"><b>${c.t}</b><span>${c.tag}</span></span></button>
+    d.innerHTML = `<button type="button" class="tile-h" aria-expanded="false"><span class="thumb"><img src="${c.shot}" alt="Кадр: ${c.t}" loading="lazy" width="1280" height="720"></span><span class="tile-t"><b>${c.t}</b><span>${CAT[c.n] ? CAT[c.n] + ' · ' : ''}${c.tag}</span></span></button>
       <div class="tile-body" hidden>
         <div class="tile-media">${mediaHtml(c)}</div>
         <div class="tile-text">
-          <p>${c.pain}</p>
+          <p><b>Было:</b> ${c.pain}</p>
           <ul>${c.steps.slice(0, 3).map(s => `<li>${s}</li>`).join('')}</ul>
-          <p class="res"><b>Результат.</b> ${c.res[0]}.</p>
+          <p class="res"><b>Стало:</b> ${c.res[0]}.</p>
           ${c.jarvisAt != null ? '<button type="button" class="btn small jumpj">Смотреть в ролике Джарвиса</button>' : ''}
         </div>
       </div>`;
