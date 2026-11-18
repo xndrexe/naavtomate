@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>На автомате — первый экран, вариант «Офис без людей»</title>
+<link rel="preload" href="fonts/Geologica-normal-cyrillic-4.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<style>
+:root{--night:#0d1116;--ink:#ebe6dd;--mute:#97a0aa;--dim:#8d96a0;--warm:#f0a95a}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--night)}
+body{color:var(--ink);font:400 17px/1.5 "Geologica",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.top{position:fixed;inset:0 0 auto;z-index:5;display:flex;align-items:center;gap:32px;height:68px;padding:0 40px;background:linear-gradient(#0d1116e6,#0d111600)}
+.brand{font-weight:600;font-size:17px;text-decoration:none;letter-spacing:-.01em;display:inline-flex;align-items:center;min-height:44px}
+.top nav{display:flex;gap:28px;margin-left:auto;font-size:15px;color:var(--mute)}
+.top nav a{text-decoration:none;display:inline-block;padding:10px 0}
+.top nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:999px;font:600 16px/1 "Geologica",sans-serif;text-decoration:none;background:var(--ink);color:#111418;border:0;cursor:pointer}
+.btn:hover{background:#fff}
+.top .btn{min-height:44px;padding:0 20px;font-size:15px}
+
+.hero{position:relative;height:100vh;height:100svh;min-height:640px;overflow:hidden;background:radial-gradient(120% 80% at 50% 70%,#151b23 0%,#0d1116 60%)}
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.09;mix-blend-mode:overlay}
+.veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#0d1116 0%,#0d111600 30%),linear-gradient(0deg,#0d1116f2 0%,#0d111600 34%)}
+.head{position:absolute;left:0;right:0;top:118px;text-align:center;pointer-events:none;padding:0 24px}
+h1{font-weight:300;font-size:clamp(40px,5.6vw,84px);line-height:1.02;letter-spacing:-.035em;max-width:20ch;margin:0 auto;text-wrap:balance}
+.foot{position:absolute;left:40px;right:40px;bottom:40px;display:flex;align-items:flex-end;justify-content:space-between;gap:32px;pointer-events:none}
+.foot>*{pointer-events:auto}
+.lead{font-size:19px;line-height:1.5;color:#c9ccd0;max-width:36ch}
+.acts{display:flex;align-items:center;gap:24px;margin-top:24px}
+.more{font-size:16px;color:var(--mute);text-underline-offset:5px;display:inline-flex;align-items:center;min-height:44px}
+.more:hover{color:var(--ink)}
+.note{font-size:13px;color:var(--dim);white-space:nowrap}
+
+/* карточка решения — у стола владельца */
+.ask{position:absolute;z-index:3;left:0;top:0;width:300px;padding:18px 18px 16px;border-radius:14px;background:rgba(46,36,26,.62);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,190,120,.45);color:#f6eadb;box-shadow:0 0 0 1px rgba(255,190,120,.08),0 0 48px rgba(255,160,80,.22),0 24px 60px #0008;opacity:0;visibility:hidden;transform:translate3d(-999px,0,0);transition:opacity .5s ease,visibility 0s .5s}
+.ask.on{opacity:1;visibility:visible;transition:opacity .6s ease}
+.ask::after{content:"";position:absolute;left:50%;bottom:-22px;width:1px;height:22px;background:linear-gradient(rgba(255,190,120,.6),rgba(255,190,120,0))}
+.ask-k{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#ffc58a}
+.ask-k::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--warm)}
+.ask-t{font-size:17px;line-height:1.35;margin-top:8px;letter-spacing:-.01em}
+.ask-b{display:flex;gap:8px;margin-top:14px}
+.ask-b button{flex:1;min-height:44px;border-radius:999px;font:600 15px/1 "Geologica",sans-serif;cursor:pointer;border:1.5px solid rgba(255,214,170,.55);background:transparent;color:#f6eadb}
+.ask-b button.yes{background:#f3b06a;border-color:#f3b06a;color:#1b140d}
+.ask-done{display:none;font-size:15px;margin-top:12px;color:#e9d9c4}
+.ask.done .ask-b{display:none}
+.ask.done .ask-done{display:block}
+
+.after{padding:72px 40px 96px;max-width:760px;color:var(--mute);font-size:16px}
+.after b{color:var(--ink);font-weight:600}
+.after a{color:var(--ink)}
+
+@media (max-width:760px){
+  .top{padding:0 16px;gap:12px;height:60px}
+  .top nav{display:none}
+  .top .btn{margin-left:auto;min-height:44px;padding:0 16px}
+  .hero{min-height:700px}
+  .head{top:84px;text-align:left;padding:0 20px}
+  h1{font-size:42px;line-height:1;margin:0;max-width:11ch}
+  .foot{left:20px;right:20px;bottom:24px;flex-direction:column;align-items:stretch;gap:16px}
+  .lead{font-size:16px}
+  .acts{margin-top:16px;gap:16px}
+  .acts{flex-wrap:wrap;row-gap:12px}
+  .acts .btn{white-space:nowrap}
+  .note{white-space:normal}
+  .ask{width:min(300px,calc(100vw - 32px))}
+  .ask-t{font-size:16px}
+  .after{padding:56px 20px 72px}
+}
+@media (max-width:360px){h1{font-size:36px}.lead{font-size:15px}}
+@media (prefers-reduced-motion:reduce){.ask,.ask.on{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="https://xndrexe.github.io/naavtomate/">На автомате</a>
+  <nav><a href="https://xndrexe.github.io/naavtomate/#cases">Примеры</a><a href="https://xndrexe.github.io/naavtomate/#demo">Демо</a><a href="https://xndrexe.github.io/naavtomate/#how">Как работает</a></nav>
+  <a class="btn" href="https://t.me/naavtomate_ai_bot?start=site">Обсудить задачу</a>
+</header>
+
+<section class="hero" id="hero">
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="grain" id="grain"></div>
+  <div class="veil"></div>
+  <div class="head"><h1>Ваш бизнес не должен держаться на вас</h1></div>
+
+  <div class="ask" id="ask" role="dialog" aria-live="polite" aria-label="Пример решения, которое доходит до владельца">
+    <p class="ask-k">Нужно ваше решение</p>
+    <p class="ask-t" id="askText"></p>
+    <div class="ask-b"><button class="yes" type="button" data-a="yes">Согласовать</button><button type="button" data-a="no">Отказать</button></div>
+    <p class="ask-done" id="askDone"></p>
+  </div>
+
+  <div class="foot">
+    <div>
+      <p class="lead">Проектирую и внедряю ИИ-системы, которые сами разбирают заявки, почту, отчёты и счета. До вас доходит только то, где нужно ваше решение.</p>
+      <div class="acts"><a class="btn" href="https://t.me/naavtomate_ai_bot?start=site">Обсудить задачу</a><a class="more" href="https://xndrexe.github.io/naavtomate/#cases">Посмотреть примеры</a></div>
+    </div>
+    <p class="note">Демонстрация. Данные условные.</p>
+  </div>
+</section>
+
+<section class="after">
+  <p><b>Черновик первого экрана, вариант «Офис без людей».</b> Остальные разделы — после выбора варианта. Второй вариант: <a href="machine.html">«Машина решений»</a>.</p>
+</section>
+
+<script>
+(() => {
+'use strict';
+const cv = document.getElementById('scene');
+const ctx = cv.getContext('2d');
+const hero = document.getElementById('hero');
+const ask = document.getElementById('ask');
+const askText = document.getElementById('askText');
+const askDone = document.getElementById('askDone');
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ── комната: мировые единицы ~ метры; x вправо-вниз, y влево-вниз, z вверх
+const ROOM = {w: 18, d: 14, h: 3.1};
+const TOP = 0.79;                       // высота столешницы
+const desks = {
+  A: {x: 5.2, y: 9.2, w: 2.2, d: 1.1},  // входящие
+  B: {x: 9.2, y: 6.8, w: 2.2, d: 1.1},  // разбор
+  C: {x: 4.6, y: 12.6, w: 2.0, d: 1.1}, // отчёты
+  D: {x: 13.2, y: 3.4, w: 2.0, d: 1.0}, // ответы
+  O: {x: 14.6, y: 10.2, w: 2.0, d: 1.1} // стол владельца за стеклом
+};
+for (const k in desks) {
+  const d = desks[k];
+  d.key = k; d.pile = []; d.busy = 0;
+  d.lamp = {x: d.x - d.w / 2 + 0.3, y: d.y - d.d / 2 + 0.25, I: 0, T: 0, r: k === 'O' ? 3.0 : 2.7};
+}
+const lamps = Object.values(desks).map(d => d.lamp);
+const GLASS = {x: 11.8, y: 7.6};        // угол стеклянной комнаты владельца
+const DOOR = {x0: 11.4, x1: 12.8, h: 2.3};
+const WIN = {x0: 6.2, x1: 10.2, z0: 0.95, z1: 2.35};
+const CAB = {x0: 2.4, x1: 5.0, d: 0.6, h: 1.9};
+
+// ── камера
+let W = 0, H = 0, dpr = 1, S = 60, CX = 0, CY = 0, FX = 9, FY = 7, mob = false;
+let yaw = Math.PI / 4, pitch = 0.5, tyaw = yaw, tpitch = pitch;
+let cs = Math.cos(yaw), sn = Math.sin(yaw), hz = Math.sqrt(1 - pitch * pitch);
+
+function resize() {
+  const r = hero.getBoundingClientRect();
+  W = r.width; H = r.height; mob = W < 760;
+  dpr = Math.min(window.devicePixelRatio || 1, mob ? 1.75 : 2);
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  if (mob) { S = W / 10; FX = 10.6; FY = 8.6; CX = W * 0.5; CY = H * 0.47; }
+  else { S = Math.min(W / 17, H / 10.5); FX = 9.6; FY = 7.6; CX = W * 0.5; CY = H * 0.6; }
+}
+function cam() { cs = Math.cos(yaw); sn = Math.sin(yaw); hz = Math.sqrt(1 - pitch * pitch); }
+function P(x, y, z) {
+  const dx = x - FX, dy = y - FY;
+  return [CX + S * (dx * cs - dy * sn), CY + S * pitch * (dx * sn + dy * cs) - S * hz * z];
+}
+// плоскость пола на высоте z — аффинное преобразование, рисуем прямо в мировых единицах
+function plane(z) {
+  ctx.setTransform(dpr * S * cs, dpr * S * pitch * sn, -dpr * S * sn, dpr * S * pitch * cs,
+    dpr * (CX - S * (FX * cs - FY * sn)), dpr * (CY - S * pitch * (FX * sn + FY * cs) - S * hz * z));
+}
+function screen() { ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+function poly(pts) { ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath(); }
+
+// ── свет
+function light(x, y) {
+  let s = 0;
+  for (const l of lamps) {
+    if (l.I < 0.01) continue;
+    const q = 1 - ((x - l.x) ** 2 + (y - l.y) ** 2) / (l.r * l.r);
+    if (q > 0) s += l.I * q * q;
+  }
+  return Math.min(1.2, s);
+}
+function mix(a, b, k) {
+  k = Math.max(0, Math.min(1, k));
+  return `rgb(${a[0] + (b[0] - a[0]) * k | 0},${a[1] + (b[1] - a[1]) * k | 0},${a[2] + (b[2] - a[2]) * k | 0})`;
+}
+const C_TOP = [27, 32, 40], C_TOP_LIT = [126, 98, 70], C_SIDE = [15, 18, 23];
+const C_PAPER = [92, 98, 106], C_PAPER_LIT = [240, 234, 222], C_HOT = [255, 196, 122];
+
+// ── документы
+const docs = [];
+let roomGlow = 0, simT = 0, nextDrop = 1.4, routeN = 0, decisionAt = 7.0, decision = null;
+const ease = k => k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const easeOut = k => 1 - Math.pow(1 - k, 3);
+
+function pileTop(d) { return TOP + 0.014 * d.pile.length; }
+function spot(d, i) {                    // место листа на столе: стопка со сдвигом
+  return {x: d.x + 0.25 + Math.sin(i * 2.1) * 0.04, y: d.y + Math.cos(i * 1.7) * 0.04};
+}
+function move(doc, to, dur, opt = {}) {
+  doc.seg = {fx: doc.x, fy: doc.y, fz: doc.z, fr: doc.rot, tx: to.x, ty: to.y, tz: to.z, tr: to.rot ?? doc.rot,
+    t0: simT, dur, arc: opt.arc || 0, sway: opt.sway || 0, e: opt.e || ease, done: opt.done};
+}
+function drop() {
+  const A = desks.A, n = A.pile.length, s = spot(A, n);
+  const doc = {x: s.x - 0.6, y: s.y - 0.4, z: 4.6, rot: 0.9, w: 0.56, h: 0.40, a: 0, hot: 0, kind: 'sheet', on: null};
+  docs.push(doc);
+  A.pile.push(doc); doc.on = A;
+  move(doc, {x: s.x, y: s.y, z: pileTop(A) - 0.014, rot: Math.sin(n) * 0.2}, 2.2, {sway: 1, e: easeOut});
+}
+function pass(from, to, then) {          // верхний лист со стола на стол
+  const doc = from.pile.pop(); if (!doc) return;
+  const s = spot(to, to.pile.length);
+  to.pile.push(doc); doc.on = to;
+  move(doc, {x: s.x, y: s.y, z: pileTop(to) - 0.014, rot: (Math.random() - 0.5) * 0.3}, 1.9, {arc: 0.7, done: then});
+}
+function send(doc) {                     // у стола ответов лист складывается в конверт и уходит в дверь
+  const D = desks.D;
+  setTimeout0(0.9, () => {
+    doc.kind = 'env';
+    D.pile.splice(D.pile.indexOf(doc), 1);
+    move(doc, {x: (DOOR.x0 + DOOR.x1) / 2, y: 0.25, z: 1.05, rot: 0}, 2.4, {arc: 0.4, done: () => { doc.gone = true; }});
+  });
+}
+function bind() {                        // пять листов отчёта сшиваются в папку и уходят в шкаф
+  const C = desks.C, sheets = C.pile.splice(0);
+  const s = spot(C, 0);
+  const f = {x: s.x, y: s.y, z: TOP + 0.02, rot: 0, w: 0.62, h: 0.46, a: 0, hot: 0, kind: 'folder', on: null};
+  docs.push(f);
+  sheets.forEach(d => { d.fade = true; });
+  setTimeout0(0.6, () => move(f, {x: (CAB.x0 + CAB.x1) / 2, y: 0.3, z: 1.1, rot: 0}, 3.0, {arc: 0.6, done: () => { f.gone = true; }}));
+}
+// таймеры в времени сцены (останавливаются вместе со сценой)
+const timers = [];
+function setTimeout0(sec, fn) { timers.push({t: simT + sec, fn}); }
+
+function route() {                       // со стола разбора: отчёт, ответ или решение владельца
+  const B = desks.B; if (!B.pile.length) return;
+  const top = B.pile[B.pile.length - 1];
+  if (top.seg) return;
+  if (!decision && simT >= decisionAt) { raise(B.pile.pop()); return; }
+  const to = [desks.C, desks.D, desks.C, desks.D, desks.D][routeN++ % 5];
+  pass(B, to, () => { if (to === desks.D) send(top); else if (desks.C.pile.length >= 5) bind(); });
+}
+
+const ASKS = [
+  ['Постоянный клиент просит скидку 12% на заказ 84 000 ₽. Согласовать?', 'Согласовано — клиент получит счёт со скидкой.', 'Отказано — клиенту уйдёт вежливый ответ.'],
+  ['Поставщик поднял цену на 7%. Принять новый прайс?', 'Принято — прайс обновлён, заказ пересчитан.', 'Отказано — запрошу два других предложения.'],
+  ['Клиент просит вернуть 6 400 ₽ без чека. Вернуть?', 'Возврат оформлен, клиенту ушло письмо.', 'Отказано — клиенту уйдёт ответ с причиной.']
+];
+let askN = 0;
+function raise(doc) {                    // лист отделяется, поднимается и плывёт к столу владельца
+  decision = doc; doc.on = null; doc.decision = true;
+  const O = desks.O;
+  move(doc, {x: doc.x, y: doc.y, z: 2.0, rot: 0}, 1.6, {e: easeOut, done: () => {
+    setTimeout0(0.5, () => move(doc, {x: O.x + 0.1, y: O.y, z: TOP + 0.01, rot: -0.15}, 3.6, {arc: 0.9, done: () => {
+      O.pile.push(doc); doc.on = O; showAsk();
+    }}));
+  }});
+}
+function showAsk() {
+  const a = ASKS[askN % ASKS.length];
+  askText.textContent = a[0];
+  ask.classList.remove('done'); ask.classList.add('on');
+}
+ask.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || !decision) return;
+  const a = ASKS[askN % ASKS.length];
+  askDone.textContent = b.dataset.a === 'yes' ? a[1] : a[2];
+  ask.classList.add('done');
+  const doc = decision, O = desks.O, D = desks.D;
+  doc.stamp = b.dataset.a;
+  setTimeout0(1.2, () => {
+    O.pile.splice(O.pile.indexOf(doc), 1);
+    const s = spot(D, D.pile.length);
+    D.pile.push(doc); doc.on = D;
+    move(doc, {x: s.x, y: s.y, z: pileTop(D) - 0.014, rot: 0.1}, 3.2, {arc: 1.6, done: () => { send(doc); }});
+    doc.decision = false;
+  });
+  setTimeout0(2.6, () => { ask.classList.remove('on'); decision = null; askN++; decisionAt = simT + 12; });
+  if (still) { for (let i = 0; i < 75; i++) step(1 / 30); render(); }
+});
+
+function step(dt) {
+  simT += dt;
+  for (let i = timers.length - 1; i >= 0; i--) if (simT >= timers[i].t) { const f = timers[i].fn; timers.splice(i, 1); f(); }
+  if (simT >= nextDrop && desks.A.pile.length < 6) { drop(); nextDrop = simT + 2.3 + Math.random() * 0.8; }
+  const A = desks.A, B = desks.B;
+  if (A.pile.length >= 2 && !A.pile[A.pile.length - 1].seg && B.pile.length < 2 && !B.pile.some(d => d.seg) && simT - B.busy > 1.2) {
+    pass(A, B, () => { B.busy = simT; });
+  }
+  if (B.pile.length && simT - B.busy > 1.1) route();
+
+  for (const d of docs) {
+    const g = d.seg;
+    if (g) {
+      const k = Math.min(1, (simT - g.t0) / g.dur), e = g.e(k);
+      d.x = g.fx + (g.tx - g.fx) * e; d.y = g.fy + (g.ty - g.fy) * e;
+      d.z = g.fz + (g.tz - g.fz) * e + g.arc * Math.sin(Math.PI * k);
+      d.rot = g.fr + (g.tr - g.fr) * e;
+      if (g.sway) { const f = 1 - k; d.x += Math.sin(k * 7) * 0.22 * f; d.y += Math.cos(k * 5) * 0.12 * f; d.rot += Math.sin(k * 6) * 0.35 * f; }
+      if (k >= 1) { d.seg = null; if (g.done) g.done(); }
+    }
+    d.a = Math.min(1, d.a + dt * 1.5);
+    if (d.fade || d.gone) d.a2 = (d.a2 ?? 1) - dt * 1.4;
+    const env = d.kind === 'env';
+    if (env) { d.w += (0.46 - d.w) * Math.min(1, dt * 4); d.h += (0.28 - d.h) * Math.min(1, dt * 4); }
+    d.hot += ((d.decision ? 1 : 0) - d.hot) * Math.min(1, dt * 2);
+    if (env && d.y < 0.9) d.a2 = Math.min(d.a2 ?? 1, (d.y - 0.25) / 0.65);
+  }
+  for (let i = docs.length - 1; i >= 0; i--) if ((docs[i].a2 ?? 1) <= 0) docs.splice(i, 1);
+  roomGlow += ((ask.classList.contains('on') ? 1 : 0) - roomGlow) * Math.min(1, dt * 1.5);
+
+  // лампы: горят там, где идёт работа, гаснут медленно
+  for (const k in desks) {
+    const d = desks[k], l = d.lamp;
+    const near = docs.some(o => !o.gone && Math.abs(o.x - d.x) < 1.6 && Math.abs(o.y - d.y) < 1.3 && o.z < 2.4);
+    l.T = k === 'O' ? (decision && decision.on === desks.O ? 1.15 : (decision ? 0.25 : 0)) : (near || d.pile.length ? 1 : 0);
+    l.I += (l.T - l.I) * Math.min(1, dt * (l.T > l.I ? 1.6 : 0.45));
+  }
+}
+
+// ── отрисовка
+const CITY = Array.from({length: 46}, (_, i) => [((i * 0.6180339) % 1), 0.45 + ((i * 0.3819) % 1) * 0.55, (i * 7) % 3]);
+function wallX(y0, y1, z0, z1) { return [P(0, y0, z0), P(0, y1, z0), P(0, y1, z1), P(0, y0, z1)]; }
+function wallY(x0, x1, z0, z1) { return [P(x0, 0, z0), P(x1, 0, z0), P(x1, 0, z1), P(x0, 0, z1)]; }
+
+function drawRoom() {
+  // стены
+  let g;
+  poly(wallX(0, ROOM.d, 0, ROOM.h));
+  g = ctx.createLinearGradient(0, P(0, 7, ROOM.h)[1], 0, P(0, 7, 0)[1]);
+  g.addColorStop(0, '#0e1217'); g.addColorStop(1, '#171c23'); ctx.fillStyle = g; ctx.fill();
+  poly(wallY(0, ROOM.w, 0, ROOM.h));
+  g = ctx.createLinearGradient(0, P(9, 0, ROOM.h)[1], 0, P(9, 0, 0)[1]);
+  g.addColorStop(0, '#0f1318'); g.addColorStop(1, '#1a2028'); ctx.fillStyle = g; ctx.fill();
+  // свет ламп на стенах
+  ctx.globalCompositeOperation = 'lighter';
+  for (const l of lamps) {
+    if (l.I < 0.02) continue;
+    if (l.y < 3.2) { const c = P(l.x, 0, 1.3); washWall(c, wallY(0, ROOM.w, 0, ROOM.h), l.I * (1 - l.y / 3.2)); }
+    if (l.x < 3.2) { const c = P(0, l.y, 1.3); washWall(c, wallX(0, ROOM.d, 0, ROOM.h), l.I * (1 - l.x / 3.2)); }
+  }
+  ctx.globalCompositeOperation = 'source-over';
+  // окно на дальней стене: ночной город
+  const wq = wallY(WIN.x0, WIN.x1, WIN.z0, WIN.z1);
+  poly(wq);
+  g = ctx.createLinearGradient(0, wq[3][1], 0, wq[0][1]);
+  g.addColorStop(0, '#111a26'); g.addColorStop(1, '#1f2c3d'); ctx.fillStyle = g; ctx.fill();
+  for (const [u, v, c] of CITY) {
+    const p = P(WIN.x0 + u * (WIN.x1 - WIN.x0), 0, WIN.z0 + (1 - v) * (WIN.z1 - WIN.z0) * 0.9);
+    ctx.fillStyle = c ? 'rgba(255,214,160,.55)' : 'rgba(170,200,240,.45)';
+    ctx.fillRect(p[0], p[1], 1.6, 1.6);
+  }
+  ctx.strokeStyle = '#2a3442'; ctx.lineWidth = 1.2;
+  for (let i = 0; i <= 4; i++) { const x = WIN.x0 + i * (WIN.x1 - WIN.x0) / 4; const a = P(x, 0, WIN.z0), b = P(x, 0, WIN.z1); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); }
+  poly(wq); ctx.stroke();
+  // дверь в коридор
+  const dq = wallY(DOOR.x0, DOOR.x1, 0, DOOR.h);
+  poly(dq); g = ctx.createLinearGradient(0, dq[2][1], 0, dq[0][1]);
+  g.addColorStop(0, '#202833'); g.addColorStop(1, '#344052'); ctx.fillStyle = g; ctx.fill();
+  // пол
+  plane(0);
+  ctx.fillStyle = '#141920'; ctx.fillRect(0, 0, ROOM.w, ROOM.d);
+  ctx.strokeStyle = 'rgba(255,255,255,.028)'; ctx.lineWidth = 0.02;
+  ctx.beginPath();
+  for (let x = 2; x < ROOM.w; x += 2) { ctx.moveTo(x, 0); ctx.lineTo(x, ROOM.d); }
+  for (let y = 2; y < ROOM.d; y += 2) { ctx.moveTo(0, y); ctx.lineTo(ROOM.w, y); }
+  ctx.stroke();
+  ctx.globalCompositeOperation = 'lighter';
+  // отсвет окна и двери на полу
+  g = ctx.createLinearGradient(0, 0, 0, 3.5); g.addColorStop(0, 'rgba(110,140,190,.07)'); g.addColorStop(1, 'rgba(110,140,190,0)');
+  ctx.fillStyle = g; ctx.fillRect(WIN.x0, 0, WIN.x1 - WIN.x0, 3.5);
+  g = ctx.createLinearGradient(0, 0, 0, 3); g.addColorStop(0, 'rgba(150,175,215,.09)'); g.addColorStop(1, 'rgba(150,175,215,0)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(DOOR.x0, 0); ctx.lineTo(DOOR.x1, 0); ctx.lineTo(DOOR.x1 + 0.8, 3); ctx.lineTo(DOOR.x0 - 0.3, 3); ctx.fill();
+  // круги света ламп
+  for (const l of lamps) {
+    if (l.I < 0.01) continue;
+    pool(l.x + 0.3, l.y + 0.3, l.r * 1.25, l.I, l === desks.O.lamp);
+  }
+  ctx.globalCompositeOperation = 'source-over';
+}
+function washWall(c, q, k) {
+  ctx.save(); poly(q); ctx.clip();
+  const g = ctx.createRadialGradient(c[0], c[1], 0, c[0], c[1], S * 2.2);
+  g.addColorStop(0, `rgba(255,170,95,${0.16 * k})`); g.addColorStop(1, 'rgba(255,170,95,0)');
+  ctx.fillStyle = g; ctx.fillRect(c[0] - S * 3, c[1] - S * 3, S * 6, S * 6);
+  ctx.restore();
+}
+function pool(x, y, r, I, hot) {
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  const c = hot ? '255,176,92' : '255,184,112';
+  g.addColorStop(0, `rgba(${c},${0.30 * I})`); g.addColorStop(0.45, `rgba(${c},${0.12 * I})`); g.addColorStop(1, `rgba(${c},0)`);
+  ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2);
+}
+
+function box(x0, y0, x1, y1, z0, z1, top, side, side2) {
+  // видимые грани при взгляде со стороны +x,+y: верх, грань y1, грань x1
+  poly([P(x0, y1, z0), P(x1, y1, z0), P(x1, y1, z1), P(x0, y1, z1)]); ctx.fillStyle = side; ctx.fill();
+  poly([P(x1, y0, z0), P(x1, y1, z0), P(x1, y1, z1), P(x1, y0, z1)]); ctx.fillStyle = side2 || side; ctx.fill();
+  poly([P(x0, y0, z1), P(x1, y0, z1), P(x1, y1, z1), P(x0, y1, z1)]); ctx.fillStyle = top; ctx.fill();
+}
+function drawDesk(d) {
+  const x0 = d.x - d.w / 2, x1 = d.x + d.w / 2, y0 = d.y - d.d / 2, y1 = d.y + d.d / 2;
+  // тень под столом
+  plane(0); ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(x0 + 0.1, y0 + 0.1, d.w, d.d);
+  screen();
+  // стул отодвинут — людей нет
+  const cx = d.x + 0.15, cy = y1 + 0.75 + (d.key === 'O' ? 0.3 : 0);
+  ctx.strokeStyle = '#07090c'; ctx.lineWidth = Math.max(1, S * 0.025);
+  for (const [lx, ly] of [[-0.2, -0.2], [0.2, -0.2], [-0.2, 0.2], [0.2, 0.2]]) { const a = P(cx + lx, cy + ly, 0), b = P(cx + lx, cy + ly, 0.44); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); }
+  const lc = light(cx, cy);
+  box(cx - 0.24, cy - 0.24, cx + 0.24, cy + 0.24, 0.44, 0.5, mix(C_TOP, C_TOP_LIT, lc * 0.8), mix(C_SIDE, [40, 32, 26], lc));
+  box(cx - 0.24, cy + 0.2, cx + 0.24, cy + 0.26, 0.5, 0.98, mix(C_TOP, C_TOP_LIT, lc * 0.6), mix([20, 24, 30], [70, 56, 44], lc * 0.7));
+  // ножки и столешница
+  for (const [lx, ly] of [[x0 + 0.08, y1 - 0.08], [x1 - 0.08, y1 - 0.08], [x1 - 0.08, y0 + 0.08]]) { const a = P(lx, ly, 0), b = P(lx, ly, TOP - 0.04); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); }
+  const lt = light(d.x, d.y);
+  box(x0, y0, x1, y1, TOP - 0.05, TOP, mix(C_TOP, C_TOP_LIT, lt * 0.85), mix(C_SIDE, [52, 42, 33], lt), mix([12, 14, 18], [44, 35, 28], lt));
+  // свет лампы на столешнице
+  if (d.lamp.I > 0.01) {
+    ctx.save(); poly([P(x0, y0, TOP), P(x1, y0, TOP), P(x1, y1, TOP), P(x0, y1, TOP)]); ctx.clip();
+    plane(TOP); ctx.globalCompositeOperation = 'lighter'; pool(d.lamp.x + 0.15, d.lamp.y + 0.15, 1.4, d.lamp.I * 0.8, d.key === 'O');
+    ctx.restore(); screen();
+  }
+  // лампа
+  const l = d.lamp, b0 = P(l.x, l.y, TOP), b1 = P(l.x, l.y, TOP + 0.55), sh = P(l.x + 0.22, l.y + 0.12, TOP + 0.5);
+  ctx.strokeStyle = '#2a2f37'; ctx.lineWidth = Math.max(1, S * 0.02);
+  ctx.beginPath(); ctx.moveTo(b0[0], b0[1]); ctx.lineTo(b1[0], b1[1]); ctx.lineTo(sh[0], sh[1]); ctx.stroke();
+  ctx.fillStyle = '#2a2f37'; ctx.beginPath(); ctx.ellipse(sh[0], sh[1], S * 0.12, S * 0.06, 0, 0, Math.PI * 2); ctx.fill();
+  if (l.I > 0.02) {
+    ctx.globalCompositeOperation = 'lighter';
+    const g = ctx.createRadialGradient(sh[0], sh[1] + S * 0.04, 0, sh[0], sh[1] + S * 0.04, S * 0.5);
+    g.addColorStop(0, `rgba(255,214,150,${0.9 * l.I})`); g.addColorStop(1, 'rgba(255,190,120,0)');
+    ctx.fillStyle = g; ctx.fillRect(sh[0] - S * 0.5, sh[1] - S * 0.5, S, S);
+    ctx.globalCompositeOperation = 'source-over';
+  }
+}
+function drawCabinet() {
+  const lt = 0.08 + light((CAB.x0 + CAB.x1) / 2, 0.6) * 0.5;
+  box(CAB.x0, 0, CAB.x1, CAB.d, 0, CAB.h, mix(C_TOP, C_TOP_LIT, lt), mix([20, 24, 30], [60, 48, 38], lt), mix([16, 19, 24], [50, 40, 32], lt));
+  ctx.strokeStyle = 'rgba(0,0,0,.45)'; ctx.lineWidth = 1;
+  for (let z = 0.48; z < CAB.h; z += 0.47) { const a = P(CAB.x0, CAB.d, z), b = P(CAB.x1, CAB.d, z); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); }
+}
+function drawGlass() {
+  const h = 2.7, x = GLASS.x, y = GLASS.y;
+  const q1 = [P(x, y, 0), P(x, ROOM.d, 0), P(x, ROOM.d, h), P(x, y, h)];
+  const q2 = [P(x, y, 0), P(ROOM.w, y, 0), P(ROOM.w, y, h), P(x, y, h)];
+  for (const q of [q2, q1]) {
+    poly(q); ctx.fillStyle = `rgba(${150 + 105 * roomGlow | 0},${180 - 10 * roomGlow | 0},${210 - 120 * roomGlow | 0},${0.045 + 0.05 * roomGlow})`; ctx.fill();
+    ctx.strokeStyle = `rgba(${190 + 65 * roomGlow | 0},${210 - 20 * roomGlow | 0},${230 - 120 * roomGlow | 0},${0.16 + 0.22 * roomGlow})`; ctx.lineWidth = 1.2; ctx.stroke();
+  }
+  // блик на стекле
+  ctx.save(); poly(q1); ctx.clip();
+  const a = P(x, y + 1.5, h), b = P(x, y + 4.5, 0);
+  const g = ctx.createLinearGradient(a[0], a[1], b[0], b[1]);
+  g.addColorStop(0, 'rgba(200,220,240,0)'); g.addColorStop(0.5, 'rgba(200,220,240,.06)'); g.addColorStop(1, 'rgba(200,220,240,0)');
+  const bb = [P(x, y, 0), P(x, ROOM.d, h)]; ctx.fillStyle = g; ctx.fillRect(Math.min(bb[0][0], bb[1][0]) - 4, Math.min(bb[0][1], bb[1][1]) - 4, Math.abs(bb[0][0] - bb[1][0]) + 8, Math.abs(bb[0][1] - bb[1][1]) + 8); ctx.restore();
+}
+function surfaceZ(d) {
+  for (const k in desks) { const s = desks[k]; if (Math.abs(d.x - s.x) < s.w / 2 && Math.abs(d.y - s.y) < s.d / 2 && d.z >= TOP - 0.01) return TOP; }
+  return 0;
+}
+function shadowOf(d) {
+  const sz = surfaceZ(d), hgt = Math.max(0, d.z - sz);
+  let lx = -0.6, ly = -0.6, best = 0;
+  for (const l of lamps) { const k = l.I / (1 + (d.x - l.x) ** 2 + (d.y - l.y) ** 2); if (k > best) { best = k; lx = l.x; ly = l.y; } }
+  let vx = d.x - lx, vy = d.y - ly; const n = Math.hypot(vx, vy) || 1; vx /= n; vy /= n;
+  const off = hgt * 0.55, a = (0.5 * (1 - Math.min(1, hgt / 3.2)) + 0.08) * (d.a2 ?? 1) * d.a;
+  plane(sz);
+  ctx.save(); ctx.translate(d.x + vx * off, d.y + vy * off); ctx.rotate(d.rot);
+  const gw = d.w * (1 + hgt * 0.2), gh = d.h * (1 + hgt * 0.2);
+  ctx.fillStyle = `rgba(0,0,0,${a * 0.5})`; ctx.fillRect(-gw / 2 - 0.04, -gh / 2 - 0.04, gw + 0.08, gh + 0.08);
+  ctx.fillStyle = `rgba(0,0,0,${a * 0.7})`; ctx.fillRect(-gw / 2, -gh / 2, gw, gh);
+  ctx.restore();
+}
+function drawDoc(d) {
+  const al = d.a * (d.a2 ?? 1); if (al <= 0) return;
+  const lt = Math.max(light(d.x, d.y), 0.06 + d.z * 0.03);
+  plane(d.z);
+  ctx.save(); ctx.globalAlpha = al; ctx.translate(d.x, d.y); ctx.rotate(d.rot);
+  let base = d.kind === 'folder' ? mix([24, 28, 34], [92, 74, 58], lt) : mix(C_PAPER, C_PAPER_LIT, lt * 0.9 + 0.1);
+  if (d.hot > 0.01) base = mix(d.kind === 'folder' ? [92, 74, 58] : C_PAPER_LIT, C_HOT, d.hot);
+  ctx.fillStyle = base; ctx.fillRect(-d.w / 2, -d.h / 2, d.w, d.h);
+  if (d.kind === 'sheet' && S * d.w > 18) {
+    ctx.fillStyle = `rgba(30,34,40,${0.22 * Math.min(1, lt + d.hot)})`;
+    for (let i = 0; i < 5; i++) ctx.fillRect(-d.w / 2 + 0.07, -d.h / 2 + 0.08 + i * 0.06, (i === 4 ? 0.22 : 0.4), 0.016);
+  }
+  if (d.kind === 'env') { ctx.strokeStyle = 'rgba(30,34,40,.25)'; ctx.lineWidth = 0.012; ctx.beginPath(); ctx.moveTo(-d.w / 2, -d.h / 2); ctx.lineTo(0, 0.02); ctx.lineTo(d.w / 2, -d.h / 2); ctx.stroke(); }
+  if (d.stamp) { ctx.strokeStyle = d.stamp === 'yes' ? 'rgba(40,90,60,.8)' : 'rgba(120,50,40,.8)'; ctx.lineWidth = 0.02; ctx.beginPath(); ctx.arc(d.w * 0.25, d.h * 0.15, 0.06, 0, Math.PI * 2); ctx.stroke(); }
+  ctx.restore();
+  if (d.hot > 0.05) {                     // решение светится само
+    screen(); const p = P(d.x, d.y, d.z);
+    ctx.globalCompositeOperation = 'lighter';
+    const g = ctx.createRadialGradient(p[0], p[1], 0, p[0], p[1], S * 1.1);
+    g.addColorStop(0, `rgba(255,170,90,${0.55 * d.hot})`); g.addColorStop(1, 'rgba(255,180,100,0)');
+    ctx.fillStyle = g; ctx.fillRect(p[0] - S * 1.1, p[1] - S * 1.1, S * 2.2, S * 2.2);
+    ctx.globalCompositeOperation = 'source-over';
+  }
+}
+const inGlass = o => o.x > GLASS.x && o.y > GLASS.y;
+const depth = o => (o.x - FX) * sn + (o.y - FY) * cs;
+
+function render() {
+  screen();
+  ctx.fillStyle = '#0d1116'; ctx.fillRect(0, 0, W, H);
+  drawRoom();
+  screen();
+  // задние предметы, потом стекло, потом комната владельца; внутри — по глубине
+  const back = [], front = [];
+  for (const k in desks) (k === 'O' ? front : back).push({o: desks[k], t: 'desk', z: depth(desks[k])});
+  back.push({o: null, t: 'cab', z: depth({x: (CAB.x0 + CAB.x1) / 2, y: CAB.d})});
+  const flying = [];
+  for (const d of docs) {
+    const item = {o: d, t: 'doc', z: depth(d) + d.z * 0.3 + 0.5};
+    if (d.z > 1.25) flying.push(item); else (inGlass(d) ? front : back).push(item);
+  }
+  const draw = it => {
+    if (it.t === 'desk') drawDesk(it.o);
+    else if (it.t === 'cab') drawCabinet();
+    else { shadowOf(it.o); drawDoc(it.o); }
+    screen();
+  };
+  back.sort((a, b) => a.z - b.z).forEach(draw);
+  drawGlass();
+  front.sort((a, b) => a.z - b.z).forEach(draw);
+  flying.sort((a, b) => a.z - b.z).forEach(draw);
+  placeAsk();
+}
+function placeAsk() {
+  if (!ask.classList.contains('on') || !decision) return;
+  const p = P(decision.x, decision.y, decision.z);
+  const w = ask.offsetWidth, h = ask.offsetHeight;
+  const x = Math.max(16, Math.min(W - w - 16, p[0] - w / 2));
+  const hb = document.querySelector('h1').getBoundingClientRect().bottom - hero.getBoundingClientRect().top;
+  const y = Math.max(hb + 12, p[1] - h - 26);
+  ask.style.transform = `translate3d(${x | 0}px,${y | 0}px,0)`;
+}
+
+// ── зерно
+(function grain() {
+  const c = document.createElement('canvas'); c.width = c.height = 96;
+  const g = c.getContext('2d'), im = g.createImageData(96, 96);
+  for (let i = 0; i < im.data.length; i += 4) { const v = Math.random() * 255 | 0; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+  g.putImageData(im, 0, 0);
+  document.getElementById('grain').style.backgroundImage = `url(${c.toDataURL()})`;
+})();
+
+// ── ввод: мышь чуть поворачивает камеру, на телефоне — прокрутка
+hero.addEventListener('pointermove', e => {
+  if (e.pointerType !== 'mouse') return;
+  const r = hero.getBoundingClientRect();
+  tyaw = Math.PI / 4 + ((e.clientX - r.left) / r.width - 0.5) * 0.10;
+  tpitch = 0.5 + ((e.clientY - r.top) / r.height - 0.5) * 0.05;
+});
+addEventListener('scroll', () => { if (mob) tyaw = Math.PI / 4 - Math.min(1, scrollY / H) * 0.08; }, {passive: true});
+
+let last = 0, running = false, visible = true, raf = 0;
+function frame(t) {
+  raf = 0;
+  const dt = Math.min(0.05, (t - (last || t)) / 1000); last = t;
+  yaw += (tyaw - yaw) * Math.min(1, dt * 3); pitch += (tpitch - pitch) * Math.min(1, dt * 3); cam();
+  step(dt); render();
+  if (running) raf = requestAnimationFrame(frame);
+}
+function play() { if (running || still) return; running = true; last = 0; raf = requestAnimationFrame(frame); }
+function pause() { running = false; if (raf) cancelAnimationFrame(raf); raf = 0; }
+new IntersectionObserver(es => { visible = es[0].isIntersecting; visible && !document.hidden ? play() : pause(); }).observe(hero);
+document.addEventListener('visibilitychange', () => { document.hidden ? pause() : visible && play(); });
+addEventListener('resize', () => { resize(); if (!running) render(); });
+
+resize(); cam();
+if (still) {                             // без движения: прокручиваем сцену до момента решения и показываем кадр
+  for (let i = 0; i < 900 && !(decision && decision.on === desks.O); i++) step(1 / 30);
+  for (let i = 0; i < 60; i++) step(1 / 30);
+  render();
+} else play();
+})();
+</script>
+</body>
+</html>

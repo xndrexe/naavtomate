@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>На автомате — первый экран, вариант «Машина решений»</title>
+<link rel="preload" href="fonts/Onest-normal-cyrillic-0.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<style>
+:root{--bg:#dcdfdf;--ink:#15181b;--mute:#4f565c;--dim:#50575d;--sig:#ff5a1f}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+body{color:var(--ink);font:400 17px/1.5 "Onest",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.top{position:fixed;inset:0 0 auto;z-index:5;display:flex;align-items:center;gap:32px;height:68px;padding:0 40px}
+.brand{font-weight:700;font-size:17px;text-decoration:none;letter-spacing:-.01em;display:inline-flex;align-items:center;min-height:44px}
+.top nav{display:flex;gap:28px;margin-left:auto;font-size:15px;color:var(--mute)}
+.top nav a{text-decoration:none;display:inline-block;padding:10px 0}
+.top nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:10px;font:500 16px/1 "Onest",sans-serif;text-decoration:none;background:var(--ink);color:#eef0ef;border:0;cursor:pointer}
+.btn:hover{background:#000}
+.top .btn{min-height:44px;padding:0 18px;font-size:15px}
+
+.hero{position:relative;height:100vh;height:100svh;min-height:660px;overflow:hidden;background:radial-gradient(90% 90% at 60% 60%,#e6e8e7 0%,#d6d9d9 70%)}
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:multiply}
+.head{position:absolute;left:40px;top:116px;pointer-events:none}
+h1{font-weight:500;font-size:clamp(40px,5.8vw,86px);line-height:.98;letter-spacing:-.045em;max-width:12ch}
+.foot{position:absolute;left:40px;bottom:40px;max-width:430px}
+.lead{font-size:18px;line-height:1.5;color:#2c3237}
+.acts{display:flex;align-items:center;gap:24px;margin-top:24px}
+.more{font-size:16px;color:var(--mute);text-underline-offset:5px;display:inline-flex;align-items:center;min-height:44px}
+.more:hover{color:var(--ink)}
+.note{position:absolute;right:40px;bottom:40px;font-size:13px;color:var(--dim)}
+
+/* окно решения — встроено в корпус машины */
+.ask{position:absolute;z-index:3;left:0;top:0;width:320px;padding:16px 18px;border-radius:14px;background:var(--ink);border:5px solid #c9cdcf;box-shadow:inset 0 0 0 1px #000,inset 0 3px 0 var(--sig),0 1px 0 #fff,0 14px 30px rgba(30,36,40,.25);color:#eef0ef;opacity:0;visibility:hidden;transform:translate3d(-999px,0,0);transition:opacity .4s ease,visibility 0s .4s}
+.ask.on{opacity:1;visibility:visible;transition:opacity .5s ease}
+.ask-k{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--sig)}
+.ask-k::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--sig)}
+.ask-t{font-size:17px;line-height:1.35;margin-top:8px;letter-spacing:-.01em}
+.ask-b{display:flex;gap:8px;margin-top:14px}
+.ask-b button{flex:1;min-height:44px;border-radius:8px;font:500 15px/1 "Onest",sans-serif;cursor:pointer;border:1.5px solid #eef0ef66;background:transparent;color:#eef0ef}
+.ask-b button.yes{background:#eef0ef;color:var(--ink);border-color:#eef0ef}
+.ask-done{display:none;font-size:15px;margin-top:12px;color:#c8cdd0}
+.ask.done .ask-b{display:none}
+.ask.done .ask-done{display:block}
+
+.after{padding:72px 40px 96px;max-width:760px;color:var(--mute);font-size:16px}
+.after b{color:var(--ink);font-weight:500}
+
+@media (max-width:760px){
+  .top{padding:0 16px;gap:12px;height:60px;background:linear-gradient(#dcdfdfee,#dcdfdf00)}
+  .top nav{display:none}
+  .top .btn{margin-left:auto}
+  .hero{min-height:760px}
+  .head{left:20px;right:20px;top:80px}
+  h1{font-size:42px;max-width:11ch}
+  .foot{left:20px;right:20px;bottom:44px;max-width:none}
+  .lead{font-size:16px}
+  .acts{margin-top:16px;gap:14px}
+  .acts .btn{padding:0 20px}
+  .more{font-size:15px}
+  .acts{flex-wrap:wrap;row-gap:12px}
+  .acts .btn{white-space:nowrap}
+  .note{left:20px;right:auto;bottom:16px;font-size:12px}
+  .ask{width:min(320px,calc(100vw - 32px))}
+  .ask-t{font-size:16px}
+  .after{padding:56px 20px 72px}
+}
+@media (max-width:360px){h1{font-size:36px}.lead{font-size:15px}}
+@media (prefers-reduced-motion:reduce){.ask,.ask.on{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="https://xndrexe.github.io/naavtomate/">На автомате</a>
+  <nav><a href="https://xndrexe.github.io/naavtomate/#cases">Примеры</a><a href="https://xndrexe.github.io/naavtomate/#demo">Демо</a><a href="https://xndrexe.github.io/naavtomate/#how">Как работает</a></nav>
+  <a class="btn" href="https://t.me/naavtomate_ai_bot?start=site">Обсудить задачу</a>
+</header>
+
+<section class="hero" id="hero">
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="grain" id="grain"></div>
+  <div class="head"><h1>Рутина работает. Вы принимаете решения.</h1></div>
+
+  <div class="ask" id="ask" role="dialog" aria-live="polite" aria-label="Пример решения, которое доходит до владельца">
+    <p class="ask-k">Требуется ваше решение</p>
+    <p class="ask-t" id="askText"></p>
+    <div class="ask-b"><button class="yes" type="button" data-a="yes">Да</button><button type="button" data-a="no">Нет</button></div>
+    <p class="ask-done" id="askDone"></p>
+  </div>
+
+  <div class="foot">
+    <p class="lead">Проектирую и внедряю ИИ-системы, которые сами разбирают заявки, почту, отчёты и счета. До вас доходит только то, где нужно ваше решение.</p>
+    <div class="acts"><a class="btn" href="https://t.me/naavtomate_ai_bot?start=site">Обсудить задачу</a><a class="more" href="https://xndrexe.github.io/naavtomate/#cases">Посмотреть примеры</a></div>
+  </div>
+  <p class="note">Демонстрация. Данные условные.</p>
+</section>
+
+<section class="after">
+  <p><b>Черновик первого экрана, вариант «Машина решений».</b> Остальные разделы — после выбора варианта. Первый вариант: <a href="office.html">«Офис без людей»</a>.</p>
+</section>
+
+<script>
+(() => {
+'use strict';
+const cv = document.getElementById('scene');
+const ctx = cv.getContext('2d');
+const hero = document.getElementById('hero');
+const ask = document.getElementById('ask');
+const askText = document.getElementById('askText');
+const askDone = document.getElementById('askDone');
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TAU = Math.PI * 2;
+
+// ── геометрия: три кольца с прорезями и ядро
+let W = 0, H = 0, dpr = 1, mob = false, CX = 0, CY = 0, R = 300, IN = Math.PI, OUT = 0;
+const rings = [                          // шаг за тик, число прорезей
+  {k: 1.00, step: TAU / 18, n: 6, t: 0.105},   // внешнее: 20° за тик, прорезь каждые 60°
+  {k: 0.74, step: -TAU / 8, n: 4, t: 0.095},   // среднее: −45°, каждые 90°
+  {k: 0.50, step: TAU / 9, n: 6, t: 0.085}     // внутреннее: 40°, каждые 60°
+];
+const CORE = 0.30;
+
+function resize() {
+  const r = hero.getBoundingClientRect();
+  W = r.width; H = r.height; mob = W < 760;
+  dpr = Math.min(window.devicePixelRatio || 1, mob ? 1.75 : 2);
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  if (mob) { R = Math.min(W * 0.31, H * 0.15); CX = W * 0.5; CY = H * 0.55; IN = -Math.PI / 2; OUT = Math.PI / 2; }
+  else { R = Math.min(H * 0.40, W * 0.25); CX = W * 0.575; CY = H * 0.60; IN = Math.PI; OUT = 0; }
+  for (const g of rings) { const sp = TAU / g.n; g.base = ((IN % sp) + sp) % sp; g.gap = 52 / (R * g.k); }
+}
+
+// ── часовой ход: кольца щёлкают; совпали все прорези — канал открыт
+let clock = 0, run = 1, runT = 1, tickN = 0, tickT0 = 0;
+const MOVE = 0.42;
+const mv = n => aligned(n + 1) ? 0.8 : MOVE;   // ход к совпадению — медленнее, с предвкушением
+const backOut = k => { const c = 1.6; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+const ease = k => k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const aligned = n => n % 6 === 0;      // после тика n все прорези стоят на входе и выходе
+function dwell(n) { return aligned(n) ? 1.25 : (n % 3 === 0 ? 0.5 : 0.26); }
+function ringAngle(g) {
+  const k = Math.min(1, (clock - tickT0) / mv(tickN));
+  return g.base + g.step * (tickN + backOut(k));
+}
+let open = false;
+
+// ── предметы: хаос на входе, ровные бруски на выходе
+const items = [];
+let spawnT = 0.2, passed = 0, nextAsk = 2, decision = null, built = [], buildShift = 0;
+const KINDS = ['msg', 'rcpt', 'table', 'doc', 'msg', 'rcpt'];
+function entry(off) { return [CX + Math.cos(IN) * (R + off), CY + Math.sin(IN) * (R + off)]; }
+function spawn() {
+  const kind = KINDS[Math.random() * KINDS.length | 0];
+  let x, y;
+  if (mob) { x = Math.random() < 0.5 ? -40 : W + 40; y = CY - R - 40 - Math.random() * 40; }
+  else { x = -70; y = CY - R * 0.55 + Math.random() * R * 1.1; }
+  const s = (mob ? 0.66 : 1.25) * (0.8 + Math.random() * 0.5);
+  items.push({kind, x, y, r: (Math.random() - 0.5) * 1.6, vr: (Math.random() - 0.5) * 0.8, s, m: 0, st: 'drift', a: 0,
+    vx: 0, vy: 0, seed: Math.random() * 100});
+}
+function queueSpot(i) {                  // свободная очередь у входа: веер
+  const [ex, ey] = entry(mob ? 34 : 56);
+  const nx = Math.cos(IN), ny = Math.sin(IN), px = -ny, py = nx;
+  const row = Math.floor(i / 3), col = (i % 3) - 1;
+  return [ex + nx * row * (mob ? 30 : 44) + px * col * (mob ? 34 : 50), ey + ny * row * (mob ? 30 : 44) + py * col * (mob ? 34 : 50)];
+}
+function go(o, path, dur, done) { o.path = path; o.t0 = clock; o.dur = dur; o.done = done; }
+
+let waveT = -9;
+function openChannel() {
+  open = true; waveT = clock;
+  // в ядро — до двух из очереди
+  const q = items.filter(o => o.st === 'queue').sort((a, b) => a.qi - b.qi);
+  q.slice(0, 2).forEach((o, i) => {
+    o.st = 'pass';
+    setT(i * 0.28, () => go(o, [[o.x, o.y], entry(0), [CX + Math.cos(IN) * R * 0.5, CY + Math.sin(IN) * R * 0.5], [CX, CY]], 0.85, () => toCore(o)));
+  });
+  // из ядра — готовые бруски
+  items.filter(o => o.st === 'core' && o !== decision).slice(0, 3).forEach((o, i) => {
+    o.st = 'exit';
+    setT(0.15 + i * 0.22, () => {
+      const out = [CX + Math.cos(OUT) * (R + (mob ? 24 : 60)), CY + Math.sin(OUT) * (R + (mob ? 24 : 60))];
+      go(o, [[o.x, o.y], [CX + Math.cos(OUT) * R * 0.5, CY + Math.sin(OUT) * R * 0.5], [CX + Math.cos(OUT) * R, CY + Math.sin(OUT) * R], out], 0.8, () => build(o));
+    });
+  });
+}
+function toCore(o) {
+  o.st = 'core'; passed++;
+  if (!decision && passed >= nextAsk) { jam(o); return; }
+}
+function coreSpot(i) { return [CX + (i % 2 ? 1 : -1) * 4, CY - 18 + i * 13]; }
+function build(o) {                      // бруски собираются в ровный блок справа (на телефоне — уходят вниз)
+  if (mob) { o.st = 'leave'; go(o, [[o.x, o.y], [o.x, o.y + 30]], 0.6, () => { o.dead = true; }); return; }
+  const i = built.length, cols = 3, rows = 10;
+  const bx = CX + R + 56 + (i % cols) * 46, by = CY + R * 0.5 - Math.floor(i / cols) * 16;
+  o.st = 'built'; built.push(o);
+  go(o, [[o.x, o.y], [bx, o.y], [bx, by]], 0.7);
+  if (built.length >= cols * rows) {
+    const blk = built; built = [];
+    setT(1.2, () => blk.forEach(b => { b.st = 'leave'; go(b, [[b.x, b.y], [b.x + 260, b.y]], 1.4, () => { b.dead = true; }); }));
+  }
+}
+
+// ── решение: ритм сбивается, предмет уходит в окно владельца, машина работает дальше
+const ASKS = [
+  ['Клиент просит вернуть 6 400 ₽ без чека. Вернуть?', 'Возврат оформлен, клиенту ушло письмо.', 'Отказано — клиенту уйдёт ответ с причиной.'],
+  ['Постоянный клиент просит скидку 12% на заказ 84 000 ₽. Согласовать?', 'Согласовано — клиент получит счёт со скидкой.', 'Отказано — клиенту уйдёт вежливый ответ.'],
+  ['Поставщик поднял цену на 7%. Принять новый прайс?', 'Принято — прайс обновлён, заказ пересчитан.', 'Отказано — запрошу два других предложения.']
+];
+let askN = 0;
+function slot() { return mob ? [CX, CY] : [CX + Math.cos(0.9) * (R + 30), CY + Math.sin(0.9) * (R + 30)]; }
+function jam(o) {
+  decision = o; o.st = 'jam'; o.hot = 0;
+  runT = 0;                              // впервые механизм замирает
+  setT(0.9, () => {
+    o.st = 'lift';
+    const [sx, sy] = slot();
+    go(o, [[o.x, o.y], [o.x + (sx - o.x) * 0.3, o.y - 40], [sx, sy]], 1.1, () => { o.st = 'slot'; showAsk(); });
+  }, true);
+  setT(2.1, () => { runT = 1; }, true);
+}
+function showAsk() {
+  askText.textContent = ASKS[askN % ASKS.length][0];
+  ask.classList.remove('done'); ask.classList.add('on'); placeAsk();
+}
+ask.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || !decision) return;
+  const a = ASKS[askN % ASKS.length];
+  askDone.textContent = b.dataset.a === 'yes' ? a[1] : a[2];
+  ask.classList.add('done');
+  const o = decision;
+  setT(1.6, () => {
+    ask.classList.remove('on');
+    o.st = 'exit'; o.hotOff = true;
+    go(o, [[o.x, o.y], [o.x + 120, o.y + 40]], 1.0, () => { o.dead = true; });
+    decision = null; askN++; nextAsk = passed + 9;
+  }, true);
+  if (still) { for (let i = 0; i < 60; i++) step(1 / 30); render(); }
+});
+
+// таймеры: обычные идут по часам машины, «живые» — по настоящему времени
+const timers = [];
+let realT = 0;
+function setT(sec, fn, real) { timers.push({t: (real ? realT : clock) + sec, fn, real}); }
+
+function along(path, k) {               // точка на ломаной по доле пути
+  let L = 0; const seg = [];
+  for (let i = 1; i < path.length; i++) { const d = Math.hypot(path[i][0] - path[i - 1][0], path[i][1] - path[i - 1][1]); seg.push(d); L += d; }
+  let s = k * L;
+  for (let i = 0; i < seg.length; i++) {
+    if (s <= seg[i] || i === seg.length - 1) { const f = seg[i] ? Math.min(1, s / seg[i]) : 1; return [path[i][0] + (path[i + 1][0] - path[i][0]) * f, path[i][1] + (path[i + 1][1] - path[i][1]) * f]; }
+    s -= seg[i];
+  }
+  return path[path.length - 1];
+}
+
+function step(dt) {
+  realT += dt;
+  run += (runT - run) * Math.min(1, dt * (runT < run ? 7 : 2.5));
+  const cdt = dt * run;
+  clock += cdt;
+  for (let i = timers.length - 1; i >= 0; i--) { const tm = timers[i]; if ((tm.real ? realT : clock) >= tm.t) { timers.splice(i, 1); tm.fn(); } }
+
+  // ход колец
+  if (clock - tickT0 >= mv(tickN) + dwell(tickN + 1)) { tickN++; tickT0 = clock; open = false; }
+  if (!open && clock - tickT0 >= mv(tickN) && aligned(tickN + 1)) openChannel();
+
+  if (clock >= spawnT && items.filter(o => o.st === 'drift' || o.st === 'queue').length < (mob ? 5 : 9)) { spawn(); spawnT = clock + 0.9 + Math.random() * 0.7; }
+
+  let qi = 0;
+  const qs = items.filter(o => o.st === 'queue').sort((a, b) => a.qi - b.qi);
+  qs.forEach((o, i) => { o.qi = i; });
+  qi = qs.length;
+  for (const o of items) {
+    o.a = Math.min(1, o.a + dt * 2);
+    if (o.path) {
+      const k = Math.min(1, (clock - o.t0) / o.dur), e = ease(k);
+      [o.x, o.y] = along(o.path, e);
+      if (k >= 1) { const f = o.done; o.path = null; o.done = null; if (f) f(); }
+    }
+    if (o.st === 'drift') {
+      const [tx, ty] = queueSpot(qi);
+      const dx = tx - o.x, dy = ty - o.y, d = Math.hypot(dx, dy);
+      const sp = (mob ? 70 : 110) * cdt;
+      o.x += dx / d * Math.min(sp, d) + Math.sin(realT * 1.3 + o.seed) * 0.6 * run;
+      o.y += dy / d * Math.min(sp, d) + Math.cos(realT * 1.1 + o.seed) * 0.6 * run;
+      o.r += o.vr * cdt;
+      if (d < 6) { o.st = 'queue'; o.qi = qi++; }
+    } else if (o.st === 'queue') {
+      const [tx, ty] = queueSpot(o.qi);
+      o.x += (tx - o.x) * Math.min(1, cdt * 3); o.y += (ty - o.y) * Math.min(1, cdt * 3);
+      o.r += o.vr * cdt * 0.4 + Math.sin(realT * 2 + o.seed) * 0.002;
+    } else if (o.st === 'pass' || o.st === 'exit' || o.st === 'built' || o.st === 'leave') {
+      if (o.st === 'pass' && o.path) { const k = Math.min(1, (clock - o.t0) / o.dur); o.m = Math.max(o.m, Math.min(1, k * 1.25)); }
+      else o.m = 1;
+      o.r += (0 - o.r) * Math.min(1, dt * 8);
+      if (o.st === 'leave') o.fade = (o.fade || 0) + dt * (mob ? 1.8 : 0.9);
+    } else if (o.st === 'core') {
+      o.m = 1;
+      const cs = items.filter(x => x.st === 'core');
+      const [tx, ty] = coreSpot(cs.indexOf(o));
+      o.x += (tx - o.x) * Math.min(1, dt * 6); o.y += (ty - o.y) * Math.min(1, dt * 6);
+      o.r += (0 - o.r) * Math.min(1, dt * 8);
+    }
+    if (o === decision || o.hotOff) o.hot = Math.max(0, Math.min(1, (o.hot || 0) + (o.hotOff ? -dt : dt * 2)));
+    if (o === decision && (o.st === 'jam' || o.st === 'lift' || o.st === 'slot')) o.m = Math.max(0, o.m - dt * 2);
+  }
+  for (let i = items.length - 1; i >= 0; i--) if (items[i].dead || (items[i].fade || 0) >= 1) items.splice(i, 1);
+}
+
+// ── отрисовка
+let hx = 0.3, hy = 0.2, thx = hx, thy = hy;   // блик металла следует за курсором
+function metal() {
+  const ang = Math.atan2(hy, hx), x0 = CX + Math.cos(ang) * R * 1.2, y0 = CY + Math.sin(ang) * R * 1.2;
+  const g = ctx.createLinearGradient(x0, y0, 2 * CX - x0, 2 * CY - y0);
+  g.addColorStop(0, '#f7f8f7'); g.addColorStop(0.35, '#d3d7d8'); g.addColorStop(0.55, '#e9ebea'); g.addColorStop(1, '#a9afb2');
+  return g;
+}
+function drawRing(g, mg) {
+  const r = R * g.k, t = R * g.t, a0 = ringAngle(g), sp = TAU / g.n;
+  // тень
+  ctx.save(); ctx.translate(0, R * 0.035);
+  ctx.lineWidth = t; ctx.strokeStyle = 'rgba(40,48,54,.16)';
+  for (let j = 0; j < g.n; j++) { const s = a0 + j * sp + g.gap / 2, e = a0 + (j + 1) * sp - g.gap / 2; ctx.beginPath(); ctx.arc(CX, CY, r, s, e); ctx.stroke(); }
+  ctx.restore();
+  for (let j = 0; j < g.n; j++) {
+    const s = a0 + j * sp + g.gap / 2, e = a0 + (j + 1) * sp - g.gap / 2;
+    ctx.beginPath(); ctx.arc(CX, CY, r + t / 2, s, e); ctx.arc(CX, CY, r - t / 2, e, s, true); ctx.closePath();
+    ctx.fillStyle = mg; ctx.fill();
+    ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(21,24,27,.55)'; ctx.stroke();
+    ctx.lineWidth = 1.5; ctx.strokeStyle = 'rgba(255,255,255,.75)'; ctx.beginPath(); ctx.arc(CX, CY, r + t / 2 - 1.5, s + 0.01, e - 0.01); ctx.stroke();
+    ctx.strokeStyle = 'rgba(21,24,27,.22)'; ctx.beginPath(); ctx.arc(CX, CY, r - t / 2 + 1.5, s + 0.01, e - 0.01); ctx.stroke();
+  }
+  // гравировка: риски по кольцу
+  ctx.strokeStyle = 'rgba(21,24,27,.32)'; ctx.lineWidth = 1;
+  ctx.beginPath();
+  const n = Math.round(r / 6);
+  for (let i = 0; i < n; i++) {
+    const a = a0 + i * TAU / n;
+    const rel = (((a - a0) % sp) + sp) % sp;
+    if (rel < g.gap / 2 + 0.02 || rel > sp - g.gap / 2 - 0.02) continue;
+    const l = i % 5 ? t * 0.16 : t * 0.32;
+    ctx.moveTo(CX + Math.cos(a) * (r + t / 2 - 2), CY + Math.sin(a) * (r + t / 2 - 2));
+    ctx.lineTo(CX + Math.cos(a) * (r + t / 2 - 2 - l), CY + Math.sin(a) * (r + t / 2 - 2 - l));
+  }
+  ctx.stroke();
+}
+function drawCore() {
+  const r = R * CORE;
+  ctx.fillStyle = 'rgba(40,48,54,.18)'; ctx.beginPath(); ctx.arc(CX, CY + R * 0.03, r, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#15181b'; ctx.beginPath(); ctx.arc(CX, CY, r, 0, TAU); ctx.fill();
+  ctx.strokeStyle = 'rgba(238,240,239,.08)'; ctx.lineWidth = 1;
+  for (let i = 1; i < 6; i++) { ctx.beginPath(); ctx.arc(CX, CY, r * i / 6, 0, TAU); ctx.stroke(); }
+  // метка хода: поворачивается вместе с тиками
+  const a = clock * 0.0 + tickN * TAU / 24 + backOut(Math.min(1, (clock - tickT0) / mv(tickN))) * TAU / 24;
+  ctx.strokeStyle = 'rgba(238,240,239,.35)'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(CX + Math.cos(a) * r * 0.86, CY + Math.sin(a) * r * 0.86); ctx.lineTo(CX + Math.cos(a) * r * 0.97, CY + Math.sin(a) * r * 0.97); ctx.stroke();
+}
+function drawWave() {                    // световой импульс через все кольца слева направо
+  const k = (clock - waveT) / 0.7; if (k < 0 || k > 1) return;
+  const x0 = CX + Math.cos(IN) * (R + 40), y0 = CY + Math.sin(IN) * (R + 40), x1 = CX + Math.cos(OUT) * (R + 40), y1 = CY + Math.sin(OUT) * (R + 40);
+  const x = x0 + (x1 - x0) * ease(k), y = y0 + (y1 - y0) * ease(k), rr0 = R * 0.38;
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  const g = ctx.createRadialGradient(x, y, 0, x, y, rr0);
+  const al = 0.42 * Math.sin(k * Math.PI);
+  g.addColorStop(0, `rgba(255,255,255,${al})`); g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g; ctx.fillRect(x - rr0, y - rr0, rr0 * 2, rr0 * 2);
+  ctx.restore();
+}
+function drawChannel() {                 // направляющие входа и выхода
+  ctx.strokeStyle = 'rgba(21,24,27,.22)'; ctx.lineWidth = 1;
+  for (const th of [IN, OUT]) {
+    const nx = Math.cos(th), ny = Math.sin(th), px = -ny * 22, py = nx * 22;
+    for (const sg of [-1, 1]) {
+      ctx.beginPath();
+      ctx.moveTo(CX + nx * R * (CORE + 0.02) + px * sg, CY + ny * R * (CORE + 0.02) + py * sg);
+      ctx.lineTo(CX + nx * (R + (th === IN ? 34 : 50)) + px * sg, CY + ny * (R + (th === IN ? 34 : 50)) + py * sg);
+      ctx.stroke();
+    }
+  }
+}
+function drawItem(o) {
+  const al = o.a * (1 - Math.min(1, o.fade || 0)); if (al <= 0) return;
+  ctx.save(); ctx.globalAlpha = al; ctx.translate(o.x, o.y); ctx.rotate(o.r);
+  const hot = o.hot || 0;
+  const ink = hot > 0.02 ? mixc([21, 24, 27], [255, 90, 31], hot) : '#15181b';
+  // ровный брусок
+  if (o.m > 0.01) {
+    const s = mob ? 0.72 : 1;
+    ctx.globalAlpha = al * o.m;
+    ctx.fillStyle = o.st === 'core' ? '#eef0ef' : ink;
+    rr(-20 * s, -6 * s, 40 * s, 12 * s, 2 * s); ctx.fill();
+  }
+  // хаос: сообщение, чек, таблица, документ
+  if (o.m < 0.99) {
+    const k = 1 - o.m, sc = o.s * (0.35 + 0.65 * k);
+    ctx.globalAlpha = al * k; ctx.scale(sc, sc);
+    ctx.lineWidth = 1.5 / sc; ctx.strokeStyle = ink; ctx.fillStyle = hot > 0.02 ? mixc([251, 251, 250], [255, 214, 196], hot) : '#fbfbfa';
+    if (o.kind === 'msg') {
+      rr(-30, -17, 60, 30, 13); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-14, 13); ctx.lineTo(-20, 22); ctx.lineTo(-6, 13); ctx.fillStyle = ctx.fillStyle; ctx.fill(); ctx.stroke();
+      ctx.fillStyle = ink; ctx.fillRect(-19, -7, 34, 2.5); ctx.fillRect(-19, 0, 22, 2.5);
+    } else if (o.kind === 'rcpt') {
+      ctx.beginPath(); ctx.moveTo(-15, -26); ctx.lineTo(15, -26); ctx.lineTo(15, 24);
+      for (let i = 0; i < 6; i++) ctx.lineTo(15 - (i + 0.5) * 5, i % 2 ? 24 : 28);
+      ctx.lineTo(-15, 24); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = ink; for (let i = 0; i < 5; i++) ctx.fillRect(-9, -18 + i * 8, i === 4 ? 18 : 12, 2);
+    } else if (o.kind === 'table') {
+      ctx.fillRect(-28, -18, 56, 36); ctx.strokeRect(-28, -18, 56, 36);
+      ctx.beginPath(); for (let i = 1; i < 3; i++) { ctx.moveTo(-28, -18 + i * 12); ctx.lineTo(28, -18 + i * 12); } for (let i = 1; i < 4; i++) { ctx.moveTo(-28 + i * 14, -18); ctx.lineTo(-28 + i * 14, 18); } ctx.stroke();
+    } else {
+      ctx.beginPath(); ctx.moveTo(-18, -24); ctx.lineTo(8, -24); ctx.lineTo(18, -14); ctx.lineTo(18, 24); ctx.lineTo(-18, 24); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = ink; for (let i = 0; i < 4; i++) ctx.fillRect(-11, -10 + i * 8, i === 3 ? 12 : 22, 2);
+    }
+  }
+  ctx.restore();
+}
+function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+function mixc(a, b, k) { return `rgb(${a[0] + (b[0] - a[0]) * k | 0},${a[1] + (b[1] - a[1]) * k | 0},${a[2] + (b[2] - a[2]) * k | 0})`; }
+
+function render() {
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  drawChannel();
+  const mg = metal();
+  for (const g of rings) drawRing(g, mg);
+  drawCore();
+  drawWave();
+  // предметы: в ядре — поверх ядра; в пути — поверх колец
+  for (const o of items) if (o !== decision) drawItem(o);
+  if (decision) drawItem(decision);
+  if (ask.classList.contains('on')) placeAsk();
+}
+function placeAsk() {
+  const [sx, sy] = slot(), w = ask.offsetWidth, h = ask.offsetHeight;
+  let x, y;
+  if (mob) {                            // между заголовком и подписью снизу
+    const hb = document.querySelector('h1').getBoundingClientRect().bottom - hero.getBoundingClientRect().top;
+    const ft = document.querySelector('.foot').offsetTop;
+    x = (W - w) / 2; y = Math.max(hb + 8, Math.min(sy - h / 2, ft - h - 8));
+  }
+  else { x = Math.min(W - w - 24, sx - 24); y = Math.min(H - h - 80, sy - 26); }
+  ask.style.transform = `translate3d(${x | 0}px,${y | 0}px,0)`;
+}
+
+(function grain() {
+  const c = document.createElement('canvas'); c.width = c.height = 96;
+  const g = c.getContext('2d'), im = g.createImageData(96, 96);
+  for (let i = 0; i < im.data.length; i += 4) { const v = 150 + Math.random() * 105 | 0; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+  g.putImageData(im, 0, 0);
+  document.getElementById('grain').style.backgroundImage = `url(${c.toDataURL()})`;
+})();
+
+hero.addEventListener('pointermove', e => {
+  if (e.pointerType !== 'mouse') return;
+  const r = hero.getBoundingClientRect();
+  thx = (e.clientX - r.left - CX) / R; thy = (e.clientY - r.top - CY) / R;
+});
+
+let last = 0, running = false, visible = true, raf = 0;
+function frame(t) {
+  raf = 0;
+  const dt = Math.min(0.05, (t - (last || t)) / 1000); last = t;
+  hx += (thx - hx) * Math.min(1, dt * 2.5); hy += (thy - hy) * Math.min(1, dt * 2.5);
+  step(dt); render();
+  if (running) raf = requestAnimationFrame(frame);
+}
+function play() { if (running || still) return; running = true; last = 0; raf = requestAnimationFrame(frame); }
+function pause() { running = false; if (raf) cancelAnimationFrame(raf); raf = 0; }
+new IntersectionObserver(es => { visible = es[0].isIntersecting; visible && !document.hidden ? play() : pause(); }).observe(hero);
+document.addEventListener('visibilitychange', () => { document.hidden ? pause() : visible && play(); });
+addEventListener('resize', () => { resize(); if (!running) render(); });
+
+resize();
+if (still) {                             // без движения: доводим до окна решения и рисуем один кадр
+  for (let i = 0; i < 1800 && !(decision && decision.st === 'slot'); i++) step(1 / 30);
+  render();
+} else play();
+})();
+</script>
+</body>
+</html>
