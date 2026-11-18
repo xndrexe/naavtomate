@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
 <meta name="description" content="На автомате — ИИ-помощники для бизнеса под ключ. Собираю ИИ-агентов для малого бизнеса: салонов, магазинов, сервисов. Ответы на заявки, разбор почты, отчёты, протоколы созвонов, сторож цен. Начало — бесплатный письменный разбор вашего сайта. Связь — Telegram-бот @naavtomate_ai_bot.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="На автомате">
+<meta property="og:url" content="https://xndrexe.github.io/naavtomate/">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="На автомате — ИИ-помощники для малого бизнеса">
+<meta property="og:description" content="Отвечают на заявки, разбирают почту, собирают отчёты и следят за ценами. Пришлите сайт — за сутки скажу, что отдать ИИ первым.">
+<meta property="og:image" content="https://xndrexe.github.io/naavtomate/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="На автомате: меньше ручной работы, больше работающих систем">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"На автомате","alternateName":"Na Avtomate",
 "description":"Внедряю ИИ-агентов в малый бизнес: заявки, почта, отчёты, протоколы созвонов, закупки и платежи, сторож цен. EN: AI agents for small businesses — leads, email, reports, call notes.",
@@ -274,20 +285,49 @@ details.more p{font-size:var(--s);color:var(--muted);max-width:70ch}
 .q output{font-weight:700;white-space:nowrap}
 input[type=range]{width:100%;accent-color:var(--ink);height:44px;margin:0}
 .D input[type=range],:root[data-theme=dark] input[type=range]{accent-color:var(--volt)}
-.quiz{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px;align-items:start}
-#quizQ{display:grid;gap:16px}
 .map{border-radius:var(--r);background:var(--bg);border:1px solid var(--line);padding:18px;display:grid;gap:14px}
-.map .row .top{display:flex;justify-content:space-between;gap:10px;font-size:var(--s);font-weight:600;line-height:1.3}
-.map .row .top span:last-child{white-space:nowrap}
-.map .track{height:10px;border-radius:5px;background:var(--line);margin-top:6px;overflow:hidden}
-.map .fill{height:100%;background:var(--ink);border-radius:5px;transition:width .35s var(--ease)}
-.D .map .fill,:root[data-theme=dark] .map .fill{background:var(--volt)}
-.map .row:first-of-type .fill{background:var(--volt)}
-.map .weak{opacity:.5}
 .map span.firstbadge{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background:var(--volt);color:var(--volt-ink);font-size:var(--s);font-weight:600;vertical-align:1px}
-.map .total{border-top:1px solid var(--line);padding-top:12px;font-size:var(--b)}
-.map .total b{font-size:var(--l);letter-spacing:-.03em}
-@media (max-width:760px){.quiz{grid-template-columns:1fr}}
+/* «Что отдать ИИ первым»: шаги слева, итог справа */
+.nv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+.nv-steps{display:grid;gap:18px}
+.nv-step{display:grid;gap:10px}
+.nv-step+.nv-step{border-top:1px solid var(--line);padding-top:18px}
+.nv-h{display:flex;align-items:center;gap:10px;font-size:var(--b);font-weight:600;line-height:1.3}
+.nv-h i{font-style:normal;flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;font-size:var(--s)}
+.nv-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.nv-tile{min-height:56px;padding:10px 14px;border-radius:var(--r);border:1px solid var(--line2);background:var(--bg);color:var(--ink);font:500 var(--s)/1.3 var(--font);text-align:left;cursor:pointer;transition:border-color .15s,background .15s}
+.nv-tile:hover{border-color:var(--ink)}
+.nv-tile[aria-pressed=true]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);background:var(--hi)}
+.nv-skip{justify-self:start;min-height:44px;padding:0;border:0;background:none;color:var(--muted);font:500 var(--s) var(--font);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.nv-skip:hover{color:var(--ink)}
+.nv-in{width:100%;min-height:44px;padding:0 14px;border-radius:var(--r);border:1px solid var(--line2);background:var(--bg);color:var(--ink);font:400 var(--s) var(--font)}
+.nv-in:focus{border-color:var(--ink);outline:none}
+.nv-pains{display:grid;gap:8px}
+.nv-pain{border:1px solid var(--line);border-radius:var(--r);background:var(--bg)}
+.nv-pain.on{border-color:var(--line2)}
+.nv-pain label{display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 12px;font-size:var(--s);line-height:1.35;cursor:pointer}
+.nv-pain input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin:0;accent-color:var(--ink)}
+.D .nv-pain input[type=checkbox],:root[data-theme=dark] .nv-pain input[type=checkbox]{accent-color:var(--volt)}
+.nv-q{display:grid;gap:8px;padding:0 12px 12px 44px}
+.nv-q>span{font-size:var(--s);color:var(--muted)}
+.nv-q .chips{gap:6px}
+.nv-q .fchip{min-height:40px;padding:0 12px}
+.nv-empty{display:grid;gap:10px;padding:6px 0}
+.nv-empty i{display:block;height:12px;border-radius:6px;background:var(--line)}
+.nv-empty i:nth-child(2){width:78%}.nv-empty i:nth-child(3){width:56%}
+.nv-empty p{color:var(--muted);font-size:var(--s);margin-top:4px}
+.nv-res h4{font-size:var(--m);font-weight:600}
+.nv-it{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;padding-top:12px;border-top:1px solid var(--line)}
+.nv-it>b{grid-row:span 3;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:var(--s)}
+.nv-it:first-of-type>b{background:var(--volt);color:var(--volt-ink)}
+.nv-it strong{font-size:var(--b);line-height:1.3}
+.nv-it span{font-size:var(--s);color:var(--muted);line-height:1.4}
+.nv-it em{font-style:normal;font-size:var(--s);font-weight:600}
+.nv-rest{font-size:var(--s);color:var(--muted)}
+.nv-res details.more ul{display:grid;gap:6px;margin-top:8px;padding-left:18px;font-size:var(--s);line-height:1.45}
+.nv-cta{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center;padding-top:12px;border-top:1px solid var(--line)}
+@media (max-width:760px){.nv{grid-template-columns:1fr}}
+@media (max-width:360px){.nv-q{padding-left:12px}}
 .ask{display:flex;gap:8px}
 .ask input{flex:1;min-width:0;min-height:52px;padding:0 18px;border-radius:999px;border:2px solid var(--line2);background:var(--bg);color:var(--ink);font:400 var(--b) var(--font)}
 .ask input:focus{border-color:var(--ink);outline:none}
@@ -568,7 +608,7 @@ tr.dim td{opacity:.4}
     </div>
     <div class="demos">
       <div class="tabs" role="tablist" aria-label="Демо" id="tabs">
-        <button class="tab" role="tab" id="t-quiz" aria-selected="true" aria-controls="d-quiz"><b>Что автоматизировать первым</b><span>5 вопросов — карта часов</span></button>
+        <button class="tab" role="tab" id="t-quiz" aria-selected="true" aria-controls="d-quiz"><b data-en="What to hand to AI first">Что отдать ИИ первым</b><span data-en="3 steps for your business">3 шага под ваш бизнес</span></button>
         <button class="tab" role="tab" id="t-buy" aria-selected="false" aria-controls="d-buy"><b>Деньги и заказы</b><span>вопрос словами вместо таблиц</span></button>
         <button class="tab" role="tab" id="t-mail" aria-selected="false" aria-controls="d-mail"><b>Почта по полочкам</b><span>12 писем разойдутся по папкам</span></button>
         <button class="tab" role="tab" id="t-call" aria-selected="false" aria-controls="d-call"><b>Секретарь созвонов</b><span>расшифровка становится задачами</span></button>
@@ -576,17 +616,12 @@ tr.dim td{opacity:.4}
       </div>
 
       <div class="win">
-        <div class="win-bar"><span class="dot" aria-hidden="true"></span><b id="winT">Что автоматизировать первым</b><span>демо · данные условные</span></div>
+        <div class="win-bar"><span class="dot" aria-hidden="true"></span><b id="winT">Что отдать ИИ первым</b><span>демо · данные условные</span></div>
 
         <div class="demo" id="d-quiz" role="tabpanel" aria-labelledby="t-quiz">
-          <h3>Где теряются часы</h3>
-          <p class="sub">Подвигайте ползунки — справа появится карта: что отдать ИИ первым.</p>
-          <div class="quiz">
-            <div id="quizQ"></div>
-            <div class="map" id="quizMap" aria-live="polite"></div>
-          </div>
-          <details class="more"><summary>Как считается</summary><p>Грубая прикидка, а не обещание экономии: 22 рабочих дня в месяце, на письмо минута, на итоги созвона 20 минут, доля автоматизации — по типу рутины. Настоящая карта — после разбора ваших заявок, писем и отчётов за 1–2 недели.</p></details>
-          <p class="democta"><a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=demo_quiz" rel="noopener">Хочу такое у себя</a><span class="note">начнём с бесплатного разбора</span></p>
+          <h3 id="nvH">Что отдать ИИ первым</h3>
+          <p class="sub" id="nvSub">Три коротких шага — и станет видно, какие 1–3 дела отдать ИИ первыми.</p>
+          <div class="nv" id="nav"></div>
         </div>
 
         <div class="demo" id="d-buy" role="tabpanel" aria-labelledby="t-buy" hidden>
@@ -1120,45 +1155,168 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
   $('#callReset').addEventListener('click', reset);
 })();
 
-/* ---------- Г. Оцифровка ---------- */
-(function quiz() {
-  const Q = [
-    ['req', 'Сколько заявок и обращений в день?', 0, 150, 30, 5, ''],
-    ['min', 'Сколько минут уходит на один ответ?', 1, 20, 6, 1, ' мин'],
-    ['rep', 'Сколько часов в неделю уходит на отчёты руками?', 0, 20, 5, 1, ' ч'],
-    ['mail', 'Сколько писем в день разбираете вручную?', 0, 300, 80, 10, ''],
-    ['call', 'Сколько созвонов в неделю, по которым пишут итоги?', 0, 15, 4, 1, '']
+/* ---------- Г. Что отдать ИИ первым: вид бизнеса → где болит → один вопрос на боль ---------- */
+(function nav() {
+  const box = $('#nav'); if (!box) return;
+  // тип вопроса: подпись, варианты, часы в месяц [от, до] (0 — «до», null — «от»), формула для «как считали»
+  const T = {
+    req: { q: ['Сколько в день?', 'How many a day?'], o: ['1–5', '5–20', '20–50', '50+'], h: [[1, 5], [5, 20], [20, 50], [50, null]],
+      f: ['{v} в день × 4 мин на ответ × 22 рабочих дня × 70% — столько агент закрывает сам', '{v} a day × 4 min per reply × 22 working days × 70% — what the agent closes alone'] },
+    mail: { q: ['Сколько в день?', 'How many a day?'], o: ['до 20', '20–50', '50–100', '100+'], h: [[0, 4], [4, 11], [11, 22], [22, null]],
+      f: ['{v} писем в день × 1 мин × 22 рабочих дня × 60% — столько разложится само', '{v} emails a day × 1 min × 22 working days × 60% — what sorts itself'] },
+    rep: { q: ['Сколько часов в неделю?', 'How many hours a week?'], o: ['до 1', '1–3', '3–6', '6+'], h: [[0, 3], [3, 10], [10, 21], [21, null]],
+      f: ['{v} ч в неделю × 4,3 недели × 80% — столько цифр соберётся само', '{v} h a week × 4.3 weeks × 80% — what gets collected automatically'] },
+    call: { q: ['Сколько в неделю?', 'How many a week?'], o: ['1–3', '4–10', '10+'], h: [[1, 3], [5, 11], [11, null]],
+      f: ['{v} созвонов в неделю × 20 мин на итоги × 4,3 недели × 80%', '{v} calls a week × 20 min of notes × 4.3 weeks × 80%'] },
+    rev: { q: ['Сколько в неделю?', 'How many a week?'], o: ['до 5', '5–20', '20+'], h: [[0, 2], [1, 6], [6, null]],
+      f: ['{v} отзывов в неделю × 5 мин × 4,3 недели × 80%', '{v} reviews a week × 5 min × 4.3 weeks × 80%'] },
+    oth: { q: ['Сколько часов в неделю уходит?', 'How many hours a week does it take?'], o: ['до 1', '1–3', '3+'], h: [[0, 3], [3, 9], [9, null]],
+      f: ['{v} ч в неделю × 4,3 недели × 70% — столько берёт агент', '{v} h a week × 4.3 weeks × 70% — what the agent takes over'] }
+  };
+  const A = { // что будет делать агент
+    req: ['отвечает за минуту по вашим правилам, спорное отдаёт вам', 'replies within a minute by your rules, hands tricky cases to you'],
+    rep: ['собирает цифры сам и присылает отчёт утром', 'collects the numbers and sends the report each morning'],
+    mail: ['раскладывает письма по папкам, срочное — наверх', 'sorts email into folders, urgent on top'],
+    call: ['пишет итоги и задачи сразу после встречи', 'writes the summary and tasks right after the meeting']
+  };
+  // боль: [тип вопроса, подпись RU, EN, что делает агент RU, EN]
+  const P = {
+    zapis: ['req', 'Запись и переносы в чатах', 'Bookings and rescheduling in chats', 'записывает и переносит в чате, сверяясь с расписанием', 'books and reschedules in chat, checking the schedule'],
+    otz: ['rev', 'Ответы на отзывы', 'Replying to reviews', 'готовит ответы на отзывы, вы только подтверждаете', 'drafts review replies, you just approve them'],
+    napz: ['oth', 'Напоминания клиентам о записи', 'Booking reminders to clients', 'сам напоминает клиентам за день и за час', 'reminds clients a day and an hour before'],
+    svod: ['rep', 'Утренняя сводка: выручка, записи, мастера', 'Morning summary: revenue, bookings, staff', 'собирает выручку, записи и загрузку мастеров в сводку к утру', 'puts revenue, bookings and staff load into a summary by morning'],
+    rash: ['oth', 'Закупка расходников', 'Buying supplies', 'считает, что заканчивается, и готовит заказ поставщику', 'tracks what is running out and drafts the supplier order'],
+    zays: ['req', 'Ответы на заявки и вопросы учеников', 'Replying to leads and student questions', ...A.req],
+    mail: ['mail', 'Разбор почты', 'Sorting email', ...A.mail],
+    reps: ['rep', 'Отчёт по продажам и оплатам', 'Sales and payments report', ...A.rep],
+    web: ['call', 'Итоги созвонов и вебинаров', 'Call and webinar summaries', ...A.call],
+    dead: ['oth', 'Напоминания о дедлайнах', 'Deadline reminders', 'сам напоминает ученикам о сроках', 'reminds students about deadlines'],
+    buy: ['req', 'Ответы покупателям и на отзывы', 'Replying to buyers and reviews', 'отвечает покупателям и на отзывы, спорное отдаёт вам', 'replies to buyers and reviews, hands tricky cases to you'],
+    price: ['oth', 'Слежка за ценами конкурентов', 'Watching competitor prices', 'следит за ценами и пишет, когда рынок дешевеет', 'watches prices and alerts you when the market drops'],
+    repm: ['rep', 'Отчёт по продажам на площадках', 'Marketplace sales report', ...A.rep],
+    sup: ['mail', 'Разбор писем поставщиков и счетов', 'Supplier emails and invoices', 'разбирает письма и счета, сводит их в одну таблицу', 'sorts emails and invoices into one table'],
+    stock: ['oth', 'Остатки и закупки', 'Stock and reordering', 'следит за остатками и подсказывает, что пора дозаказать', 'watches stock and tells you when to reorder'],
+    zay: ['req', 'Ответы на заявки', 'Replying to leads', ...A.req],
+    prot: ['call', 'Протоколы созвонов и задачи после них', 'Call notes and follow-up tasks', 'протокол и задачи сразу после созвона', 'notes and tasks right after the call'],
+    rep: ['rep', 'Отчёты руками', 'Manual reports', ...A.rep],
+    pay: ['oth', 'Напоминания об оплатах и сроках', 'Payment and deadline reminders', 'напоминает клиентам об оплатах и сроках', 'reminds clients about payments and deadlines'],
+    calls: ['call', 'Итоги созвонов', 'Call summaries', ...A.call],
+    rev: ['rev', 'Отзывы', 'Reviews', 'готовит ответы на отзывы, вы только подтверждаете', 'drafts review replies, you just approve them'],
+    cprice: ['oth', 'Цены конкурентов', 'Competitor prices', 'следит за ценами и пишет, когда рынок дешевеет', 'watches prices and alerts you when the market drops'],
+    nap: ['oth', 'Напоминания клиентам', 'Client reminders', 'сам напоминает клиентам о записи, оплате и сроках', 'reminds clients about bookings, payments and deadlines'],
+    inv: ['oth', 'Счета и оплаты', 'Invoices and payments', 'сверяет счета и напоминает об оплатах', 'checks invoices and chases payments']
+  };
+  const B = [ // вид бизнеса: ключ, RU, EN, боли
+    ['salon', 'Салон, студия, мастера', 'Salon, studio, craftspeople', ['zapis', 'otz', 'napz', 'svod', 'rash']],
+    ['school', 'Онлайн-школа, эксперт', 'Online school, expert', ['zays', 'mail', 'reps', 'web', 'dead']],
+    ['shop', 'Магазин, маркетплейсы', 'Shop, marketplaces', ['buy', 'price', 'repm', 'sup', 'stock']],
+    ['b2b', 'Услуги для компаний', 'Services for companies', ['zay', 'prot', 'rep', 'mail', 'pay']],
+    ['other', 'Другое', 'Other', null]
   ];
-  const v = {};
-  const form = $('#quizQ');
-  Q.forEach(q => {
-    v[q[0]] = q[4];
-    const w = el('div', 'q');
-    w.innerHTML = `<label for="q-${q[0]}"><span>${q[1]}</span><output id="o-${q[0]}">${q[4]}${q[6]}</output></label><input id="q-${q[0]}" type="range" min="${q[2]}" max="${q[3]}" step="${q[5]}" value="${q[4]}">`;
-    w.querySelector('input').addEventListener('input', e => { v[q[0]] = +e.target.value; $('#o-' + q[0]).textContent = e.target.value + q[6]; calc(); });
-    form.appendChild(w);
-  });
-  const map = $('#quizMap');
-  function calc() {
-    const items = [
-      ['Ответ на заявки за минуту', v.req * v.min / 60 * 22 * 0.7, 'агент отвечает сам, спорное отдаёт человеку'],
-      ['Утренняя сводка вместо ручных отчётов', v.rep * 4.3 * 0.8, 'цифры собираются сами и приходят утром'],
-      ['Почта по полочкам', v.mail / 60 * 22 * 0.6, 'письма раскладываются, срочное сверху'],
-      ['Секретарь созвонов', v.call * 20 / 60 * 4.3 * 0.8, 'протокол и задачи сразу после встречи']
-    ].sort((a, b) => b[1] - a[1]);
-    const max = Math.max(items[0][1], 1);
-    const total = items.filter(i => i[1] >= 2).reduce((s, i) => s + i[1], 0);
-    let html = '<h4 style="font-size:var(--m);font-weight:600;margin-bottom:8px">Карта: порядок и часы в месяц</h4>';
-    items.forEach((it, i) => {
-      const weak = it[1] < 2;
-      html += `<div class="row${weak ? ' weak' : ''}"><div class="top"><span>${weak ? '–' : (i + 1)}. ${it[0]}${i === 0 && !weak ? '<span class="firstbadge">начать с этого</span>' : ''}</span><span>${weak ? 'пока не стоит' : '≈ ' + Math.round(it[1]) + ' ч'}</span></div><div class="track"><div class="fill" style="width:${Math.max(2, it[1] / max * 100)}%"></div></div><div style="color:var(--muted);font-size:var(--s);margin-top:4px">${it[2]}</div></div>`;
-    });
-    html += `<div class="total">До <b>${Math.round(total)} ч</b> в месяц по вашим вводным<br><span style="color:var(--muted);font-size:var(--s)">это около ${(total / 8).toFixed(1).replace('.', ',')} рабочего дня одного сотрудника в месяц</span></div>`;
-    map.innerHTML = html;
-  }
-  calc();
-})();
+  const ALL = ['zay', 'mail', 'rep', 'calls', 'rev', 'cprice', 'nap', 'inv'];
+  const L = {
+    h: ['Что отдать ИИ первым', 'What to hand to AI first'],
+    sub: ['Три коротких шага — и станет видно, какие 1–3 дела отдать ИИ первыми.', 'Three short steps — you get 1–3 tasks worth starting with.'],
+    s1: ['Какой у вас бизнес?', 'What is your business?'],
+    biz: ['Напишите, чем занимаетесь', 'Tell me what you do'],
+    skip: ['Пропустить — показать всё', 'Skip — show everything'],
+    s2: ['Где уходит время?', 'Where does the time go?'],
+    s2n: ['Отметьте и ответьте на один вопрос под галочкой', 'Tick and answer one question under each tick'],
+    other: ['Другое: напишите своё', 'Other: describe yours'],
+    res: ['С чего начать', 'Where to start'],
+    empty: ['Отметьте, где уходит время', 'Tick where your time goes'],
+    first: ['начать с этого', 'start here'],
+    ask: ['ответьте на вопрос под галочкой', 'answer the question under the tick'],
+    own: ['Разберу вашу задачу лично', 'I will look into your task personally'],
+    rest: ['Ещё {n} — обсудим на разборе', '{n} more — we will cover them in the review'],
+    restq: ['Ещё {n} — ответьте на вопрос под галочкой, и пункт встанет в порядок', '{n} more — answer the question under the tick to rank it'],
+    how: ['Как считали', 'How it is estimated'],
+    howp: ['Грубая прикидка, а не обещание: 22 рабочих дня и 4,3 недели в месяце, процент — сколько агент делает сам, остальное остаётся человеку.', 'A rough estimate, not a promise: 22 working days and 4.3 weeks a month; the percentage is what the agent does alone, the rest stays with a person.'],
+    cta: ['Обсудить с моим списком', 'Discuss my list'],
+    note: ['начнём с бесплатного разбора', 'starts with a free review']
+  };
+  const st = { biz: null, bizText: '', on: [], ans: {}, other: '' };
+  const en = () => document.documentElement.lang === 'en';
+  const t = k => L[k][en() ? 1 : 0];
+  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const opt = s => en() ? s.replace('до ', 'up to ') : s;
+  const pains = () => { const b = B.find(x => x[0] === st.biz); return b && b[3] ? b[3] : ALL; };
+  const hrs = ([lo, hi]) => en()
+    ? (lo === 0 ? `up to ${hi} h a month` : hi == null ? `${lo}+ h a month` : `about ${lo}–${hi} h a month`)
+    : (lo === 0 ? `до ${hi} ч в месяц` : hi == null ? `от ${lo} ч в месяц` : `около ${lo}–${hi} ч в месяц`);
+  const weight = ([lo, hi]) => hi == null ? lo * 1.5 : (lo + hi) / 2;
 
+  const left = el('div', 'nv-steps'), right = el('div', 'map nv-res');
+  right.setAttribute('aria-live', 'polite');
+  box.append(left, right);
+
+  function renderLeft() {
+    const i = en() ? 1 : 0, f = document.activeElement && document.activeElement.dataset.f;
+    let h = `<div class="nv-step"><p class="nv-h"><i>1</i>${t('s1')}</p><div class="nv-tiles">` +
+      B.map(b => `<button type="button" class="nv-tile" data-f="b-${b[0]}" data-biz="${b[0]}" aria-pressed="${st.biz === b[0]}">${b[1 + i]}</button>`).join('') + '</div>';
+    if (st.biz === 'other') h += `<input class="nv-in" data-f="bizText" type="text" maxlength="80" placeholder="${t('biz')}" aria-label="${t('biz')}" value="${esc(st.bizText)}">`;
+    if (st.biz !== 'all') h += `<button type="button" class="nv-skip" data-f="skip" data-biz="all">${t('skip')}</button>`;
+    h += '</div>';
+    if (st.biz) {
+      h += `<div class="nv-step"><p class="nv-h"><i>2</i>${t('s2')}</p><p class="note">${t('s2n')}</p><div class="nv-pains">`;
+      pains().forEach(k => {
+        const p = P[k], ty = T[p[0]], on = st.on.includes(k);
+        h += `<div class="nv-pain${on ? ' on' : ''}"><label><input type="checkbox" data-f="c-${k}" data-pain="${k}"${on ? ' checked' : ''}>${p[1 + i]}</label>`;
+        if (on) h += `<div class="nv-q" role="group" aria-label="${esc(p[1 + i])}: ${ty.q[i]}"><span>${ty.q[i]}</span><div class="chips">` +
+          ty.o.map((o, j) => `<button type="button" class="fchip${st.ans[k] === j ? ' on' : ''}" data-f="a-${k}-${j}" data-ans="${k}:${j}" aria-pressed="${st.ans[k] === j}">${opt(o)}</button>`).join('') + '</div></div>';
+        h += '</div>';
+      });
+      h += `<input class="nv-in" data-f="other" type="text" maxlength="120" placeholder="${t('other')}" aria-label="${t('other')}" value="${esc(st.other)}"></div></div>`;
+    }
+    left.innerHTML = h;
+    const back = f && left.querySelector(`[data-f="${f}"]`); if (back) back.focus({ preventScroll: true });
+  }
+
+  function renderRight() {
+    const i = en() ? 1 : 0;
+    const items = st.on.filter(k => pains().includes(k)).map(k => {
+      const p = P[k], ty = T[p[0]], j = st.ans[k];
+      return { k, p, ty, j, h: j == null ? null : ty.h[j] };
+    }).sort((a, b) => (b.h ? weight(b.h) : -1) - (a.h ? weight(a.h) : -1));
+    const own = st.other.trim();
+    if (!items.length && !own) {
+      right.innerHTML = `<h4>${t('res')}</h4><div class="nv-empty" aria-hidden="true"><i></i><i></i><i></i></div><p class="note">${t('empty')}</p>`;
+      return;
+    }
+    const top = items.slice(0, 3);
+    let h = `<h4>${t('res')}</h4>`;
+    top.forEach((it, n) => {
+      h += `<div class="nv-it"><b>${n + 1}</b><strong>${it.p[1 + i]}${n === 0 && it.h ? `<span class="firstbadge">${t('first')}</span>` : ''}</strong><span>${it.p[3 + i]}</span><em>${it.h ? hrs(it.h) : t('ask')}</em></div>`;
+    });
+    if (own) h += `<div class="nv-it"><b>${top.length + 1}</b><strong>${t('own')}</strong><span>${en() ? '“' : '«'}${esc(own)}${en() ? '”' : '»'}</span><em></em></div>`;
+    const more = items.slice(3), wait = more.filter(it => !it.h).length;
+    if (more.length) h += `<p class="nv-rest">${t(wait ? 'restq' : 'rest').replace('{n}', more.length)}</p>`;
+    const counted = top.filter(it => it.h);
+    if (counted.length) h += `<details class="more"><summary>${t('how')}</summary><p>${t('howp')}</p><ul>` +
+      counted.map(it => `<li><b>${it.p[1 + i]}:</b> ${it.ty.f[i].replace('{v}', opt(it.ty.o[it.j]))} ≈ ${hrs(it.h)}</li>`).join('') + '</ul></details>';
+    h += `<p class="nv-cta"><a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=calc" rel="noopener">${t('cta')}</a><span class="note">${t('note')}</span></p>`;
+    right.innerHTML = h;
+  }
+
+  const render = () => { renderLeft(); renderRight(); };
+  left.addEventListener('click', e => {
+    const b = e.target.closest('[data-biz]'), a = e.target.closest('[data-ans]');
+    if (b) { st.biz = b.dataset.biz; st.on = st.on.filter(k => pains().includes(k)); render(); }
+    else if (a) { const [k, j] = a.dataset.ans.split(':'); st.ans[k] = +j; render(); }
+  });
+  left.addEventListener('change', e => {
+    const c = e.target.closest('[data-pain]'); if (!c) return;
+    const k = c.dataset.pain; st.on = c.checked ? [...st.on, k] : st.on.filter(x => x !== k); render();
+  });
+  left.addEventListener('input', e => {
+    const f = e.target.dataset.f;
+    if (f === 'other') { st.other = e.target.value; renderRight(); }
+    else if (f === 'bizText') st.bizText = e.target.value;
+  });
+  function texts() { $('#nvH').textContent = t('h'); $('#nvSub').textContent = t('sub'); render(); const a = $('.tab[aria-selected=true] b'); if (a) $('#winT').textContent = a.textContent; }
+  new MutationObserver(texts).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+  texts();
+})();
 /* ---------- Д. Сторож цен ---------- */
 (function price() {
   const OWN = 24.9;
