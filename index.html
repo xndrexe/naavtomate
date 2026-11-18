@@ -18,334 +18,521 @@
 </script>
 <title>На автомате · ИИ-помощники для бизнеса под ключ: заявки, почта, отчёты</title>
 <script>(()=>{try{const t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}})()</script>
+<link rel="preload" href="fonts/Geologica-normal-cyrillic-4.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@font-face{font-family:'Geologica';font-style:normal;font-weight:300 800;font-display:swap;src:url(fonts/Geologica-normal-cyrillic-4.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Geologica';font-style:normal;font-weight:300 800;font-display:swap;src:url(fonts/Geologica-normal-latin-5.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* Дизайн-система: бетон, графит, один акцент «вольт» на главных действиях.
+   Шрифт один — Geologica; размеры 14/17/22/32/56 + заголовок первого экрана. */
 :root{
-  --bg:#fff; --soft:#f4f6f9; --ink:#0b1220; --muted:#566070; --line:#dfe3ea;
-  --accent:#145aff; --accent-ink:#fff; --btn:#145aff; --btn-hover:#0a47d6; --bad:#c62828; --ok:#1b7a3a;
-  /* алиасы для разметки, которую собирает JS */
-  --text:var(--ink); --bg2:var(--soft); --panel:var(--bg); --panel2:var(--soft); --warn:var(--ink);
-  --s:14px; --b:17px; --m:20px; --l:28px; --xl:44px; --xxl:72px;
-  --gap:112px;
-  --font:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --paper:#e9e8e4; --paper2:#f5f4f1; --graph:#171716; --graph2:#222220;
+  --volt:#c4f94f; --volt-ink:#171716; --bad:#c2321f; --ok:#2f7d3a;
+  --s:14px; --b:17px; --m:22px; --l:32px; --xl:clamp(36px,4.6vw,56px);
+  --hero:clamp(42px,6.3vw,100px);
+  --r:6px; --pad:clamp(20px,4.4vw,64px); --gap:clamp(88px,10vw,144px);
+  --font:'Geologica',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
 }
-/* тёмная тема: те же переменные, другие значения */
-:root[data-theme=dark]{
-  --bg:#0d1117; --soft:#161b24; --ink:#e8ecf2; --muted:#9aa4b4; --line:#2a313d;
-  --accent:#4d84ff; --accent-ink:#fff; --btn:#2d64e6; --btn-hover:#1f52c9; --bad:#ff6b6b; --ok:#4cc27a; --hdr:rgba(13,17,23,.94); --chip:rgba(13,17,23,.94);
-  color-scheme:dark;
-}
+/* светлый слой (бетон) и тёмный слой (графит): каждая секция берёт свой */
+.L,:root{--bg:var(--paper);--bg2:var(--paper2);--ink:#1b1a19;--muted:#57554f;--line:rgba(27,26,25,.16);--line2:rgba(27,26,25,.32);--accent:#1b1a19;--own:#4d7a00;--mk:#8a877f;--hi:rgba(196,249,79,.55)}
+.D{--bg:var(--graph);--bg2:var(--graph2);--ink:#eeede8;--muted:#a6a49d;--line:rgba(238,237,232,.14);--line2:rgba(238,237,232,.3);--accent:var(--volt);--own:var(--volt);--mk:#eeede8;--hi:rgba(196,249,79,.18);--bad:#ff7a5c;--ok:#8fd16a}
+/* тёмная тема: светлые слои темнеют, тёмные уходят ещё глубже */
+:root[data-theme=dark]{color-scheme:dark}
+:root[data-theme=dark],:root[data-theme=dark] .L{--bg:#1c1c1a;--bg2:#262624;--ink:#eeede8;--muted:#a9a7a0;--line:rgba(238,237,232,.14);--line2:rgba(238,237,232,.3);--accent:var(--volt);--own:var(--volt);--mk:#eeede8;--hi:rgba(196,249,79,.18);--bad:#ff7a5c;--ok:#8fd16a}
+:root[data-theme=dark] .D{--bg:#0f0f0e;--bg2:#1a1a18}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 var(--b)/1.6 var(--font);overflow-x:hidden}
-a{color:var(--accent)}
-h1,h2,h3,h4,h5{margin:0;line-height:1.15;font-weight:700;letter-spacing:-.02em}
-p{margin:0}
-.wrap{width:min(1600px,100% - clamp(32px,8vw,160px));margin-inline:auto}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 var(--b)/1.55 var(--font);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.L,.D{background:var(--bg);color:var(--ink)}
+h1,h2,h3,h4,h5,p,ul,ol{margin:0}
+ul,ol{padding:0;list-style:none}
+h2{font-size:var(--xl);line-height:1.02;font-weight:600;letter-spacing:-.035em}
+h3{font-size:var(--m);line-height:1.2;font-weight:600;letter-spacing:-.015em}
+a{color:inherit}
+img,video{display:block;max-width:100%}
+.wrap{width:min(1440px,100% - 2*var(--pad));margin-inline:auto}
 section{padding:var(--gap) 0}
-h1{font-size:var(--xxl);line-height:1.04;letter-spacing:-.035em}
-h2{font-size:var(--xl);margin-bottom:16px}
-h3{font-size:var(--l);font-weight:600;line-height:1.2}
-.lead{color:var(--muted);font-size:var(--m);line-height:1.5;max-width:56ch}
-.note,.small{color:var(--muted);font-size:var(--s)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 var(--b)/1 var(--font);text-decoration:none;cursor:pointer;transition:background .15s,border-color .15s}
-.btn:hover{border-color:var(--ink)}
-.btn.primary{background:var(--btn);color:var(--accent-ink);border-color:var(--btn)}
-.btn.primary:hover{background:var(--btn-hover);border-color:var(--btn-hover)}
-.btn.quiet{border-color:transparent;background:transparent;color:var(--ink)}
-.btn.quiet:hover{background:var(--soft);border-color:transparent}
-.theme{min-width:44px;padding:0 10px;font-size:20px}
-.btn.small{min-height:44px;padding:0 20px;font-size:var(--s)}
-.btn[disabled]{opacity:.45;cursor:default}
-.btn:focus-visible,.tab:focus-visible,.chip:focus-visible,input:focus-visible,summary:focus-visible,.tile-h:focus-visible,.shot:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sub{color:var(--muted);font-size:var(--m);line-height:1.4;max-width:34ch}
+.note{color:var(--muted);font-size:var(--s);line-height:1.5}
+.sec-head{display:grid;grid-template-columns:1fr auto;gap:24px 64px;align-items:end;margin-bottom:clamp(40px,5vw,72px)}
+.sec-head h2{max-width:14ch}
+.sec-head .sub{justify-self:end;max-width:30ch}
+@media (max-width:860px){.sec-head{grid-template-columns:1fr}.sec-head .sub{justify-self:start}}
 
-/* шапка */
-header.top{position:sticky;top:0;z-index:20;background:var(--hdr,rgba(255,255,255,.94));backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-header.top .wrap{display:flex;align-items:center;gap:24px;min-height:64px;padding-block:8px}
-.brand{display:flex;align-items:center;min-height:44px;font-weight:600;font-size:var(--b);line-height:1.25;flex:1;min-width:0;text-decoration:none;color:var(--ink)}
-nav.menu{display:flex;gap:8px}
-nav.menu a{color:var(--muted);text-decoration:none;font-size:var(--b);padding:10px 16px;border-radius:999px}
-nav.menu a:hover{color:var(--ink);background:var(--soft)}
+/* ---------- Кнопки: primary · secondary · tertiary · icon ---------- */
+.btn{--h:52px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:var(--h);padding:0 26px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--ink);font:600 var(--b)/1.1 var(--font);letter-spacing:-.005em;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background .18s var(--ease),color .18s var(--ease),border-color .18s var(--ease),transform .12s var(--ease),box-shadow .18s var(--ease);-webkit-tap-highlight-color:transparent}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn:focus-visible{outline:3px solid var(--volt);outline-offset:3px;box-shadow:0 0 0 6px var(--graph)}
+.btn.primary{background:var(--volt);color:var(--volt-ink);border-color:var(--ink)}
+.D .btn.primary,:root[data-theme=dark] .btn.primary{border-color:var(--volt)}
+.btn.primary:hover{background:var(--ink);color:var(--volt);border-color:var(--ink)}
+.D .btn.primary:hover,:root[data-theme=dark] .btn.primary:hover{background:transparent;color:var(--volt);border-color:var(--volt)}
+.btn.ink{background:var(--graph);color:var(--volt);border-color:var(--graph)}
+.btn.ink:hover{background:transparent;color:var(--graph)}
+.btn.small{--h:44px;padding:0 18px;font-size:var(--s)}
+.btn[disabled],.btn[disabled]:hover{opacity:.38;cursor:not-allowed;background:transparent;color:var(--ink);border-color:var(--line2);transform:none}
+.btn.primary[disabled],.btn.primary[disabled]:hover{background:var(--volt);color:var(--volt-ink)}
+.btn .arr{display:inline-block;transition:transform .18s var(--ease)}
+.btn:hover .arr{transform:translateX(3px)}
+.link{display:inline-flex;align-items:center;min-height:44px;font-weight:600;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px;text-decoration-color:var(--line2);transition:text-decoration-color .15s}
+.link:hover{text-decoration-color:currentColor}
+.link:focus-visible,.tab:focus-visible,.chip:focus-visible,.fchip:focus-visible,summary:focus-visible,.w-open:focus-visible,.ibtn:focus-visible,input:focus-visible,.task:focus-visible,.mail:focus-visible{outline:3px solid var(--volt);outline-offset:3px}
+.ibtn{width:44px;height:44px;display:inline-grid;place-items:center;border-radius:999px;border:2px solid var(--line2);background:transparent;color:var(--ink);font:600 14px/1 var(--font);cursor:pointer;transition:border-color .15s,background .15s}
+.ibtn:hover{border-color:var(--ink);background:var(--bg2)}
 
-/* первый экран */
-.hero{padding:64px 0 0}
-.hero + section{padding-top:64px}
-.hero .grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:64px;align-items:center}
-.hero .kicker{font-size:var(--s);font-weight:600;color:var(--muted);letter-spacing:.02em;margin-bottom:12px}
-.hero h1{margin-bottom:24px}
-.hero .lead{margin-bottom:32px}
-.cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-.cta .btn{min-height:56px;padding:0 32px}
-.hero-video video{display:block;width:100%;aspect-ratio:16/9;border-radius:12px;background:#0b1220}
-.hero-video .note{margin-top:8px}
-.vwrap{position:relative}
-.vplay{position:absolute;inset:0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:12px}
-.vplay span{width:80px;height:80px;border-radius:50%;background:var(--accent);box-shadow:0 8px 24px rgba(20,90,255,.35);position:relative}
-.vplay span::after{content:"";position:absolute;left:32px;top:24px;border-style:solid;border-width:16px 0 16px 26px;border-color:transparent transparent transparent #fff}
-.vplay:hover span{transform:scale(1.06)}
-.vplay[hidden]{display:none}
-
-/* кейсы */
-.cases-head{margin-bottom:64px}
-.big-cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px 48px}
-.case .cat{margin:24px 0 0;font-size:var(--s);color:var(--muted)}
-.case > .txt:first-child > .cat{margin-top:0}
-.case.wide{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:48px;align-items:center}
-.case.wide .cat{margin-top:0}
-.case h3{margin:8px 0 8px}
-.case p{max-width:62ch}
-.case .res{margin-top:8px}
-.media{position:relative;border-radius:12px;overflow:hidden;background:#0b1220;aspect-ratio:16/9}
-.media video{display:block;width:100%;height:100%;object-fit:contain;background:#0b1220}
-.media-note{margin-top:8px;color:var(--muted);font-size:var(--s)}
-.more-h{margin:var(--gap) 0 8px}
-.more-sub{color:var(--muted);margin-bottom:32px}
-.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:32px 24px}
-.tile.open{grid-column:1/-1}
-.tile-h{display:block;width:100%;padding:0;border:0;background:none;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
-.tile-h .thumb{display:block;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--soft)}
-.tile-h img{display:block;width:100%;height:100%;object-fit:cover;transition:opacity .15s}
-.tile-h:hover img{opacity:.85}
-.tile-t{display:block;margin-top:12px}
-.tile-t b{display:block;font-weight:600;line-height:1.3}
-.tile-t span{display:block;color:var(--muted);font-size:var(--s);margin-top:4px}
-.tile-body{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:48px;align-items:start}
-.tile-body[hidden]{display:none}
-.tile.open .tile-h{display:flex;justify-content:space-between;gap:16px;align-items:baseline;margin-bottom:16px}
-.tile.open .thumb{display:none}
-.tile.open .tile-t{margin:0}
-.tile.open .tile-t b{font-size:var(--l);font-weight:600}
-.tile.open .tile-t span{display:inline;margin-left:12px}
-.tile.open .tile-h::after{content:"Свернуть";color:var(--accent);font-size:var(--s);font-weight:600;flex:none}
-.tile-text p+p,.tile-text ul,.tile-text .jumpj{margin-top:16px}
-.tile-text ul{padding-left:20px;margin-bottom:0}
-.tile-text li{margin:8px 0}
-.mods{display:flex;flex-wrap:wrap;gap:8px 32px;align-items:center;margin-top:var(--gap)}
-.mods span{color:var(--muted)}
-.mods a{color:var(--ink);font-weight:600;display:inline-flex;align-items:center;min-height:44px}
-.shots-note{margin-top:32px;color:var(--muted);font-size:var(--s)}
-
-.shot{display:block;position:relative;width:100%;padding:0;border:0;overflow:hidden;background:var(--soft);cursor:zoom-in;aspect-ratio:16/9}
-.shot img{display:block;width:100%;height:100%;object-fit:cover}
-.shot .zoom{position:absolute;right:12px;bottom:12px;padding:8px 16px;border-radius:999px;background:var(--chip,rgba(255,255,255,.94));color:var(--ink);font:600 var(--s) var(--font)}
-.lightbox{position:fixed;inset:0;z-index:100;background:rgba(11,18,32,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:16px;cursor:zoom-out}
-.lightbox[hidden],.lightbox [hidden]{display:none}
-.lightbox img,.lightbox video{max-width:96vw;max-height:84vh;object-fit:contain;border-radius:12px;background:#000}
-.lightbox p{margin:0;max-width:900px;text-align:center;color:#d6dbe4;font-size:var(--s)}
-.lb-close{position:absolute;top:12px;right:14px;width:48px;height:48px;border-radius:999px;border:0;background:#fff;color:#0b1220;font-size:28px;line-height:1;cursor:pointer}
-
-/* демо */
-#demo{background:var(--soft)}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:40px 0 32px}
-.tab{min-height:52px;padding:0 24px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 var(--b)/1 var(--font);cursor:pointer}
-.tab:hover{border-color:var(--ink)}
-.democta{margin-top:24px}
-.democta .btn{line-height:1.25;text-align:center;padding-top:10px;padding-bottom:10px}
-.inc{margin:12px 0 0;padding-left:20px}
-.inc li{margin:4px 0}
-.tab[aria-selected=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-.demo[hidden]{display:none}
-.demo h3{margin-bottom:8px}
-.demo .sub{color:var(--muted);margin-bottom:24px;max-width:62ch}
-details.more{margin-top:24px;color:var(--muted)}
-details.more summary,details.sample summary{cursor:pointer;font-weight:600;color:var(--ink);padding:8px 0;min-height:44px;display:flex;align-items:center}
-details.more p{margin-top:8px;max-width:70ch;font-size:var(--b)}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
-.chip{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:400 var(--s)/1 var(--font);cursor:pointer}
-.chip:hover{border-color:var(--accent)}
-.ask{display:flex;gap:8px}
-.ask input{flex:1;min-width:0;min-height:52px;padding:0 20px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:400 var(--b) var(--font)}
-.answer{margin:16px 0;padding:16px 24px;border-radius:12px;background:var(--bg);border:1px solid var(--line);min-height:72px}
-.answer b.big{font-size:var(--m);color:var(--accent)}
-.answer .typing{color:var(--muted)}
-.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
-table{border-collapse:collapse;width:100%;font-size:var(--s)}
-th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
-th{font-weight:600;color:var(--muted)}
-tr:last-child td{border-bottom:0}
-td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
-tr.dim td{opacity:.35}
-tr.hl td{font-weight:600;color:var(--accent)}
-.st{font-size:var(--s);padding:2px 12px;border-radius:999px;border:1px solid var(--line)}
-.st.paid{color:var(--ok);border-color:var(--ok)}
-.st.late{color:var(--bad);border-color:var(--bad)}
-.st.wait{color:var(--muted)}
-.tw.tall{max-height:360px;overflow:auto}
-
-.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
-.fchip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--muted);font:400 var(--s) var(--font);cursor:pointer}
-.fchip b{color:var(--ink)}
-.fchip.on{border-color:var(--accent);color:var(--ink)}
-.fchip[disabled]{opacity:.5;cursor:default}
-.mails{display:flex;flex-direction:column;gap:8px}
-.mh{margin:16px 0 0;font-weight:600;font-size:var(--s);color:var(--muted);animation:slide .5s ease both}
-.mh.urgent{color:var(--bad)}
-.mail{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 16px;cursor:pointer;will-change:transform}
-.mail:hover{border-color:var(--ink)}
-.mail .row{display:flex;gap:8px 16px;align-items:baseline;flex-wrap:wrap}
-.mail .from{font-weight:600;font-size:var(--s)}
-.mail .subj{font-size:var(--s);flex:1 1 220px;min-width:0}
-.mail .tag{font-size:var(--s);padding:0 12px;border-radius:999px;border:1px solid var(--line);color:var(--muted);display:none}
-.sorted .mail .tag{display:inline-block}
-.mail.urgent{border-color:var(--bad)}
-.mail.urgent .tag{color:var(--bad);border-color:var(--bad)}
-.mail .body{display:none;margin-top:8px;color:var(--muted);font-size:var(--s)}
-.mail.open .body{display:block}
-
-.call{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.pane{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:24px}
-.pane h4{margin:0 0 16px;font-size:var(--m);font-weight:600}
-.tr p{font-size:var(--s);padding:4px 0 4px 12px;border-left:3px solid transparent;margin-bottom:4px}
-.tr p b{color:var(--accent)}
-.tr p.src{border-left-color:var(--accent);font-weight:600}
-.proto h5{margin:16px 0 8px;font-size:var(--b);font-weight:600}
-.proto ul{margin:0;padding-left:20px;font-size:var(--s)}
-.proto li{margin:4px 0}
-.task{border-left:3px solid var(--line);padding:4px 0 4px 16px;margin:16px 0;cursor:pointer;animation:slide .4s ease both;font-size:var(--s)}
-.task:hover,.task:focus-visible{border-left-color:var(--accent)}
-.task .who{font-weight:600}
-.task .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:var(--s)}
-.pill{padding:0 12px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
-.pill.date{color:var(--accent);border-color:var(--accent)}
-.pill.warn{color:var(--bad);border-color:var(--bad)}
-.pill.sent{color:var(--ok);border-color:var(--ok)}
-.status{color:var(--muted);font-size:var(--s);margin:0 0 8px;min-height:24px}
-
-.quiz{display:grid;grid-template-columns:1fr 1fr;gap:48px}
-.q{margin-bottom:24px}
-.q label{display:flex;justify-content:space-between;gap:16px;margin-bottom:8px}
-.q output{font-weight:600;color:var(--accent);flex:none;font-variant-numeric:tabular-nums}
-input[type=range]{width:100%;accent-color:var(--accent);height:32px}
-.map .row{margin:16px 0}
-.map .top{display:flex;justify-content:space-between;gap:16px;font-size:var(--b);margin-bottom:8px}
-.map .top span:last-child{font-weight:600;color:var(--accent);flex:none}
-.map .top span.firstbadge{color:var(--accent-ink)}
-.track{height:12px;border-radius:999px;background:var(--line);overflow:hidden}
-.fill{height:100%;background:var(--accent);border-radius:999px;transition:width .5s ease}
-.row.weak .fill{background:#9aa3b2}
-.row.weak .top span:last-child{color:var(--muted)}
-.total{margin-top:24px;font-size:var(--b)}
-.total b{font-size:var(--l);color:var(--accent)}
-.firstbadge{font-size:var(--s);padding:0 12px;border-radius:999px;background:var(--btn);color:var(--accent-ink);margin-left:8px;font-weight:600;white-space:nowrap}
-
-.chartbox{position:relative}
-.chartbox svg{display:block;width:100%;height:auto}
-.legend{display:flex;gap:24px;flex-wrap:wrap;font-size:var(--s);color:var(--muted);margin:8px 0 0}
-.legend i{display:inline-block;width:16px;height:4px;border-radius:999px;vertical-align:middle;margin-right:8px}
-.toast{position:absolute;right:12px;top:12px;max-width:min(320px,calc(100% - 24px));background:var(--bg);border:1px solid var(--bad);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:var(--s);box-shadow:0 8px 24px rgba(11,18,32,.14);animation:slide .3s ease both}
-.toast[hidden]{display:none}
-@media (max-width:600px){.toast{position:static;max-width:none;margin-top:12px}}
-.toast b{color:var(--bad)}
-.alerts{list-style:none;margin:16px 0 0;padding:0}
-.alerts li{padding:8px 0;border-bottom:1px solid var(--line);font-size:var(--s);animation:slide .3s ease both}
-.alerts time{font-weight:600;margin-right:8px}
-.ctrl{display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
-.ctrl .q{margin:0;flex:1 1 280px}
-@keyframes slide{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
-/* как работаем */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:48px}
-.steps h3{margin-bottom:8px}
-.steps p{color:var(--muted)}
-details.sample{margin-top:48px}
-details.sample .in{padding-top:16px;max-width:900px}
-details.sample ol{color:var(--muted);padding-left:20px}
-details.sample .lead{font-size:var(--b);margin-bottom:16px}
-.promise{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:48px}
-.promise b{display:block;font-size:var(--m);font-weight:600;margin-bottom:8px}
-.promise span{color:var(--muted)}
-#promise{background:var(--soft)}
-
-footer{padding:var(--gap) 0 64px;border-top:1px solid var(--line)}
-footer .wrap{display:flex;gap:32px 64px;justify-content:space-between;align-items:center;flex-wrap:wrap}
-footer .cta-t{max-width:56ch}
-footer .btn{min-height:56px;padding:0 32px}
-footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s);flex-basis:100%}
-
-@media (max-width:1100px){
-  :root{--xxl:44px}
-  .hero .grid{grid-template-columns:1fr;gap:48px}
-  .tile-body{grid-template-columns:1fr;gap:24px}
-}
+/* ---------- Шапка ---------- */
+.hdr{position:fixed;inset:0 0 auto;z-index:50;transition:background .25s,border-color .25s,transform .3s var(--ease);border-bottom:1px solid transparent}
+.hdr.solid{background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-color:var(--line)}
+.hdr .wrap{display:flex;align-items:center;gap:8px;height:68px}
+.brand{font-weight:700;font-size:var(--b);letter-spacing:-.02em;text-decoration:none;margin-right:auto;display:inline-flex;align-items:center;gap:10px;min-height:44px}
+.brand i{width:12px;height:12px;border-radius:2px;background:var(--ink)}
+.menu{display:flex;gap:4px;margin-right:12px}
+.menu a{padding:10px 14px;border-radius:999px;text-decoration:none;font-size:var(--s);font-weight:500;color:var(--muted);transition:color .15s,background .15s}
+.menu a:hover{color:var(--ink);background:var(--bg2)}
+.burger{display:none}
+.mnav{display:none}
 @media (max-width:900px){
-  nav.menu{display:none}
-  .big-cases,.call,.quiz,.steps,.promise{grid-template-columns:1fr}
-  .big-cases{gap:48px}
-  .case.wide{display:block}
-  .case.wide .cat{margin-top:24px}
-  .steps,.promise{gap:32px}
+  .menu,.hdr .ibtn.tl{display:none}
+  .burger{display:inline-grid}
+  .hdr .btn.small{padding:0 14px}
+  .mnav{position:fixed;inset:68px 0 auto;z-index:49;padding:12px var(--pad) 24px;background:var(--bg);border-bottom:1px solid var(--line);display:grid;gap:4px;transform:translateY(-8px);opacity:0;visibility:hidden;transition:.2s var(--ease)}
+  .mnav.open{transform:none;opacity:1;visibility:visible}
+  .mnav a{font-size:var(--m);font-weight:600;padding:12px 0;text-decoration:none;border-bottom:1px solid var(--line)}
+  .mnav .row{display:flex;gap:8px;padding-top:12px}
 }
-@media (max-width:600px){
-  :root{--gap:64px;--s:16px;--b:16px;--m:20px;--l:24px;--xl:32px;--xxl:40px}
-  body{line-height:1.55}
-  .hero{padding:32px 0 0}
-  .brand-tag{display:none}
-  .cta .btn{width:100%}
-  .brand{font-size:var(--s)}
-  header.top .wrap{gap:8px}
-  .brand{min-width:min-content}
-  header.top .btn.small{padding:0 12px}
-  .theme{min-width:40px;padding:0 8px}
-  .ask{flex-direction:column}
-  .tab{flex:1 1 auto;padding:0 16px}
-  .cases-head{margin-bottom:48px}
-  .tiles{grid-template-columns:1fr;gap:24px}
-  .tile:not(.open) .tile-h{display:grid;grid-template-columns:128px 1fr;gap:16px;align-items:center}
-  .tile:not(.open) .tile-t{margin:0}
-  .pane{padding:16px}
-  .tile.open .tile-h{flex-wrap:wrap}
-  .tile.open .tile-t span{margin-left:0;display:block}
+@media (max-width:420px){.hdr .btn.small{padding:0 12px}}
+
+/* ---------- Первый экран ---------- */
+.hero{min-height:100svh;padding:112px 0 56px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.hero .wrap{display:flex;flex-direction:column;flex:1;gap:clamp(28px,4vh,48px)}
+.hero h1{font-size:var(--hero);line-height:.96;font-weight:600;letter-spacing:-.05em}
+.hero h1 span{display:block}
+.hero h1 .dim{color:var(--muted)}
+.hero h1 .dim b{color:var(--ink);font-weight:600;background:linear-gradient(transparent 62%,rgba(196,249,79,.35) 62%)}
+.hero-foot{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 48px;align-items:end}
+@media (max-width:1000px){.hero{min-height:0}.hero-foot{grid-template-columns:1fr;align-items:start}}
+.hero-foot p{font-size:var(--m);line-height:1.4;max-width:30ch;color:var(--ink)}
+.hero-foot .cta{display:flex;gap:12px;flex-wrap:wrap}
+.en-only:empty{display:none}
+.en-only{display:block;margin-top:8px;font-size:var(--s);color:var(--muted)}
+@media (max-width:760px){.hero{padding-top:96px;min-height:0}.hero-foot{grid-template-columns:1fr;order:1}.flow{order:2}.hero-foot .cta .btn{flex:1 1 auto}}
+
+/* живая схема: приходит → агент → готово */
+.flow{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(120px,.7fr) minmax(0,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0 30px;flex:1;min-height:270px;align-items:stretch}
+.flow-h{font-size:var(--s);color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.flow-h b{color:var(--ink);font-weight:600}
+.flow ul{display:grid;gap:8px;align-content:start}
+.flow li{border:1px solid var(--line2);border-radius:var(--r);padding:10px 14px;display:grid;gap:2px;background:var(--bg);transition:opacity .5s var(--ease),transform .5s var(--ease),border-color .4s,background .4s}
+.flow li b{font-weight:600;font-size:var(--s);line-height:1.3}
+.flow li span{font-size:var(--s);color:var(--muted);line-height:1.35}
+.flow li.new{opacity:0;transform:translateY(-10px)}
+.flow .in li:first-child{border-color:var(--ink)}
+.flow .out li:first-child{border-color:var(--volt)}
+.flow .out li b::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--volt);margin-right:8px;vertical-align:1px}
+.flow li.old{opacity:.45}
+.flow-core{position:relative;display:grid;place-items:center}
+.flow-core svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.flow-core path{fill:none;stroke:var(--line2);stroke-width:1.5}
+.flow-core .pulse{fill:var(--volt)}
+.core{position:relative;z-index:1;width:min(150px,92%);aspect-ratio:1;border-radius:50%;border:2px solid var(--ink);background:var(--bg);display:grid;place-content:center;text-align:center;gap:2px;padding:12px}
+.core b{font-size:var(--m);font-weight:600;letter-spacing:-.02em}
+.core span{font-size:12px;color:var(--muted);line-height:1.3;min-height:2.6em}
+.core::before{content:"";position:absolute;inset:-9px;border-radius:50%;border:1px dashed var(--line2);animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.flow-note{position:absolute;right:0;bottom:6px;font-size:12px;color:var(--muted)}
+.flow .out,.flow .in{min-width:0}
+@media (max-width:760px){
+  .flow{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);min-height:0;padding:16px 0 30px}
+  .flow li{padding:8px 10px}
+  .flow li b{font-size:14px}
+  .flow li span{font-size:12px;line-height:1.45}
+  .flow li:nth-child(n+4){display:none}
+  .core{width:12px;height:100%;aspect-ratio:auto;border-radius:6px;padding:0;border-width:0;background:var(--line)}
+  .core b,.core span,.core::before{display:none}
 }
-/* узкий телефон: подпись в одну строку, чтобы главная кнопка оставалась на первом экране 320×568 */
-@media (max-width:360px){.hero{padding-top:20px}.hero .kicker{font-size:14px;letter-spacing:0;margin-bottom:8px}.hero h1{font-size:34px;margin-bottom:16px}.hero .lead{margin-bottom:24px}}
+
+/* ---------- Работы: галерея ---------- */
+.gal{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(12px,1.4vw,20px)}
+.w{position:relative;border-radius:var(--r);background:var(--bg2);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .2s}
+.w:hover{border-color:var(--line2)}
+.w-open{all:unset;cursor:pointer;display:flex;flex-direction:column;flex:1;box-sizing:border-box}
+.w-media{display:block;aspect-ratio:16/10;overflow:hidden;background:var(--graph);position:relative}
+.w-media img{width:100%;height:100%;object-fit:cover;object-position:left top;transition:transform .6s var(--ease)}
+.w-open:hover .w-media img{transform:scale(1.03)}
+.w-media .play{position:absolute;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:8px;padding:8px 14px 8px 10px;border-radius:999px;background:rgba(23,23,22,.82);color:#fff;font-size:var(--s);font-weight:600}
+.w-media .play::before{content:'';width:0;height:0;border-left:9px solid var(--volt);border-top:6px solid transparent;border-bottom:6px solid transparent}
+.w-meta{display:grid;gap:6px;padding:20px 22px 22px;flex:1;align-content:start}
+.w:not(.txt) .w-media{flex:1 0 auto}
+.w:not(.txt) .w-meta{flex:none}
+.w-cat{font-size:var(--s);color:var(--muted)}
+.w-t{font-size:var(--m);font-weight:600;letter-spacing:-.02em;line-height:1.15}
+.w-one{color:var(--muted);font-size:var(--s);line-height:1.45;max-width:46ch}
+.w-go{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-weight:600;font-size:var(--s)}
+.w-go::after{content:'';width:22px;height:2px;background:currentColor;transition:width .2s var(--ease)}
+.w-open:hover .w-go::after{width:36px}
+.w-acts{padding:0 22px 22px;display:flex;gap:8px;flex-wrap:wrap}
+/* кейс без кадра: было → стало крупно, вместо поддельного экрана */
+.w.txt .w-media{aspect-ratio:auto;background:none;padding:22px 22px 0;display:grid;gap:8px}
+.ba{display:grid;gap:8px}
+.ba>span{display:block;border-radius:var(--r);padding:16px 18px;font-size:var(--m);line-height:1.25;letter-spacing:-.015em}
+.ba>.was{border:1px dashed var(--line2);color:var(--muted)}
+.ba .was s{text-decoration-thickness:1px}
+.ba>.now{background:var(--graph);color:#eeede8}
+.ba>.now em{font-style:normal;color:var(--volt);font-weight:600}
+.ba small{display:block;font-size:var(--s);letter-spacing:0;margin-bottom:6px;opacity:.75}
+.w-8{grid-column:span 7}.w-6{grid-column:span 5}
+.w-1{grid-column:span 4}.w-3{grid-column:span 5}.w-2{grid-column:span 3}
+.w-9{grid-column:span 5}.w-4{grid-column:span 3}.w-11{grid-column:span 4}
+.w-10{grid-column:span 12}
+.w-10 .w-open{flex-direction:row}
+.w.w-10:not(.txt) .w-media{flex:0 0 58%;aspect-ratio:16/8}
+.w-10 .w-meta{align-content:center;padding:32px}
+.w-8 .w-t,.w-10 .w-t{font-size:var(--l)}
+@media (max-width:1100px){
+  .w-10 .w-open{flex-direction:column}
+  .w.w-10:not(.txt) .w-media{flex:none;aspect-ratio:16/8}
+  .w-10 .w-meta{padding:20px 22px 22px}
+  .gal{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .w{grid-column:span 1!important}
+  .w-8,.w-10{grid-column:span 2!important}
+}
+@media (max-width:760px){
+  .gal{grid-template-columns:1fr}
+  .w,.w-8,.w-10{grid-column:auto!important}
+  .w-10 .w-open{flex-direction:column}
+  .w.w-10:not(.txt) .w-media{flex:none;aspect-ratio:16/10}
+  .w-10 .w-meta{padding:20px 22px 22px}
+  .w-8 .w-t,.w-10 .w-t{font-size:var(--m)}
+}
+.static-cases{display:grid;gap:12px;padding:0}
+
+/* окно кейса */
+.dlg{border:0;padding:0;width:min(1080px,100% - 24px);max-height:calc(100svh - 24px);border-radius:10px;background:var(--bg);color:var(--ink);overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.dlg::backdrop{background:rgba(15,15,14,.72)}
+.dlg-h{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:16px;padding:16px 20px 16px 28px;background:var(--bg);border-bottom:1px solid var(--line)}
+.dlg-h div{flex:1;min-width:0}
+.dlg-h h3{font-size:var(--l);letter-spacing:-.03em;line-height:1.1}
+.dlg-b{padding:24px 28px 32px;display:grid;gap:28px}
+.dlg-media{border-radius:var(--r);overflow:hidden;background:var(--graph)}
+.dlg-media img,.dlg-media video{width:100%;height:auto}
+.dlg-cols{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:28px}
+.dlg-cols h4{font-size:var(--s);color:var(--muted);font-weight:500;margin-bottom:8px}
+.dlg-cols p,.dlg-cols li{font-size:var(--s);line-height:1.5}
+.dlg-cols ol{display:grid;gap:8px;counter-reset:s}
+.dlg-cols ol li{padding-left:28px;position:relative;counter-increment:s}
+.dlg-cols ol li::before{content:counter(s);position:absolute;left:0;top:1px;width:20px;height:20px;border-radius:50%;border:1px solid var(--line2);font-size:12px;display:grid;place-items:center}
+.dlg-cols ul{display:grid;gap:8px}
+.dlg-cols ul li{padding:10px 12px;border-radius:var(--r);background:var(--hi)}
+.dlg-acts{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+@media (max-width:760px){.dlg-cols{grid-template-columns:1fr;gap:20px}.dlg-h{padding:12px 12px 12px 18px}.dlg-h h3{font-size:var(--m)}.dlg-b{padding:18px}}
+
+/* ---------- Демо ---------- */
+.demos{display:grid;grid-template-columns:300px minmax(0,1fr);gap:clamp(16px,2vw,32px);align-items:start}
+.tabs{display:grid;gap:6px;position:sticky;top:88px}
+.tab{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:2px;padding:14px 16px 14px 18px;border-radius:var(--r);border:1px solid var(--line);position:relative;transition:background .15s,border-color .15s}
+.tab b{font-weight:600;font-size:var(--b);line-height:1.25}
+.tab span{font-size:var(--s);color:var(--muted);line-height:1.35}
+.tab:hover{border-color:var(--line2);background:var(--bg2)}
+.tab[aria-selected=true]{background:var(--volt);border-color:var(--volt);color:var(--volt-ink)}
+.tab[aria-selected=true] span{color:rgba(23,23,22,.72)}
+.win{border-radius:10px;background:var(--bg2);border:1px solid var(--line);overflow:hidden;min-width:0}
+.win-bar{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line);font-size:var(--s);color:var(--muted)}
+.win-bar .dot{width:8px;height:8px;border-radius:50%;background:var(--volt);animation:blink 2.4s ease-in-out infinite}
+.win-bar b{color:var(--ink);font-weight:600;margin-right:auto}
+@keyframes blink{50%{opacity:.35}}
+.demo{padding:clamp(18px,2.4vw,32px);display:grid;gap:18px}
+.demo[hidden]{display:none}
+.demo>h3{font-size:var(--l);letter-spacing:-.03em;line-height:1.1}
+.demo>.sub{font-size:var(--b);max-width:60ch}
+.democta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding-top:6px;border-top:1px solid var(--line)}
+details.more summary{cursor:pointer;color:var(--muted);font-size:var(--s);min-height:44px;display:flex;align-items:center;gap:8px;list-style:none}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:'+';width:20px;height:20px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;font-size:14px}
+details.more[open] summary::before{content:'–'}
+details.more p{font-size:var(--s);color:var(--muted);max-width:70ch}
+@media (max-width:900px){
+  .demos{grid-template-columns:1fr}
+  .tabs{position:static;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;margin-inline:calc(-1*var(--pad));padding:0 var(--pad) 4px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;scroll-snap-align:start;padding:10px 16px;border-radius:999px;min-height:44px;align-content:center}
+  .tab span{display:none}
+  .tab b{font-size:var(--s);white-space:nowrap}
+  .win-bar span:last-child{display:none}
+}
+/* общие элементы демо */
+.q{display:grid;gap:6px}
+.q label{display:flex;justify-content:space-between;gap:12px;font-size:var(--s);line-height:1.35}
+.q output{font-weight:700;white-space:nowrap}
+input[type=range]{width:100%;accent-color:var(--ink);height:44px;margin:0}
+.D input[type=range],:root[data-theme=dark] input[type=range]{accent-color:var(--volt)}
+.quiz{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px;align-items:start}
+#quizQ{display:grid;gap:16px}
+.map{border-radius:var(--r);background:var(--bg);border:1px solid var(--line);padding:18px;display:grid;gap:14px}
+.map .row .top{display:flex;justify-content:space-between;gap:10px;font-size:var(--s);font-weight:600;line-height:1.3}
+.map .row .top span:last-child{white-space:nowrap}
+.map .track{height:10px;border-radius:5px;background:var(--line);margin-top:6px;overflow:hidden}
+.map .fill{height:100%;background:var(--ink);border-radius:5px;transition:width .35s var(--ease)}
+.D .map .fill,:root[data-theme=dark] .map .fill{background:var(--volt)}
+.map .row:first-of-type .fill{background:var(--volt)}
+.map .weak{opacity:.5}
+.map span.firstbadge{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background:var(--volt);color:var(--volt-ink);font-size:12px;font-weight:600;vertical-align:2px}
+.map .total{border-top:1px solid var(--line);padding-top:12px;font-size:var(--b)}
+.map .total b{font-size:var(--l);letter-spacing:-.03em}
+@media (max-width:760px){.quiz{grid-template-columns:1fr}}
+.ask{display:flex;gap:8px}
+.ask input{flex:1;min-width:0;min-height:52px;padding:0 18px;border-radius:999px;border:2px solid var(--line2);background:var(--bg);color:var(--ink);font:400 var(--b) var(--font)}
+.ask input:focus{border-color:var(--ink);outline:none}
+.chips,.bar{display:flex;flex-wrap:wrap;gap:8px}
+.chip,.fchip{min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--line2);background:var(--bg);color:var(--ink);font:500 14px var(--font);cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.chip:hover,.fchip:hover{border-color:var(--ink)}
+.chip:active,.fchip:active{transform:scale(.98)}
+.fchip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fchip b{margin-left:4px}
+.answer{border-left:3px solid var(--volt);padding:6px 0 6px 16px;font-size:var(--s);line-height:1.55;min-height:3em}
+.answer .big{font-size:var(--m);letter-spacing:-.02em}
+.typing{color:var(--muted)}
+.tw{overflow:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--bg)}
+.tw.tall{max-height:330px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{position:sticky;top:0;background:var(--bg);color:var(--muted);font-weight:500;z-index:1}
+td.num,th.num{text-align:right}
+tr.hl td{background:var(--hi)}
+tr.dim td{opacity:.4}
+.st{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid var(--line2)}
+.st.paid{color:var(--ok);border-color:currentColor}.st.late{color:var(--bad);border-color:currentColor}.st.wait{color:var(--muted)}
+.mails{display:grid;gap:6px}
+.mail{border:1px solid var(--line);border-radius:var(--r);background:var(--bg);padding:10px 14px;cursor:pointer;will-change:transform}
+.mail .row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:4px 14px;font-size:14px;align-items:baseline}
+.mail .from{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mail .subj{font-weight:500}
+.mail .tag{grid-column:2;font-size:12px;color:var(--muted)}
+.mail .tag:empty{display:none}
+.mail .body{display:none;font-size:14px;color:var(--muted);margin-top:6px}
+.mail.open .body{display:block}
+.mails.sorted .mail.urgent{border-color:var(--bad);border-left-width:4px}
+.mh{font-size:var(--s);font-weight:600;margin-top:10px;color:var(--muted)}
+.mh.urgent{color:var(--bad)}
+@media (max-width:560px){.mail .row{grid-template-columns:1fr}.mail .tag{grid-column:1}}
+.call{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pane{border:1px solid var(--line);border-radius:var(--r);background:var(--bg);padding:16px;display:grid;gap:8px;align-content:start;font-size:14px;line-height:1.5}
+.pane h4{font-size:var(--s);color:var(--muted);font-weight:500}
+.pane.tr{max-height:440px;overflow:auto}
+.pane.tr p{padding:4px 8px;border-radius:4px;transition:background .2s}
+.pane.tr p.src{background:var(--hi)}
+.pane h5{font-size:var(--s);font-weight:600;margin-top:6px}
+.pane ul{display:grid;gap:6px}
+.pane ul li{padding:8px 10px;border-radius:4px;border:1px solid var(--line)}
+.pane ul li:hover{border-color:var(--line2)}
+.status{font-weight:600;min-height:1.5em}
+.task{border:1px solid var(--line);border-radius:4px;padding:8px 10px;cursor:pointer;display:grid;gap:6px}
+.task:hover{border-color:var(--line2)}
+.task .who{font-weight:600}
+.task .meta{display:flex;gap:6px;flex-wrap:wrap}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;border:1px solid var(--line2);color:var(--muted)}
+.pill.warn{color:var(--bad);border-color:currentColor}
+.pill.sent{color:var(--ink);background:var(--hi);border-color:transparent}
+.pill.date{color:var(--ink)}
+@media (max-width:760px){.call{grid-template-columns:1fr}.pane.tr{max-height:280px}}
+.ctrl{display:flex;gap:16px;align-items:end;flex-wrap:wrap}
+.ctrl .q{flex:1 1 260px}
+.chartbox{position:relative;border:1px solid var(--line);border-radius:var(--r);background:var(--bg);padding:12px 8px 4px}
+.chartbox svg{display:block;width:100%;height:auto}
+.toast{position:absolute;right:12px;top:12px;max-width:min(300px,calc(100% - 24px));background:var(--graph);color:#eeede8;border-left:4px solid var(--volt);border-radius:var(--r);padding:12px 14px;font-size:var(--s);line-height:1.4;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+@media (max-width:600px){.toast{position:static;max-width:none;margin-top:12px;box-shadow:none}}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:var(--s);color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:3px;margin-right:6px;vertical-align:4px}
+.alerts{display:grid;gap:6px;font-size:14px}
+.alerts li{padding:8px 12px;border-radius:4px;background:var(--bg);border:1px solid var(--line)}
+.alerts time{font-weight:600;margin-right:10px}
+
+/* ---------- Как начать ---------- */
+.free{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px 40px;align-items:center;padding:28px 32px;border-radius:10px;background:var(--graph);color:#eeede8;margin-bottom:20px}
+.free .zero{font-size:var(--xl);font-weight:600;letter-spacing:-.04em;color:var(--volt);line-height:1}
+.free h3{font-size:var(--m)}
+.free p{color:#bdbbb4;font-size:var(--s);margin-top:4px;max-width:52ch}
+.free .btn{border-color:var(--volt)}
+.free .btn.primary:hover{background:transparent;color:var(--volt)}
+.stages{display:grid;grid-template-columns:1fr 1fr;gap:20px;position:relative}
+.stage{border:2px solid var(--ink);border-radius:10px;padding:clamp(22px,2.6vw,36px);display:grid;gap:16px;align-content:start;background:var(--bg)}
+.stage .lab{font-size:var(--s);color:var(--muted);display:flex;gap:10px;align-items:center}
+.stage .lab b{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:14px}
+.stage .price{font-size:var(--xl);font-weight:600;letter-spacing:-.045em;line-height:1}
+.stage .price small{display:block;font-size:var(--s);letter-spacing:0;color:var(--muted);font-weight:400;margin-top:8px}
+.stage p.d{font-size:var(--b)}
+.stage ul{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:16px}
+.stage li{padding-left:26px;position:relative;font-size:var(--s);line-height:1.45}
+.stage li::before{content:'';position:absolute;left:0;top:6px;width:12px;height:12px;border-radius:3px;background:var(--volt);box-shadow:inset 0 0 0 2px var(--ink)}
+.stage .btn{justify-self:start;margin-top:4px}
+.stage.two{background:var(--bg2)}
+.stages::after{content:'→';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:var(--volt);border:2px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:var(--m);color:var(--volt-ink)}
+.terms{margin-top:20px;border-top:1px solid var(--line)}
+.terms summary{cursor:pointer;min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:600;list-style:none;border-bottom:1px solid var(--line)}
+.terms summary::-webkit-details-marker{display:none}
+.terms summary::after{content:"+";font-size:var(--m);font-weight:400}
+.terms[open] summary::after{content:'–'}
+.terms dl{display:grid;grid-template-columns:220px 1fr;gap:12px 32px;margin:20px 0 0;font-size:var(--s);line-height:1.5}
+.terms dt{font-weight:600}
+.terms dd{margin:0;color:var(--muted)}
+.mapline{display:flex;justify-content:space-between;align-items:center;gap:16px 32px;flex-wrap:wrap;padding:22px 0;border-bottom:1px solid var(--line)}
+.mapline b{font-size:var(--m);letter-spacing:-.02em}
+.mapline span{color:var(--muted);font-size:var(--s);margin-left:12px}
+@media (max-width:860px){
+  .free{grid-template-columns:1fr;padding:24px}
+  .stages{grid-template-columns:1fr}
+  .stages::after{display:none}
+  .terms dl{grid-template-columns:1fr;gap:4px}
+  .terms dd{margin-bottom:12px}
+  .mapline span{display:block;margin:4px 0 0}
+}
+
+/* ---------- Карта бизнеса ---------- */
+.mp{display:grid;gap:0;border-top:1px solid var(--line2)}
+.mp-row{display:grid;grid-template-columns:72px minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,1fr);gap:16px 28px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}
+.mp-n{font-size:var(--xl);font-weight:600;letter-spacing:-.05em;line-height:1;color:var(--volt)}
+.mp-row.skip .mp-n{color:var(--muted);font-size:var(--l)}
+.mp-p b{display:block;font-size:var(--m);letter-spacing:-.02em;line-height:1.2}
+.mp-p span{font-size:var(--s);color:var(--muted)}
+.mp-bar{display:grid;gap:6px;font-size:var(--s);color:var(--muted)}
+.mp-bar i{display:block;height:12px;border-radius:6px;background:var(--line);overflow:hidden}
+.mp-bar i::before{content:'';display:block;height:100%;width:var(--w);background:var(--mk);border-radius:6px;transform-origin:left;transition:transform 1s var(--ease)}
+.mp-r{font-size:var(--s);line-height:1.45}
+.mp-r em{font-style:normal;display:inline-block;padding:2px 8px;border-radius:999px;background:var(--volt);color:var(--volt-ink);font-size:12px;font-weight:600;margin-bottom:4px}
+.mp-row.skip em{background:transparent;color:var(--muted);border:1px solid var(--line2)}
+.mp-foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:24px;align-items:center}
+@media (max-width:860px){
+  .mp-row{grid-template-columns:48px minmax(0,1fr);gap:10px 16px}
+  .mp-bar,.mp-r{grid-column:2}
+  .mp-n{font-size:var(--l)}
+}
+
+/* ---------- Гарантии ---------- */
+.prom{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:40px 80px;align-items:start}
+.prom h2{position:sticky;top:100px}
+.prom ul{display:grid}
+.prom li{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:8px 32px;padding:24px 0;border-top:1px solid var(--line2)}
+.prom li:last-child{border-bottom:1px solid var(--line2)}
+.prom li b{font-size:var(--m);font-weight:600;letter-spacing:-.02em;line-height:1.2}
+.prom li span{color:var(--muted);font-size:var(--b);line-height:1.5}
+@media (max-width:860px){.prom{grid-template-columns:1fr}.prom h2{position:static}.prom li{grid-template-columns:1fr}}
+
+/* ---------- Кто делает ---------- */
+.who{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:40px 64px;align-items:center}
+.who .name{font-size:var(--xl);font-weight:600;letter-spacing:-.04em;line-height:1}
+.who p{font-size:var(--b);color:var(--muted);margin-top:20px;max-width:46ch;line-height:1.6}
+.who p.name{color:var(--ink);font-size:var(--xl);margin-top:8px;line-height:1}
+.who .links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:24px}
+.vwrap{position:relative;border-radius:10px;overflow:hidden;background:#000;border:1px solid var(--line)}
+.vwrap video{width:100%;aspect-ratio:16/9}
+.vplay{position:absolute;inset:0;border:0;background:transparent;cursor:pointer;display:grid;place-items:center}
+.vplay span{width:84px;height:84px;border-radius:50%;background:var(--volt);display:grid;place-items:center;transition:transform .2s var(--ease)}
+.vplay span::before{content:'';margin-left:6px;border-left:22px solid var(--volt-ink);border-top:14px solid transparent;border-bottom:14px solid transparent}
+.vplay:hover span{transform:scale(1.08)}
+.vplay:focus-visible span{outline:3px solid #fff;outline-offset:4px}
+.vcap{margin-top:12px;font-size:var(--s);color:var(--muted)}
+.code{margin-top:32px;padding-top:20px;border-top:1px solid var(--line)}
+.code p{margin:0 0 8px;font-size:var(--s)}
+.code .chips a{text-decoration:none;display:inline-flex;align-items:center}
+@media (max-width:860px){.who{grid-template-columns:1fr}}
+
+/* ---------- Финал ---------- */
+.final{background:var(--volt);color:var(--volt-ink);padding:var(--gap) 0 48px}
+.final h2{font-size:var(--hero);line-height:.95;letter-spacing:-.05em;max-width:13ch}
+.final .row{display:flex;justify-content:space-between;align-items:end;gap:24px 48px;flex-wrap:wrap;margin-top:40px}
+.final p{font-size:var(--m);line-height:1.4;max-width:32ch}
+.final .btn.ink:focus-visible{outline-color:var(--graph);box-shadow:none}
+.final small{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:clamp(64px,8vw,120px);padding-top:20px;border-top:1px solid rgba(23,23,22,.25);font-size:var(--s)}
+.final small a{color:inherit}
+:root[data-theme=dark] .final{--ink:#171716;--bg:var(--volt)}
+
+/* появление и уважение к reduce */
 @media (prefers-reduced-motion:reduce){
-  *{animation:none!important;transition:none!important}
-  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
+
+@media (max-width:380px){.hdr .hcta{display:none}}
 </style>
 </head>
 <body>
 
-<header class="top">
+<header class="hdr D" id="topbar">
   <div class="wrap">
-    <a class="brand" href="#top">На автомате<span class="brand-tag">&nbsp;· Александр Костюхов</span></a>
+    <a class="brand" href="#top"><i aria-hidden="true"></i><span data-brand-short>На автомате</span></a>
     <nav class="menu" aria-label="Разделы">
-      <a href="#cases">Кейсы</a>
-      <a href="#demo">Демо</a>
-      <a href="#how">Как работаем</a>
+      <a href="#cases" data-en="Work">Работы</a>
+      <a href="#demo" data-en="Demos">Демо</a>
+      <a href="#how" data-en="Pricing">Цена</a>
+      <a href="#who" data-en="About">Обо мне</a>
     </nav>
-    <button type="button" class="btn small quiet theme" id="themeBtn" aria-label="Тёмная тема" title="Тёмная тема">◐</button>
-    <button type="button" class="btn small quiet lang" id="langBtn" aria-label="Switch to English">EN</button>
-    <a class="btn small quiet" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener" data-en="Message">Написать</a>
+    <button type="button" class="ibtn tl" id="themeBtn" data-theme-btn aria-label="Тёмная тема" title="Тёмная тема">◐</button>
+    <button type="button" class="ibtn tl" id="langBtn" data-lang-btn aria-label="Switch to English">EN</button>
+    <a class="btn primary small hcta" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener" data-en="Discuss a task">Обсудить задачу</a>
+    <button type="button" class="ibtn burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="mnav"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="2"/></svg></button>
   </div>
 </header>
+<nav class="mnav D" id="mnav" aria-label="Меню">
+  <a href="#cases">Работы</a>
+  <a href="#demo">Демо</a>
+  <a href="#how">Цена</a>
+  <a href="#who">Обо мне</a>
+  <div class="row">
+    <button type="button" class="ibtn" data-theme-btn aria-label="Тёмная тема">◐</button>
+    <button type="button" class="ibtn" data-lang-btn aria-label="Switch to English">EN</button>
+    <a class="btn primary small" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Обсудить задачу</a>
+  </div>
+</nav>
 
 <main id="top">
 
-<section class="hero">
-  <div class="wrap grid">
-    <div>
-      <p class="kicker" data-en="Turnkey AI assistants for business">ИИ-помощники для бизнеса под ключ</p>
-      <h1 data-en="Your business runs. AI takes the routine">Бизнес работает, рутину берёт ИИ</h1>
-      <p class="lead" data-en="Leads don't get lost, reports build themselves, calls turn into tasks. I connect AI agents to your tools. The page is in Russian — write to the bot in English, I reply in English.">Заявки не теряются, отчёты собираются сами, созвоны превращаются в задачи. Подключаю ИИ-агентов к вашим инструментам.</p>
-      <div class="cta">
-        <a class="btn primary" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener" data-en="Message on Telegram">Прислать сайт на разбор</a>
-        <a class="btn quiet" href="#demo" data-en="Try the demos">Протестировать демо</a>
+<section class="hero D">
+  <div class="wrap">
+    <h1><span data-en="Less manual work.">Меньше ручной работы.</span><span class="dim" data-en="More systems that work.">Больше работающих систем.</span></h1>
+
+    <div class="flow" id="flow" aria-label="Как работает агент: пример">
+      <div class="in">
+        <p class="flow-h"><b data-en="Comes in">Приходит</b></p>
+        <ul id="flowIn">
+          <li><b>Заявка с сайта</b><span>«Можно на субботу после обеда?»</span></li>
+          <li><b>Письмо поставщика</b><span>счёт на 84 000 ₽, оплата до 14-го</span></li>
+          <li><b>Созвон, 40 минут</b><span>расшифровка готова</span></li>
+        </ul>
       </div>
+      <div class="flow-core" aria-hidden="true">
+        <svg id="flowSvg" preserveAspectRatio="none"></svg>
+        <div class="core"><b>Агент</b><span id="flowStep">разбирает и раскладывает</span></div>
+      </div>
+      <div class="out">
+        <p class="flow-h"><b data-en="Done">Готово</b></p>
+        <ul id="flowOut">
+          <li><b>Ответ за 1 минуту</b><span>свободное окно в 15:00, запись в журнале</span></li>
+          <li><b>Платёж в графике</b><span>напомнит 13-го, сумма в плане месяца</span></li>
+          <li><b>Протокол</b><span>3 решения, 6 задач исполнителям</span></li>
+        </ul>
+      </div>
+      <p class="flow-note" data-en="Demonstration. Data is made up.">Демонстрация. Данные условные.</p>
     </div>
-    <div class="hero-video">
-      <div class="vwrap"><video id="jarvisVid" preload="metadata" playsinline poster='shots/jarvis-poster.jpg' src="jarvis-demo.mp4" aria-label="Мой Джарвис: как устроен ИИ-отдел"></video><button type="button" class="vplay" id="jarvisPlay" aria-label="Смотреть ролик: как устроен ИИ-отдел, полторы минуты"><span></span></button></div>
-      <p class="note" data-en="My Jarvis: how an AI department works, 1.5 minutes (in Russian).">Мой Джарвис: так устроен ИИ-отдел, полторы минуты.</p>
+
+    <div class="hero-foot">
+      <div>
+        <p data-en="I build AI systems for small business: they answer leads, sort email, put together reports and watch prices.">Создаю ИИ-системы для малого бизнеса: отвечают на заявки, разбирают почту, собирают отчёты и следят за ценами.</p>
+        <span class="en-only" data-en="The site is in Russian — message the bot in English, I reply in English."></span>
+      </div>
+      <div class="cta">
+        <a class="btn primary" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener" data-en="Discuss a task">Обсудить задачу</a>
+        <a class="btn" href="#cases" data-en="See projects">Посмотреть проекты</a>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="cases">
+<section id="cases" class="L">
   <div class="wrap">
-    <div class="cases-head">
-      <h2>Что собрано за последние 5 месяцев и работает</h2>
-      <p class="lead">Названия компаний и цифры клиентов под соглашением о неразглашении, поэтому показываю, как устроено и что делает. Имена и цифры на роликах и скриншотах — для примера, настоящим не соответствуют.</p>
+    <div class="sec-head">
+      <h2>Девять систем, которые уже работают</h2>
+      <p class="sub">Кадры настоящие, имена и цифры изменены: клиенты под NDA.</p>
     </div>
-    <div class="big-cases" id="casesBox"></div>
+    <div class="gal" id="casesBox"></div>
     <!-- STATIC-CASES:START -->
     <noscript><ul class="static-cases">
       <li><b>Аналитика блогеров по всем площадкам</b> (торговая компания). Компания работала с десятками блогеров на YouTube, TikTok и Instagram. Цифры сводили руками в таблицах, а что именно в ролике сработало, оставалось догадкой.</li>
@@ -359,192 +546,250 @@ footer small{display:block;color:var(--muted);margin-top:32px;font-size:var(--s)
       <li><b>Разведчик заказов с бирж</b> (свои системы). Я беру заказы на биржах фриланса. Объявлений сотни в день, половина — спам, развод или не по профилю. Пока листаешь руками, хороший заказ забирают другие.</li>
     </ul></noscript>
     <!-- STATIC-CASES:END -->
-    <h3 class="more-h" id="moreH"></h3>
-    <p class="more-sub">Нажмите на любую, чтобы открыть.</p>
-    <div class="tiles" id="tiles"></div>
-    <div class="mods" id="modules">
-      <span>Часть инструментов открыта на GitHub — можно посмотреть код и как устроены решения, без «чёрного ящика»:</span>
-      <a href="https://github.com/xndrexe/booking-bot-demo" target="_blank" rel="noopener">Бот записи</a>
-      <a href="https://github.com/xndrexe/wb-report-demo" target="_blank" rel="noopener">Отчёт WB и Ozon</a>
-      <a href="https://github.com/xndrexe/price-parser-demo" target="_blank" rel="noopener">Парсер каталога</a>
-      <a href="https://github.com/xndrexe/doc-assistant-demo" target="_blank" rel="noopener">Помощник по документам</a>
-      <a href="https://xndrexe.github.io/" target="_blank" rel="noopener">Все работы</a>
+  </div>
+</section>
+
+<section id="demo" class="D">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Попробуйте сами</h2>
+      <p class="sub">Данные условные, ничего никуда не уходит.</p>
+    </div>
+    <div class="demos">
+      <div class="tabs" role="tablist" aria-label="Демо" id="tabs">
+        <button class="tab" role="tab" id="t-quiz" aria-selected="true" aria-controls="d-quiz"><b>Что автоматизировать первым</b><span>5 вопросов — карта часов</span></button>
+        <button class="tab" role="tab" id="t-buy" aria-selected="false" aria-controls="d-buy"><b>Деньги и заказы</b><span>вопрос словами вместо таблиц</span></button>
+        <button class="tab" role="tab" id="t-mail" aria-selected="false" aria-controls="d-mail"><b>Почта по полочкам</b><span>12 писем разойдутся по папкам</span></button>
+        <button class="tab" role="tab" id="t-call" aria-selected="false" aria-controls="d-call"><b>Секретарь созвонов</b><span>расшифровка становится задачами</span></button>
+        <button class="tab" role="tab" id="t-price" aria-selected="false" aria-controls="d-price"><b>Сторож цен</b><span>сигнал, когда рынок дешевеет</span></button>
+      </div>
+
+      <div class="win">
+        <div class="win-bar"><span class="dot" aria-hidden="true"></span><b id="winT">Что автоматизировать первым</b><span>демо · данные условные</span></div>
+
+        <div class="demo" id="d-quiz" role="tabpanel" aria-labelledby="t-quiz">
+          <h3>Где теряются часы</h3>
+          <p class="sub">Подвигайте ползунки — справа появится карта: что отдать ИИ первым.</p>
+          <div class="quiz">
+            <div id="quizQ"></div>
+            <div class="map" id="quizMap" aria-live="polite"></div>
+          </div>
+          <details class="more"><summary>Как считается</summary><p>Грубая прикидка, а не обещание экономии: 22 рабочих дня в месяце, на письмо минута, на итоги созвона 20 минут, доля автоматизации — по типу рутины. Настоящая карта — после разбора ваших заявок, писем и отчётов за 1–2 недели.</p></details>
+          <p class="democta"><a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=demo_quiz" rel="noopener">Хочу такое у себя</a><span class="note">начнём с бесплатного разбора</span></p>
+        </div>
+
+        <div class="demo" id="d-buy" role="tabpanel" aria-labelledby="t-buy" hidden>
+          <h3>Спросите про деньги и заказы</h3>
+          <p class="sub">Обычными словами вместо пяти таблиц. Сегодня в демо <span id="buyToday">12-е число</span>.</p>
+          <form class="ask" id="buyForm" autocomplete="off">
+            <input id="buyQ" type="text" placeholder="Сколько платим в этом месяце?" aria-label="Вопрос по заказам">
+            <button class="btn primary" type="submit">Спросить</button>
+          </form>
+          <div class="chips" id="buyChips"></div>
+          <div class="answer" id="buyA" aria-live="polite"><span class="typing">Выберите подсказку или напишите свой вопрос.</span></div>
+          <div class="tw tall"><table id="buyT"></table></div>
+          <details class="more"><summary>Чем отличается рабочая версия</summary><p>В демо вопрос разбирается по словам: месяц, поставщик, «просрочено», «долг», «ближайший». В рабочей версии вопрос понимает ИИ, данные — из ваших таблиц и учётной системы.</p></details>
+          <p class="democta"><a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=demo_buy" rel="noopener">Хочу такое у себя</a><span class="note">начнём с бесплатного разбора</span></p>
+        </div>
+
+        <div class="demo" id="d-mail" role="tabpanel" aria-labelledby="t-mail" hidden>
+          <h3>Двенадцать писем в одной куче</h3>
+          <p class="sub">Нажмите «Разобрать»: письма разойдутся по папкам, срочное — наверх.</p>
+          <div class="bar">
+            <button class="btn primary" id="mailGo">Разобрать</button>
+            <button class="btn" id="mailReset" disabled>Вернуть как было</button>
+          </div>
+          <div class="bar" id="mailChips" aria-label="Папки"></div>
+          <div class="mails" id="mails"></div>
+          <details class="more"><summary>Как письма попадают в папки</summary><p>После разбора у каждого письма видно, по какому признаку оно попало в папку. Правила настраиваются под ваш бизнес.</p></details>
+          <p class="democta"><a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=demo_mail" rel="noopener">Хочу такое у себя</a><span class="note">начнём с бесплатного разбора</span></p>
+        </div>
+
+        <div class="demo" id="d-call" role="tabpanel" aria-labelledby="t-call" hidden>
+          <h3>Созвон закончился — протокол готов</h3>
+          <p class="sub">Слева расшифровка. Нажмите кнопку — справа появятся решения и задачи.</p>
+          <div class="bar">
+            <button class="btn primary" id="callGo">Сделать протокол</button>
+            <button class="btn" id="callSend" disabled>Разослать исполнителям</button>
+            <button class="btn" id="callReset" disabled>Сначала</button>
+          </div>
+          <div class="call">
+            <div class="pane tr" id="callTr"><h4>Расшифровка · четверг</h4></div>
+            <div class="pane proto"><h4>Протокол</h4><div class="status" id="callSt"></div><div id="callOut"><span style="color:var(--muted)">Пока пусто.</span></div></div>
+          </div>
+          <details class="more"><summary>Что, если срок не назван</summary><p>Агент не придумывает срок: помечает задачу и напоминает, пока срок не появится. Нажмите на задачу — подсветится реплика, из которой она взята.</p></details>
+          <p class="democta"><a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=demo_call" rel="noopener">Хочу такое у себя</a><span class="note">начнём с бесплатного разбора</span></p>
+        </div>
+
+        <div class="demo" id="d-price" role="tabpanel" aria-labelledby="t-price" hidden>
+          <h3>Сторож цен</h3>
+          <p class="sub">Тридцать дней за одним товаром. Выберите порог просадки и запустите.</p>
+          <div class="ctrl">
+            <div class="q"><label for="pTh"><span>Сигналить, если цена упала на</span><output id="pThO">5%</output></label><input id="pTh" type="range" min="3" max="25" value="5"></div>
+            <button class="btn primary" id="pGo">Запустить</button>
+          </div>
+          <div class="chartbox" id="pBox">
+            <div id="pChart"></div>
+            <div class="toast" id="pToast" role="status" hidden></div>
+          </div>
+          <div class="legend"><span><i style="background:var(--own)"></i>ваша цена</span><span><i style="background:var(--ink)"></i>цена на рынке</span><span><i style="background:var(--bad)"></i>новый продавец</span></div>
+          <ul class="alerts" id="pAlerts"></ul>
+          <details class="more"><summary>Что в рабочей версии</summary><p>Цены в демо условные. В рабочей версии сигнал приходит в ваш рабочий мессенджер в течение часа.</p></details>
+          <p class="democta"><a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=demo_price" rel="noopener">Хочу такое у себя</a><span class="note">начнём с бесплатного разбора</span></p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="demo">
+<section id="how" class="L">
   <div class="wrap">
-    <h2>Попробуйте сами</h2>
-    <p class="lead">Начните с прикидки, что автоматизировать первым, — дальше четыре работающих примера автоматизации. Данные для примера, ничего никуда не отправляется.</p>
-
-    <div class="tabs" role="tablist" aria-label="Демо">
-      <button class="tab" role="tab" id="t-quiz" aria-selected="true" aria-controls="d-quiz">Что автоматизировать первым</button>
-      <button class="tab" role="tab" id="t-buy" aria-selected="false" aria-controls="d-buy">Закупки и платежи</button>
-      <button class="tab" role="tab" id="t-mail" aria-selected="false" aria-controls="d-mail">Почта по полочкам</button>
-      <button class="tab" role="tab" id="t-call" aria-selected="false" aria-controls="d-call">Секретарь созвонов</button>
-      <button class="tab" role="tab" id="t-price" aria-selected="false" aria-controls="d-price">Сторож цен</button>
+    <div class="sec-head">
+      <h2>Как начать</h2>
+      <p class="sub">Подойдёт, если рутина съедает часы каждую неделю, даже в команде из 1–2 человек.</p>
     </div>
-
-    <div class="demo" id="d-quiz" role="tabpanel" aria-labelledby="t-quiz">
-      <h3>Что автоматизировать первым</h3>
-      <p class="sub">Ответьте на пять вопросов: рядом появится мини-карта, где теряется больше всего часов.</p>
-      <div class="quiz">
-        <div id="quizQ"></div>
-        <div class="map" id="quizMap" aria-live="polite"></div>
-      </div>
-      <p class="note">Это прикидка по средним допущениям, а не обещание экономии.</p>
-      <details class="more"><summary>Как считается</summary><p>Это грубая прикидка по средним допущениям, а не обещание: 22 рабочих дня в месяце, на письмо уходит минута, на итоги созвона 20 минут, доля автоматизации задана по типу рутины. Настоящая карта делается после разбора ваших заявок, писем и отчётов за 1–2 недели.</p></details>
-      <p class="democta"><a class="btn small" href="https://t.me/naavtomate_ai_bot?start=demo_quiz" rel="noopener">Хочу такое у себя — бесплатный разбор</a></p>
+    <!-- Цены живут только здесь и в JSON-LD в head. Меняешь — меняй оба места. -->
+    <div class="free">
+      <span class="zero">0 ₽</span>
+      <div><h3>Разбор вашего сайта</h3><p>Пришлите сайт — за сутки напишу, где теряются заявки и что отдать ИИ первым.</p></div>
+      <a class="btn primary" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Прислать сайт</a>
     </div>
-
-    <div class="demo" id="d-buy" role="tabpanel" aria-labelledby="t-buy" hidden>
-      <h3>Спросите про деньги и заказы</h3>
-      <p class="sub">Вопрос обычными словами вместо пяти таблиц. Сегодня в демо <span id="buyToday">12-е число</span>.</p>
-      <form class="ask" id="buyForm" autocomplete="off">
-        <input id="buyQ" type="text" placeholder="Например: сколько платим в этом месяце?" aria-label="Вопрос по заказам">
-        <button class="btn primary" type="submit">Спросить</button>
-      </form>
-      <div class="chips" id="buyChips"></div>
-      <div class="answer" id="buyA" aria-live="polite"><span class="typing">Выберите подсказку или напишите свой вопрос.</span></div>
-      <div class="tw tall"><table id="buyT"></table></div>
-      <details class="more"><summary>Чем демо отличается от рабочей версии</summary><p>В демо вопрос разбирается по ключевым словам: месяц, поставщик, «просрочено», «долг», «ближайший». В рабочей версии вопрос понимает ИИ, а данные берутся из ваших таблиц и учётной системы.</p></details>
-      <p class="democta"><a class="btn small" href="https://t.me/naavtomate_ai_bot?start=demo_buy" rel="noopener">Хочу такое у себя — бесплатный разбор</a></p>
+    <div class="stages">
+      <div class="stage">
+        <p class="lab"><b>1</b>Пробный запуск</p>
+        <p class="price">25 000 ₽<small>предоплата · 2 недели</small></p>
+        <p class="d">Одна задача на ваших настоящих заявках, письмах или отчётах.</p>
+        <ul>
+          <li>старт в течение 3 рабочих дней после оплаты</li>
+        </ul>
+      </div>
+      <div class="stage two">
+        <p class="lab"><b>2</b>Полный запуск</p>
+        <p class="price">+25 000 ₽<small>итого 50 000 ₽ · если пробный понравился</small></p>
+        <p class="d">Задача работает на весь объём, каждый день.</p>
+        <ul>
+          <li>2 месяца гарантии, без абонентской платы</li>
+          <li>пробный не устроил — останавливаемся без доплаты, сделанное остаётся у вас</li>
+        </ul>
+      </div>
     </div>
-
-    <div class="demo" id="d-mail" role="tabpanel" aria-labelledby="t-mail" hidden>
-      <h3>Двенадцать писем в одной куче</h3>
-      <p class="sub">Нажмите «Разобрать»: письма разойдутся по полкам, срочное окажется наверху.</p>
-      <div class="bar">
-        <button class="btn primary" id="mailGo">Разобрать</button>
-        <button class="btn" id="mailReset" disabled>Вернуть как было</button>
-      </div>
-      <div class="bar" id="mailChips" aria-label="Папки"></div>
-      <div class="mails" id="mails"></div>
-      <details class="more"><summary>Как письма попадают в папки</summary><p>После разбора у каждого письма видно, по какому признаку оно попало в папку. Правила настраиваются под ваш бизнес.</p></details>
-      <p class="democta"><a class="btn small" href="https://t.me/naavtomate_ai_bot?start=demo_mail" rel="noopener">Хочу такое у себя — бесплатный разбор</a></p>
-    </div>
-
-    <div class="demo" id="d-call" role="tabpanel" aria-labelledby="t-call" hidden>
-      <h3>Созвон закончился, протокол уже готов</h3>
-      <p class="sub">Слева кусок расшифровки примерного созвона. Нажмите кнопку: справа появятся решения и задачи.</p>
-      <div class="bar">
-        <button class="btn primary" id="callGo">Сделать протокол</button>
-        <button class="btn" id="callSend" disabled>Разослать исполнителям</button>
-        <button class="btn" id="callReset" disabled>Сначала</button>
-      </div>
-      <div class="call">
-        <div class="pane tr" id="callTr"><h4>Расшифровка · четверг</h4></div>
-        <div class="pane proto"><h4>Протокол</h4><div class="status" id="callSt"></div><div id="callOut"><span style="color:var(--muted)">Пока пусто.</span></div></div>
-      </div>
-      <details class="more"><summary>Что, если срок не назван</summary><p>Агент не придумывает срок, а помечает задачу и напоминает, пока срок не появится. Нажмите на задачу, чтобы увидеть реплику, из которой она взята.</p></details>
-      <p class="democta"><a class="btn small" href="https://t.me/naavtomate_ai_bot?start=demo_call" rel="noopener">Хочу такое у себя — бесплатный разбор</a></p>
-    </div>
-
-
-    <div class="demo" id="d-price" role="tabpanel" aria-labelledby="t-price" hidden>
-      <h3>Сторож цен</h3>
-      <p class="sub">Тридцать дней наблюдения за одним товаром. Выберите порог просадки цены и запустите.</p>
-      <div class="ctrl">
-        <div class="q"><label for="pTh"><span>Сигналить, если цена упала на</span><output id="pThO">5%</output></label><input id="pTh" type="range" min="3" max="25" value="5"></div>
-        <button class="btn primary" id="pGo">Запустить</button>
-      </div>
-      <div class="chartbox" id="pBox">
-        <div id="pChart"></div>
-        <div class="toast" id="pToast" role="status" hidden></div>
-      </div>
-      <div class="legend"><span><i style="background:var(--accent)"></i>ваша цена</span><span><i style="background:var(--ink)"></i>цена на рынке</span><span><i style="background:var(--bad)"></i>новый продавец</span></div>
-      <ul class="alerts" id="pAlerts"></ul>
-      <details class="more"><summary>Что в рабочей версии</summary><p>Цены в демо — для примера. В рабочей версии сигнал приходит в ваш рабочий мессенджер в течение часа.</p></details>
-      <p class="democta"><a class="btn small" href="https://t.me/naavtomate_ai_bot?start=demo_price" rel="noopener">Хочу такое у себя — бесплатный разбор</a></p>
-    </div>
-  </div>
-</section>
-
-<section id="how">
-  <div class="wrap">
-    <h2>Как начать работу</h2>
-    <p class="lead">Подойдёт, если рутина съедает часы каждую неделю — даже в команде из одного-двух человек: торговля, сервисы, онлайн-школы, салоны, агентства, производство.</p>
-    <div class="steps">
-      <div><h3>Разбор, бесплатно</h3><p>Пришлите ссылку на сайт или страницу, откуда приходят клиенты. В течение суток пишу, где теряются заявки и что отдать ИИ первым.</p></div>
-      <div><h3>Пробный запуск, 25 000 ₽</h3><p>Одна задача на ваших данных за 2 недели, предоплата. Начинаю в течение 3 рабочих дней после оплаты.</p><ul class="inc"><li>разбираю задачу и подключаю нужные данные</li><li>настраиваю и проверяю агента</li><li>показываю результат на ваших настоящих заявках, письмах или отчётах</li></ul></div>
-      <div><h3>Полный запуск и гарантия</h3><p>Понравился результат пробного — доплачиваете 25 000 ₽ (всего 50 000 ₽). Не устроил — останавливаемся без доплаты, сделанное остаётся у вас.</p><ul class="inc"><li>задача работает на весь ваш объём каждый день</li><li>агент ставится на ваш сервер или в ваши аккаунты</li><li>2 месяца гарантии: бесплатно чиню сбои и поломки связок с вашими сервисами, делаю 5 мелких правок, без помесячной оплаты</li></ul></div>
-    </div>
-    <p class="note">Нейросеть и сервер оплачиваете вы напрямую, обычно это несколько тысяч рублей в месяц, точную сумму называю до старта. В цену работы они не входят.</p>
-    <details class="sample">
-      <summary>Нужна карта всего бизнеса сразу? От 30 000 ₽, 1–2 недели. Как она выглядит (образец на примере салона красоты)</summary>
-      <div class="in">
-        <p class="lead">Салон «Студия Марии»: 6 мастеров, 2 администратора. Вот что нашлось за неделю разбора.</p>
-        <div class="tw"><table>
-          <tr><th>Рутина</th><th>Сколько уходит сейчас</th><th>Что теряется</th></tr>
-          <tr><td>Ответы на заявки</td><td>2,5 часа в день администратора</td><td>ночью и в пик ждут 3–5 часов, 1 из 6 уходит к конкурентам</td></tr>
-          <tr><td>Ответы на отзывы</td><td>3 часа в неделю владелицы</td><td>40% отзывов без ответа, плохие замечают через неделю</td></tr>
-          <tr><td>Утренний отчёт владелице</td><td>40 минут в день</td><td>цифры собираются руками из трёх мест</td></tr>
-          <tr><td>Напоминания о записи</td><td>1 час в день</td><td>8% записей пропадают без предупреждения</td></tr>
-        </table></div>
-        <p class="lead" style="margin:24px 0 8px">Порядок, который предложила карта:</p>
-        <ol>
-          <li><b>Заявки</b>: ответ за минуту. Возвращает около 25 потерянных записей в месяц.</li>
-          <li><b>Отзывы</b>: черновик ответа, а плохой отзыв сразу уходит владелице. Возвращает 12 часов в месяц.</li>
-          <li><b>Утренняя сводка</b>: цифры в 9:00 без ручного сбора.</li>
-          <li><b>Напоминания о записи</b>: пока не берём, у системы записи есть свои, сначала настроить их бесплатно.</li>
-        </ol>
-      </div>
+    <details class="terms">
+      <summary>Условия подробно</summary>
+      <dl>
+        <dt>Гарантия 2 месяца</dt><dd>Бесплатно чиню сбои и поломки связок с вашими сервисами, делаю 5 мелких правок.</dd>
+        <dt>Сторонние сервисы</dt><dd>Нейросеть и сервер оплачиваете вы напрямую, обычно несколько тысяч рублей в месяц. Точную сумму называю до старта, в цену работы они не входят.</dd>
+        <dt>Оплата</dt><dd>Работаю по предоплате. Цену новых задач называю до начала работ.</dd>
+        <dt>Кому подходит</dt><dd>Торговля, сервисы, онлайн-школы, салоны, агентства, производство.</dd>
+      </dl>
     </details>
-  </div>
-</section>
-
-<section id="promise">
-  <div class="wrap">
-    <h2>Что я гарантирую</h2>
-    <p class="lead">Ваши данные остаются под вашим контролем.</p>
-    <div class="promise">
-      <div><b>Доступы у вас</b><span>Агенты работают в ваших аккаунтах и на вашем сервере.</span></div>
-      <div><b>Ничего не заперто</b><span>Если расстанемся, доступы, данные и сами агенты остаются у вас.</span></div>
-      <div><b>Минимум прав</b><span>Агенту даю только те доступы, без которых задача не делается, где можно — только на чтение. Забрать доступ можно в любой момент.</span></div>
-      <div><b>Ключи не в переписке</b><span>Пароли и ключи лежат в закрытом хранилище на сервере, не в коде и не в чатах. Ваши данные используются только для вашей задачи.</span></div>
-      <div><b>После расставания</b><span>Передаю всё, что сделано, и удаляю у себя копии данных и ключи.</span></div>
-      <div><b>Цена до начала работ</b><span>Пробный запуск — 25 000 ₽, полный запуск — ещё 25 000 ₽, 2 месяца гарантии входят в цену, без абонентской платы. Цену новых задач называю до старта. Работаю по предоплате.</span></div>
+    <div class="mapline">
+      <p><b>Карта всего бизнеса</b><span>от 30 000 ₽ · 1–2 недели</span></p>
+      <a class="link" href="#map">Как выглядит карта</a>
     </div>
   </div>
 </section>
 
-<section id="who">
+<section id="map" class="D">
   <div class="wrap">
-    <h2>Кто делает</h2>
-    <p class="lead">Александр Костюхов. Последние 5 месяцев строю ИИ-системы для бизнеса и для своей работы — они показаны выше и работают каждый день. Каждую задачу веду сам от разбора до сдачи, крупные делаю с командой исполнителей по договору.</p>
+    <div class="sec-head">
+      <h2>Карта: что отдать ИИ первым</h2>
+      <p class="sub">Образец для салона на 6 мастеров. Цифры условные.</p>
+    </div>
+    <ol class="mp" id="mp">
+      <li class="mp-row"><span class="mp-n">1</span><p class="mp-p"><b>Ответы на заявки</b><span>ночью и в пик ждут 3–5 часов, 1 из 6 уходит к конкурентам</span></p><p class="mp-bar"><i style="--w:100%"></i>2,5 ч в день администратора · ≈55 ч в месяц</p><p class="mp-r"><em>первым</em><br>Ответ за минуту: +25 записей в месяц.</p></li>
+      <li class="mp-row"><span class="mp-n">2</span><p class="mp-p"><b>Ответы на отзывы</b><span>40% отзывов без ответа, плохие замечают через неделю</span></p><p class="mp-bar"><i style="--w:24%"></i>3 ч в неделю владелицы · ≈13 ч в месяц</p><p class="mp-r"><em>вторым</em><br>Черновик ответа, плохой отзыв — сразу владелице.</p></li>
+      <li class="mp-row"><span class="mp-n">3</span><p class="mp-p"><b>Утренний отчёт</b><span>цифры собираются руками из трёх мест</span></p><p class="mp-bar"><i style="--w:27%"></i>40 мин в день · ≈15 ч в месяц</p><p class="mp-r"><em>третьим</em><br>Сводка сама приходит в 9:00.</p></li>
+      <li class="mp-row skip"><span class="mp-n">—</span><p class="mp-p"><b>Напоминания о записи</b><span>8% записей пропадают без предупреждения</span></p><p class="mp-bar"><i style="--w:40%"></i>1 ч в день · ≈22 ч в месяц</p><p class="mp-r"><em>пока не берём</em><br>Хватит бесплатных напоминаний системы записи.</p></li>
+    </ol>
+    <div class="mp-foot">
+      <a class="btn primary" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Обсудить карту для себя</a>
+    </div>
+  </div>
+</section>
+
+<section id="promise" class="L">
+  <div class="wrap prom">
+    <h2>Ваши данные — под вашим контролем</h2>
+    <ul>
+      <li><b>Доступы у вас</b><span>Агенты работают в ваших аккаунтах и на вашем сервере, с минимумом прав. Забрать доступ можно в любой момент.</span></li>
+      <li><b>Ключи не в переписке</b><span>Пароли — в закрытом хранилище, не в коде и не в чатах.</span></li>
+      <li><b>Ничего не заперто</b><span>Расстаёмся — всё сделанное остаётся у вас, свои копии данных и ключей удаляю.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="who" class="D">
+  <div class="wrap who">
+    <div>
+      <p class="note">Кто делает</p>
+      <p class="name">Александр Костюхов</p>
+      <p>Строю ИИ-системы, которые показаны выше. Каждую задачу веду сам от разбора до сдачи, крупные — с командой по договору.</p>
+      <div class="links">
+        <a class="link" href="https://github.com/xndrexe" target="_blank" rel="noopener">GitHub</a>
+        <a class="link" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Telegram</a>
+        <a class="link" href="https://xndrexe.github.io/" target="_blank" rel="noopener">Все работы</a>
+      </div>
+      <div class="code" id="modules">
+        <p class="note">Открытый код части инструментов:</p>
+        <div class="chips">
+          <a class="chip" href="https://github.com/xndrexe/booking-bot-demo" target="_blank" rel="noopener">Бот записи</a>
+          <a class="chip" href="https://github.com/xndrexe/wb-report-demo" target="_blank" rel="noopener">Отчёт WB и Ozon</a>
+          <a class="chip" href="https://github.com/xndrexe/price-parser-demo" target="_blank" rel="noopener">Парсер каталога</a>
+          <a class="chip" href="https://github.com/xndrexe/doc-assistant-demo" target="_blank" rel="noopener">Помощник по документам</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="vwrap"><video id="jarvisVid" preload="metadata" playsinline poster="shots/jarvis-poster.jpg" src="jarvis-demo.mp4" aria-label="Мой Джарвис: как устроен ИИ-отдел"></video><button type="button" class="vplay" id="jarvisPlay" aria-label="Смотреть ролик: как устроен ИИ-отдел, полторы минуты"><span></span></button></div>
+      <p class="vcap">Мой Джарвис: так устроен ИИ-отдел, 1:30.</p>
+    </div>
   </div>
 </section>
 
 </main>
 
-<footer>
+<footer class="final">
   <div class="wrap">
-    <div class="cta-t">
-      <h2>Расскажите, какая рутина отнимает у вас часы</h2>
-      <p class="lead">Пришлите ссылку на сайт — бесплатно напишу, где теряются заявки и что можно отдать ИИ.</p>
+    <h2>Какая рутина отнимает у вас часы?</h2>
+    <div class="row">
+      <p>Разбор бесплатный, ответ за сутки.</p>
+      <a class="btn ink" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Прислать сайт на разбор</a>
     </div>
-    <a class="btn primary" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Прислать сайт на разбор</a>
-    <small><span data-brand>На автомате · Александр Костюхов</span>. Telegram <a data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">@naavtomate_ai_bot</a>. Данные в демо — для примера.</small>
+    <small><span data-brand>На автомате · Александр Костюхов</span><span>Telegram <a data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">@naavtomate_ai_bot</a></span></small>
   </div>
 </footer>
 
+<dialog class="dlg" id="caseDlg" aria-labelledby="dlgT">
+  <div class="dlg-h"><div><p class="note" id="dlgC"></p><h3 id="dlgT"></h3></div><button type="button" class="ibtn" id="dlgX" aria-label="Закрыть">✕</button></div>
+  <div class="dlg-b" id="dlgB"></div>
+</dialog>
+
 <script>
 'use strict';
-/* Название бренда — менять только здесь */
+/* Название бренда — менять только здесь (шапка берёт часть до « · ») */
 const BRAND_NAME = 'На автомате · Александр Костюхов';
 const TG_LINK = 'https://t.me/naavtomate_ai_bot?start=site';
 
 (() => { const v = document.getElementById('jarvisVid'), b = document.getElementById('jarvisPlay'); const go = () => { b.hidden = true; v.controls = true; }; b.addEventListener('click', () => { go(); v.play(); }); v.addEventListener('play', go); })();
 document.querySelectorAll('[data-brand]').forEach(e => { e.textContent = BRAND_NAME; });
+document.querySelectorAll('[data-brand-short]').forEach(e => { e.textContent = BRAND_NAME.split(' · ')[0]; });
 document.querySelectorAll('[data-tg]').forEach(e => { e.href = TG_LINK; });
-/* Английский — только первый экран: иностранцу хватит, чтобы понять и написать */
-(() => { const b = document.getElementById('themeBtn'), r = document.documentElement;
-  const set = d => { if (d) r.dataset.theme = 'dark'; else delete r.dataset.theme; const t = d ? 'Светлая тема' : 'Тёмная тема'; b.setAttribute('aria-label', t); b.title = t; };
+(() => { const bs = [...document.querySelectorAll('[data-theme-btn]')], r = document.documentElement;
+  const set = d => { if (d) r.dataset.theme = 'dark'; else delete r.dataset.theme; const t = d ? 'Светлая тема' : 'Тёмная тема'; bs.forEach(b => { b.setAttribute('aria-label', t); b.title = t; }); };
   set(r.dataset.theme === 'dark');
-  b.addEventListener('click', () => { const d = r.dataset.theme !== 'dark'; set(d); try { localStorage.setItem('theme', d ? 'dark' : 'light'); } catch (e) {} }); })();
-(() => { const b = document.getElementById('langBtn'); const els = [...document.querySelectorAll('[data-en]')]; els.forEach(e => { e.dataset.ru = e.textContent; }); let en = false;
-  b.addEventListener('click', () => { en = !en; els.forEach(e => { e.textContent = en ? e.dataset.en : e.dataset.ru; }); document.documentElement.lang = en ? 'en' : 'ru'; b.textContent = en ? 'RU' : 'EN'; b.setAttribute('aria-label', en ? 'Переключить на русский' : 'Switch to English'); }); })();
+  bs.forEach(b => b.addEventListener('click', () => { const d = r.dataset.theme !== 'dark'; set(d); try { localStorage.setItem('theme', d ? 'dark' : 'light'); } catch (e) {} })); })();
+/* Английский — только первый экран и меню: иностранцу хватит, чтобы понять и написать */
+(() => { const bs = [...document.querySelectorAll('[data-lang-btn]')]; const els = [...document.querySelectorAll('[data-en]')]; els.forEach(e => { e.dataset.ru = e.textContent; }); let en = false;
+  bs.forEach(b => b.addEventListener('click', () => { en = !en; els.forEach(e => { e.textContent = en ? e.dataset.en : e.dataset.ru; }); document.documentElement.lang = en ? 'en' : 'ru'; bs.forEach(x => { x.textContent = en ? 'RU' : 'EN'; x.setAttribute('aria-label', en ? 'Переключить на русский' : 'Switch to English'); }); })); })();
+
+/* ---------- Шапка: подложка при прокрутке, мобильное меню ---------- */
+(() => { const top = document.getElementById('topbar'), b = document.getElementById('burger'), m = document.getElementById('mnav');
+  const onScroll = () => top.classList.toggle('solid', scrollY > 8); onScroll(); addEventListener('scroll', onScroll, { passive: true });
+  const set = o => { m.classList.toggle('open', o); b.setAttribute('aria-expanded', o); b.setAttribute('aria-label', o ? 'Закрыть меню' : 'Меню'); };
+  b.addEventListener('click', () => set(!m.classList.contains('open')));
+  m.querySelectorAll('a').forEach(a => a.addEventListener('click', () => set(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && m.classList.contains('open')) { set(false); b.focus(); } });
+  matchMedia('(min-width:901px)').addEventListener('change', e => { if (e.matches) set(false); }); })();
 
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
@@ -890,7 +1135,7 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     let html = '<h4 style="font-size:var(--m);font-weight:600;margin-bottom:8px">Карта: порядок и часы в месяц</h4>';
     items.forEach((it, i) => {
       const weak = it[1] < 2;
-      html += `<div class="row${weak ? ' weak' : ''}"><div class="top"><span>${weak ? '–' : (i + 1)}. ${it[0]}${i === 0 && !weak ? '<span class="firstbadge">начать с этого</span>' : ''}</span><span>${weak ? 'пока не стоит' : '≈ ' + Math.round(it[1]) + ' ч'}</span></div><div class="track"><div class="fill" style="width:${Math.max(2, it[1] / max * 100)}%"></div></div><div style="color:var(--muted);font-size:13px;margin-top:4px">${it[2]}</div></div>`;
+      html += `<div class="row${weak ? ' weak' : ''}"><div class="top"><span>${weak ? '–' : (i + 1)}. ${it[0]}${i === 0 && !weak ? '<span class="firstbadge">начать с этого</span>' : ''}</span><span>${weak ? 'пока не стоит' : '≈ ' + Math.round(it[1]) + ' ч'}</span></div><div class="track"><div class="fill" style="width:${Math.max(2, it[1] / max * 100)}%"></div></div><div style="color:var(--muted);font-size:var(--s);margin-top:4px">${it[2]}</div></div>`;
     });
     html += `<div class="total">До <b>${Math.round(total)} ч</b> в месяц по вашим вводным<br><span style="color:var(--muted);font-size:var(--s)">это около ${(total / 8).toFixed(1).replace('.', ',')} рабочего дня одного сотрудника в месяц</span></div>`;
     map.innerHTML = html;
@@ -916,14 +1161,14 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     const y = p => pt + (H - pt - pb) * (1 - (p - 18) / (28 - 18));
     let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="График цен за 30 дней">`;
     [18, 20, 22, 24, 26, 28].forEach(g => { s += `<line x1="${pl}" x2="${W - pr}" y1="${y(g)}" y2="${y(g)}" style="stroke:var(--line)"/><text x="${pl - 8}" y="${y(g) + 4}" style="fill:var(--muted)" font-size="14" text-anchor="end">${g}</text>`; });
-    [1, 10, 20, 30].forEach(d => { s += `<text x="${x(d - 1)}" y="${H - 8}" style="fill:var(--muted)" font-size="14" text-anchor="${d === 30 ? 'end' : d === 1 ? 'start' : 'middle'}">день ${d}</text>`; });
-    s += `<line x1="${pl}" x2="${W - pr}" y1="${y(OWN)}" y2="${y(OWN)}" stroke="#145aff" stroke-width="2"/>`;
+    (W < 420 ? [1, 15, 30] : [1, 10, 20, 30]).forEach(d => { s += `<text x="${x(d - 1)}" y="${H - 8}" style="fill:var(--muted)" font-size="14" text-anchor="${d === 30 ? 'end' : d === 1 ? 'start' : 'middle'}">день ${d}</text>`; });
+    s += `<line x1="${pl}" x2="${W - pr}" y1="${y(OWN)}" y2="${y(OWN)}" style="stroke:var(--own)" stroke-width="2"/>`;
     const n = Math.min(day, 30);
     if (n > 0) {
       const pts = comp.slice(0, n).map((p, i) => `${x(i)},${y(p)}`).join(' ');
       s += `<polyline points="${pts}" fill="none" style="stroke:var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>`;
       const ns = Object.keys(newS).map(Number).filter(i => i < n);
-      if (ns.length) s += `<polyline points="${ns.map(i => `${x(i)},${y(newS[i])}`).join(' ')}" fill="none" stroke="#c62828" stroke-width="2.5"/>`;
+      if (ns.length) s += `<polyline points="${ns.map(i => `${x(i)},${y(newS[i])}`).join(' ')}" fill="none" style="stroke:var(--bad)" stroke-width="2.5"/>`;
     }
     evs.filter(e => e.d <= n).forEach(e => { s += `<circle cx="${x(e.d - 1)}" cy="${y(e.p)}" r="6" style="fill:var(--bg);stroke:var(--bad)" stroke-width="2.5"/>`; });
     host.innerHTML = s + '</svg>';
@@ -964,122 +1209,140 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
   draw();
 })();
 
+/* заголовок окна демо = название открытой вкладки; лента вкладок на телефоне докручивается к выбранной */
+(() => { const t = $('#winT');
+  document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+    t.textContent = b.querySelector('b').textContent;
+    const box = b.parentElement; if (box.scrollWidth > box.clientWidth) box.scrollTo({ left: b.offsetLeft - 16, behavior: reduce ? 'auto' : 'smooth' });
+  })); })();
+const openDemo = id => { const b = document.getElementById(id); if (!b) return; b.click(); $('#demo').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); setTimeout(() => b.focus({ preventScroll: true }), reduce ? 0 : 500); };
+
+/* ---------- Первый экран: приходит → агент → готово ---------- */
+(function flow() {
+  const P = [
+    ['Заявка с сайта', '«Можно на субботу после обеда?»', 'читает заявку', 'Ответ за 1 минуту', 'свободное окно в 15:00, запись в журнале'],
+    ['Письмо поставщика', 'счёт на 84 000 ₽, оплата до 14-го', 'разносит счёт', 'Платёж в графике', 'напомнит 13-го, сумма в плане месяца'],
+    ['Созвон, 40 минут', 'расшифровка готова', 'пишет протокол', 'Протокол', '3 решения, 6 задач исполнителям'],
+    ['Отзыв ★★', '«Ждала мастера 20 минут»', 'оценивает отзыв', 'Владельцу в Telegram', 'и черновик ответа клиенту'],
+    ['Цена у конкурента', 'на 18% ниже вашей', 'сверяет цены', 'Сигнал в рабочий чат', 'через час, а не по падению продаж'],
+    ['Отчёт из трёх таблиц', 'заявки, касса, записи', 'собирает цифры', 'Сводка в 9:00', 'без ручного сбора']
+  ];
+  const fin = $('#flowIn'), fout = $('#flowOut'), step = $('#flowStep'), svg = $('#flowSvg');
+  const li = (b, s) => { const e = el('li', 'new'); e.innerHTML = `<b>${b}</b><span>${s}</span>`; return e; };
+  const draw = () => { const r = svg.getBoundingClientRect(); if (!r.width) return; const w = r.width, h = r.height, cy = h / 2;
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    svg.innerHTML = `<path d="M0 ${cy * .45} C ${w * .3} ${cy * .45}, ${w * .2} ${cy}, ${w / 2} ${cy}"/><path d="M${w / 2} ${cy} C ${w * .8} ${cy}, ${w * .7} ${cy * .45}, ${w} ${cy * .45}"/>` +
+      (reduce ? '' : `<circle class="pulse" r="4"><animateMotion dur="2.6s" repeatCount="indefinite" path="M0 ${cy * .45} C ${w * .3} ${cy * .45}, ${w * .2} ${cy}, ${w / 2} ${cy} C ${w * .8} ${cy}, ${w * .7} ${cy * .45}, ${w} ${cy * .45}"/></circle>`); };
+  draw(); addEventListener('resize', draw);
+  if (reduce) return;
+  let i = 3, timer = null;
+  const tick = async () => {
+    const p = P[i % P.length]; i++;
+    const a = li(p[0], p[1]); fin.prepend(a); requestAnimationFrame(() => a.classList.remove('new'));
+    while (fin.children.length > 4) fin.lastElementChild.remove();
+    step.textContent = p[2] + '…';
+    await sleep(1300);
+    const b = li(p[3], p[4]); fout.prepend(b); requestAnimationFrame(() => b.classList.remove('new'));
+    while (fout.children.length > 4) fout.lastElementChild.remove();
+    step.textContent = 'готово';
+  };
+  const run = on => { clearInterval(timer); timer = on ? setInterval(tick, 3200) : null; };
+  // крутится, только пока первый экран виден и вкладка открыта
+  const io = new IntersectionObserver(es => run(es[0].isIntersecting && !document.hidden));
+  io.observe($('#flow'));
+  document.addEventListener('visibilitychange', () => { const r = $('#flow').getBoundingClientRect(); run(!document.hidden && r.bottom > 0 && r.top < innerHeight); });
+})();
+
 /* ---------- Кейсы ---------- */
 (function cases() {
   const C = [
-    { n: 6, tag: 'торговая компания', shot: 'shots/case-6.jpg', video: 'shots/case-6.mp4', alt: 'Панель аналитики креаторов в TikTok, Instagram и YouTube: итоги по всем авторам, карточка каждого со всеми соцсетями и графиками по дням, ИИ-сводка комментариев и банк гипотез с разметкой роликов по тегам (имена и цифры изменены)', t: 'Аналитика блогеров по всем площадкам', pain: 'Компания работала с десятками блогеров на YouTube, TikTok и Instagram. Цифры сводили руками в таблицах, а что именно в ролике сработало, оставалось догадкой.',
+    { n: 6, tag: 'торговая компания', s: 'Аналитика блогеров', one: 'Ночью собирает статистику со всех площадок и объясняет, почему зашёл ролик.', shot: 'shots/case-6.jpg', video: 'shots/case-6.mp4', alt: 'Панель аналитики креаторов в TikTok, Instagram и YouTube: итоги по всем авторам, карточка каждого со всеми соцсетями и графиками по дням, ИИ-сводка комментариев и банк гипотез с разметкой роликов по тегам (имена и цифры изменены)', t: 'Аналитика блогеров по всем площадкам', pain: 'Компания работала с десятками блогеров на YouTube, TikTok и Instagram. Цифры сводили руками в таблицах, а что именно в ролике сработало, оставалось догадкой.',
       steps: ['Каждую ночь собираются ролики, просмотры, лайки, комментарии и подписчики со всех площадок', 'У каждого креатора карточка с динамикой, блогеров можно сравнить между собой и отобрать по показателям', 'ИИ разбирает комментарии зрителей и сам ролик: за счёт чего зашёл, снят живьём или сгенерирован', 'Банк гипотез: метка в описании ролика — статистика по идее собирается сама, команда голосует', 'Сводки за день, неделю и месяц, сигнал при резкой просадке или всплеске, кабинет креатора, бот и выгрузка в таблицы'],
       res: ['решения по блогерам — по данным, а не на глаз', 'вся статистика и разбор роликов в одном месте, без ручных таблиц'] },
-    { n: 8, tag: 'IT-сервис', shot: 'shots/case-8.jpg', video: 'shots/case-8.mp4', alt: 'Очередь заявок поддержки: ответ по фактам из журналов и живой проверки, ниже лента проверок сервиса', t: 'Поддержка, которая отвечает по фактам и сама следит за сервисом', pain: 'Заявки шли из нескольких чатов и почты, на каждую нужно было лезть в логи. О сбоях клиенты иногда узнавали раньше команды, а разработчики — от раздражённых клиентов.',
+    { n: 8, tag: 'IT-сервис', s: 'Поддержка по фактам', one: 'Отвечает по логам и замечает сбой раньше клиентов.', shot: 'shots/case-8.jpg', video: 'shots/case-8.mp4', alt: 'Очередь заявок поддержки: ответ по фактам из журналов и живой проверки, ниже лента проверок сервиса', t: 'Поддержка, которая отвечает по фактам и сама следит за сервисом', pain: 'Заявки шли из нескольких чатов и почты, на каждую нужно было лезть в логи. О сбоях клиенты иногда узнавали раньше команды, а разработчики — от раздражённых клиентов.',
       steps: ['Заявки из чатов и почты собираются в одну очередь', 'Нейросеть, обученная на базе знаний и логах сервиса, сама разбирается в проблеме: смотрит логи, делает живой замер, сразу отвечает клиенту, что проблема найдена', 'Разработчикам уходит готовый разбор: что сломалось, у кого и как повторить. Когда починили — агент перепроверяет и сообщает клиенту', 'Без всяких заявок агент круглосуточно следит за сервисом: качество и скорость работы, регулярные тесты, поиск уязвимостей — найденное сразу уходит разработчикам', 'Утром и вечером — разбор: что падало, на что жалуются, что повторяется. Решённые случаи пополняют базу знаний'],
       res: ['сбой видят раньше клиентов', 'клиент получает ответ по фактам и новость о починке, разработчики — готовый разбор и сигнал о сбоях и уязвимостях ещё до жалоб'] },
-    { n: 1, tag: 'торговая компания', alt: 'Экран «Оплаты недели»: что оплатить сейчас и на следующей неделе по каждому поставщику, просроченное отдельно и кнопка «оплачено» (имена и цифры изменены)', t: 'Закупки и деньги в одном окне', pain: 'Заказы поставщикам, рассрочки и логистика жили в нескольких таблицах. На вопрос «сколько мы платим в марте» уходил день.',
+    { n: 1, tag: 'торговая компания', s: 'Закупки и деньги', demo: 't-buy', alt: 'Экран «Оплаты недели»: что оплатить сейчас и на следующей неделе по каждому поставщику, просроченное отдельно и кнопка «оплачено» (имена и цифры изменены)', t: 'Закупки и деньги в одном окне', pain: 'Заказы поставщикам, рассрочки и логистика жили в нескольких таблицах. На вопрос «сколько мы платим в марте» уходил день.',
       steps: ['Заказ вносится с условиями оплаты, они сами раскладываются в график платежей: депозит и рассрочка', 'Все платежи видны по неделям, план и факт рядом', 'Экран «оплаты недели»: что платить сейчас и на следующей неделе, по каждому поставщику', 'Кнопка «оплачено» проводит платёж, суммы пересчитываются', 'Любая сумма и дата правится прямо в строке, выгрузка в Excel'],
       res: ['ответ про деньги — сразу, а не через день', 'закупки, финансы и склад работают в одной системе, каждый в своём разделе'] },
-    { n: 3, tag: 'торговая компания', shot: 'shots/case-3.jpg', video: 'shots/case-3.mp4', alt: 'Партнёрская программа: сводка выплат, аналитика заявок, таблица партнёров со сверкой с TikTok, рейтинг и призы, кабинет блогера (имена и цифры изменены)', t: 'Партнёрская программа для блогеров', pain: 'Компания хотела продавать через блогеров, но заявки, ссылки и выплаты вести было негде.',
+    { n: 3, tag: 'торговая компания', s: 'Партнёрка для блогеров', one: 'Заявки, рейтинг и выплаты идут сами, менеджер только одобряет.', shot: 'shots/case-3.jpg', video: 'shots/case-3.mp4', alt: 'Партнёрская программа: сводка выплат, аналитика заявок, таблица партнёров со сверкой с TikTok, рейтинг и призы, кабинет блогера (имена и цифры изменены)', t: 'Партнёрская программа для блогеров', pain: 'Компания хотела продавать через блогеров, но заявки, ссылки и выплаты вести было негде.',
       steps: ['Блогер оставляет заявку на странице программы, заявки считаются сами', 'Менеджер видит подписчиков и вовлечённость и одобряет одной кнопкой — блогеру уходит вход в личный кабинет', 'Выплаты идут списком со статусами: в очереди, в обработке, выплачено', 'Блогеры соревнуются в месячном рейтинге, он считается из продаж', 'В своём кабинете блогер видит место, продажи и выплаты'],
       res: ['менеджер только одобряет заявки', 'остальное идёт само: кабинет блогеру, рейтинг из продаж и выплаты со статусами'] },
-    { n: 2, tag: 'торговая компания', alt: 'Общая почта: вкладка «Важное» — письма всех аккаунтов из общего ящика с аккаунтом, темой и статусом разбора (имена, адреса и цифры изменены)', t: 'Почта всех рабочих ящиков и аккаунтов по полочкам', pain: 'Письма из всех аккаунтов падали в один ящик. Блокировки, жалобы и проверки тонули среди рассылок.',
+    { n: 2, tag: 'торговая компания', s: 'Почта по полочкам', demo: 't-mail', alt: 'Общая почта: вкладка «Важное» — письма всех аккаунтов из общего ящика с аккаунтом, темой и статусом разбора (имена, адреса и цифры изменены)', t: 'Почта всех рабочих ящиков и аккаунтов по полочкам', pain: 'Письма из всех аккаунтов падали в один ящик. Блокировки, жалобы и проверки тонули среди рассылок.',
       steps: ['Письма всех аккаунтов собираются из общего ящика', 'Каждое письмо раскладывается по аккаунту и теме: блокировки, жалобы, возвраты, вопросы покупателей', 'Важное и вопросы покупателей — на отдельных вкладках', 'Письмо берут в работу, и команда видит статус и кто взял'],
       res: ['важное не тонет', 'любой аккаунт и любая тема — за два клика, видно, что уже в работе и что сделано'] },
-    { n: 4, tag: 'торговая компания', alt: 'Сторож товаров: свои товары с ценой, оценками, рейтингом и графиком за 30 дней, рядом вкладки рынка и журнала (имена и цифры изменены)', t: 'Сторож товаров и цен', pain: 'Что у товара отобрали кнопку покупки, к нему подсел чужой продавец или карточку заблокировали, команда узнавала через несколько дней по падению продаж.',
+    { n: 4, tag: 'торговая компания', s: 'Сторож товаров и цен', demo: 't-price', alt: 'Сторож товаров: свои товары с ценой, оценками, рейтингом и графиком за 30 дней, рядом вкладки рынка и журнала (имена и цифры изменены)', t: 'Сторож товаров и цен', pain: 'Что у товара отобрали кнопку покупки, к нему подсел чужой продавец или карточку заблокировали, команда узнавала через несколько дней по падению продаж.',
       steps: ['Сервис следит за своими товарами и за теми же позициями у других продавцов', 'Замечает нового продавца, блокировку карточки, смену цены и акции', 'Каждое изменение пишет в журнал: когда, что было, что стало', 'Важное о своих товарах за час-два уходит в рабочий чат', 'По рынку — таблица и недельная сводка'],
       res: ['сигнал за час-два, а не по падению продаж', 'свои товары и цены на рынке под присмотром круглые сутки'] },
-    { n: 11, tag: 'свои системы', jarvisAt: 28, shot: 'shots/case-11.jpg', alt: 'Одна задача на всех устройствах: список дел с галочками на телефоне, компьютере и сайте и напоминание в Telegram (кадр из ролика на демо-данных)', t: 'Все ИИ-агенты в одном окне управления', pain: 'Владелец сам держит в голове все задачи, напоминания и кто что делает.',
+    { n: 11, tag: 'свои системы', s: 'Пульт всех агентов', one: 'Агенты, задачи и напоминания — в одном окне на ПК и телефоне.', jarvisAt: 28, shot: 'shots/case-11.jpg', alt: 'Одна задача на всех устройствах: список дел с галочками на телефоне, компьютере и сайте и напоминание в Telegram (кадр из ролика на демо-данных)', t: 'Все ИИ-агенты в одном окне управления', pain: 'Владелец сам держит в голове все задачи, напоминания и кто что делает.',
       steps: ['У каждого направления своя тема в рабочем чате и свой агент: помнит историю проекта, ведёт журнал «где остановились» и не путается с соседями', 'Джарвис — пульт и окно владельца на компьютере и телефоне. Он связан с оркестратором напрямую: задачу можно дать голосом или текстом, разбудить или остановить агента, поменять приоритеты', 'Оркестратор отдаёт работу нужному агенту. Задачи не теряются: после перезапуска или паузы работа сама возвращается тому же агенту с того же места, срочное обгоняет фоновое', 'Агент, понявший, что задача не его, сам передаёт её соседу. Перед решениями с ценой агенты советуются: продукт, деньги, бизнес', 'Всё, где нужен человек, собирается в одном списке: дела с галочками и напоминаниями, вопросы с готовыми вариантами на кнопках, тексты людям уходят только по кнопке «Отправить»', '«Сделано» засчитывается только по следу. Код перед выпуском проверяет агент-ревьюер, экран — агент-приёмщик по снимкам', 'Регулярная сводка по всем проектам: что сделано, что стоит, чего ждём от людей'],
-      res: ['60+ агентов работают параллельно, владелец видит всё в одном окне', 'действие в Джарвисе сразу видно агентам, и наоборот: ответ кнопкой, отметка «сделал» и новая задача доходят без пересылок. Так же будет устроен ИИ-отдел у клиента'] },
-    { n: 9, tag: 'свои системы', jarvisAt: 16, shot: 'shots/case-9.jpg', alt: 'Секретарь созвонов: план дня с наложением, перенос встречи с кнопками ответа и протокол созвона с задачами (демо-данные)', t: 'Секретарь созвонов', pain: 'Встречи переносят и отменяют, договорённости со созвона теряются, «созвонимся на неделе» так и висит.',
+      res: ['владелец видит все задачи и всех агентов в одном окне', 'так же будет устроен ИИ-отдел у клиента'] },
+    { n: 9, tag: 'свои системы', s: 'Секретарь созвонов', one: 'Предлагает окна для переноса, после встречи — протокол и задачи.', demo: 't-call', jarvisAt: 16, shot: 'shots/case-9.jpg', alt: 'Секретарь созвонов: план дня с наложением, перенос встречи с кнопками ответа и протокол созвона с задачами (демо-данные)', t: 'Секретарь созвонов', pain: 'Встречи переносят и отменяют, договорённости со созвона теряются, «созвонимся на неделе» так и висит.',
       steps: ['Каждые 5 минут календари сверяются автоматически, наложения встреч видны сразу', 'О переносе, отмене или новой встрече сразу пишет в Telegram, ответить можно кнопкой', 'На просьбу о переносе предлагает 2–3 свободных окна и готовит ответ', 'Утром — план на день, напоминания за 60 и за 10 минут, в воскресенье вечером — план на неделю', 'После встречи — протокол, задачи уходят исполнителям, а текст человеку — после одобрения владельца'],
-      res: ['договорённость без даты под присмотром, пока не встанет в календарь', 'секретарь — часть Джарвиса и показан в ролике о нём выше: созвон превращается в текст, решения — в задачи'] },
-    { n: 10, tag: 'свои системы', shot: 'shots/case-10.jpg', video: 'shots/case-10.mp4', alt: 'Отчёт разведчика за два дня: заказы с бирж разобраны на годные, мусор и не по профилю, к годным готов отклик, имена и площадки скрыты', t: 'Разведчик заказов с бирж', pain: 'Я беру заказы на биржах фриланса. Объявлений сотни в день, половина — спам, развод или не по профилю. Пока листаешь руками, хороший заказ забирают другие.',
+      res: ['договорённость без даты под присмотром, пока не встанет в календарь', 'секретарь — часть Джарвиса: созвон превращается в текст, решения — в задачи'] },
+    { n: 10, tag: 'свои системы', s: 'Разведчик заказов', one: 'Отсеивает мусор на биржах и присылает годные заказы с откликом.', shot: 'shots/case-10.jpg', video: 'shots/case-10.mp4', alt: 'Отчёт разведчика за два дня: заказы с бирж разобраны на годные, мусор и не по профилю, к годным готов отклик, имена и площадки скрыты', t: 'Разведчик заказов с бирж', pain: 'Я беру заказы на биржах фриланса. Объявлений сотни в день, половина — спам, развод или не по профилю. Пока листаешь руками, хороший заказ забирают другие.',
       steps: ['Каждый день агент читает новые объявления на нескольких биржах заказов', 'Отсеивает мусор: спам, развод, «нужен небольшой взнос», повторы одного автора', 'Откладывает то, что не по профилю, и объясняет почему', 'К каждому годному заказу пишет черновик отклика и присылает мне в Telegram', 'Я только читаю короткий список и отправляю отклики'],
       res: ['до меня доходят только годные заказы — с готовым откликом', 'для бизнеса то же самое работает со входящими заявками: почта, формы на сайте, чаты, Авито'] }
   ];
-  // короткие тексты четырёх главных кейсов (факты — из полных описаний выше)
+  // короткие тексты кейсов без кадра и главного (факты — из полных описаний выше)
   const MAIN = {
-    2: { does: 'Собирает письма всех аккаунтов из общего ящика и раскладывает по теме: блокировки, жалобы, возвраты, вопросы покупателей.', was: 'блокировки и жалобы тонули среди рассылок.', now: 'важное наверху, видно, кто взял письмо в работу.' },
-    1: { does: 'Раскладывает оплаты поставщикам по неделям, кнопка «оплачено» сама пересчитывает суммы.', was: 'на вопрос «сколько платим в марте» уходил день.', now: 'ответ про деньги сразу.' },
-    8: { does: 'Разбирает заявки по логам и живым замерам, отвечает клиенту и круглосуточно следит за сервисом.', was: 'о сбоях клиенты узнавали раньше команды.', now: 'сбой видят раньше клиентов, разработчикам уходит готовый разбор.' },
-    4: { does: 'Следит за своими товарами и ценами на рынке: новый продавец, блокировка карточки, смена цены.', was: 'о проблеме узнавали через несколько дней по падению продаж.', now: 'сигнал в рабочий чат за час-два.' }
+    2: { does: 'Собирает письма всех аккаунтов из общего ящика и раскладывает по теме: блокировки, жалобы, возвраты, вопросы покупателей.', was: 'блокировки и жалобы тонули среди рассылок', now: 'важное наверху, видно, кто взял письмо в работу' },
+    1: { does: 'Раскладывает оплаты поставщикам по неделям, кнопка «оплачено» сама пересчитывает суммы.', was: 'на вопрос «сколько платим в марте» уходил день', now: 'ответ про деньги сразу' },
+    8: { does: 'Разбирает заявки по логам и живым замерам, отвечает клиенту и круглосуточно следит за сервисом.', was: 'о сбоях клиенты узнавали раньше команды', now: 'сбой видят раньше клиентов, разработчикам уходит готовый разбор' },
+    4: { does: 'Следит за своими товарами и ценами на рынке: новый продавец, блокировка карточки, смена цены.', was: 'о проблеме узнавали через несколько дней по падению продаж', now: 'сигнал в рабочий чат за час-два' }
   };
   const CAT = { 1: 'Финансы', 2: 'Почта', 3: 'Продажи', 4: 'Мониторинг', 6: 'Аналитика', 8: 'Поддержка', 9: 'Созвоны', 10: 'Заявки', 11: 'Управление' };
-  // кейс с роликом — первым, во всю ширину; текстовые — рядами под ним
-  const MAIN_ORDER = [8, 1, 2, 4];
-  const c11 = C.find(c => c.n === 11);
-  if (c11) c11.res = ['владелец видит все задачи и всех агентов в одном окне', 'Так же будет устроен ИИ-отдел у клиента.'];
+  // асимметричная сетка: ряд 7+5, ряд 4+5+3, ряд 5+3+4, последний на всю ширину
+  const ORDER = [8, 6, 1, 3, 2, 9, 4, 11, 10];
+  const byN = n => C.find(c => c.n === n);
+  const box = $('#casesBox'), dlg = $('#caseDlg'), body = $('#dlgB');
 
-  // окно с увеличенным скриншотом: закрывается кликом, крестиком и Esc
-  const lb = el('div', 'lightbox'); lb.hidden = true; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Скриншот');
-  lb.innerHTML = '<button type="button" class="lb-close" aria-label="Закрыть">×</button><img alt=""><video controls playsinline muted preload="none" hidden></video><p></p>';
-  document.body.appendChild(lb);
-  let lbFrom = null;
-  const lbVid = lb.querySelector('video');
-  const closeShot = () => { lb.hidden = true; lbVid.pause(); document.body.style.overflow = ''; if (lbFrom) lbFrom.focus(); };
-  lbVid.addEventListener('click', e => e.stopPropagation());
-  function openShot(src, alt, from) {
-    lbFrom = from; const im = lb.querySelector('img');
-    im.hidden = false; lbVid.hidden = true; im.src = src; im.alt = alt;
-    lb.querySelector('p').textContent = alt;
-    lb.hidden = false; document.body.style.overflow = 'hidden'; lb.querySelector('.lb-close').focus();
-  }
-  lb.addEventListener('click', closeShot);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) closeShot(); });
+  const tile = c => {
+    const m = MAIN[c.n], txt = !c.shot;
+    const d = el('article', `w w-${c.n}${txt ? ' txt' : ''}`);
+    const media = txt
+      ? `<span class="w-media ba"><span class="was"><small>было</small>${m.was}</span><span class="now"><small>стало</small><em>${m.now}</em></span></span>`
+      : `<span class="w-media"><img src="${c.shot}" alt="${c.alt}" loading="lazy" width="1280" height="720">${c.video ? '<span class="play">Ролик</span>' : ''}</span>`;
+    d.innerHTML = `<button type="button" class="w-open" aria-haspopup="dialog">${media}<span class="w-meta"><span class="w-cat">${CAT[c.n]} · ${c.tag}</span><span class="w-t">${c.s}</span>${txt ? '' : `<span class="w-one">${c.one || m.does}</span>`}<span class="w-go">Подробнее</span></span></button>` +
+      (c.demo ? `<div class="w-acts"><button type="button" class="btn small" data-demo="${c.demo}">Попробовать в демо</button></div>` : '');
+    d.querySelector('.w-open').addEventListener('click', () => open(c));
+    const db = d.querySelector('[data-demo]'); if (db) db.addEventListener('click', () => openDemo(c.demo));
+    return d;
+  };
 
-  // кейс без кадра (настоящие интерфейсы клиента сняты 17.11) — только текст
-  const mediaHtml = c => !c.shot ? '' : c.video
-    ? `<div class="media"><video controls playsinline preload="none" poster="${c.shot}" src="${c.video}" aria-label="Демо: ${c.alt}"></video></div><p class="media-note">Нажмите на ролик</p>`
-    : `<div class="media"><button type="button" class="shot" aria-label="Увеличить скриншот: ${c.alt}"><img src="${c.shot}" alt="${c.alt}" loading="lazy" width="1280" height="720"><span class="zoom">Увеличить</span></button></div><p class="media-note">Нажмите, чтобы увеличить</p>`;
-
-  // играет только один ролик за раз
-  const onePlayer = root => root.querySelectorAll('video').forEach(v => v.addEventListener('play', () => document.querySelectorAll('video').forEach(o => { if (o !== v) o.pause(); })));
-  const wireShot = (root, c) => { const sb = root.querySelector('.shot'); if (sb) sb.addEventListener('click', () => openShot(c.shot, c.alt, sb)); };
-
-  // четыре главных кейса: ролик, что делает, было и стало
-  const box = $('#casesBox');
-  const mainWithMedia = MAIN_ORDER.filter(n => (C.find(c => c.n === n) || {}).shot).length;
-  MAIN_ORDER.map(n => C.find(c => c.n === n)).forEach(c => {
-    const m = MAIN[c.n];
-    const d = el('article', 'case');
-    d.innerHTML = `${c.shot ? `<div class="mcol">${mediaHtml(c)}</div>` : ''}<div class="txt"><p class="cat">${CAT[c.n] || ''} · ${c.tag}</p><h3>${c.t}</h3>
-      <p><b>Что делает.</b> ${m.does}</p>
-      <p class="res"><b>Было:</b> ${m.was}<br><b>Стало:</b> ${m.now}</p></div>`;
-    // единственный кейс с роликом среди главных — во всю ширину, чтобы ряд не был кривым
-    if (c.shot && mainWithMedia === 1) d.classList.add('wide');
-    wireShot(d, c); onePlayer(d); box.appendChild(d);
-  });
-
-  // остальные — компактной сеткой, раскрываются по клику
-  const rest = C.filter(c => !MAIN_ORDER.includes(c.n));
-  $('#moreH').textContent = `Ещё ${rest.length} ${rest.length === 1 ? 'система' : rest.length < 5 ? 'системы' : 'систем'}`;
-  const tiles = $('#tiles');
-  rest.forEach(c => {
-    const d = el('article', 'tile');
-    d.innerHTML = `<button type="button" class="tile-h" aria-expanded="false"><span class="thumb"><img src="${c.shot}" alt="Кадр: ${c.t}" loading="lazy" width="1280" height="720"></span><span class="tile-t"><b>${c.t}</b><span>${CAT[c.n] ? CAT[c.n] + ' · ' : ''}${c.tag}</span></span></button>
-      <div class="tile-body" hidden>
-        <div class="tile-media">${mediaHtml(c)}</div>
-        <div class="tile-text">
-          <p><b>Было:</b> ${c.pain}</p>
-          <ul>${c.steps.slice(0, 3).map(s => `<li>${s}</li>`).join('')}</ul>
-          <p class="res"><b>Стало:</b> ${c.res[0]}.</p>
-          ${c.jarvisAt != null ? '<button type="button" class="btn small jumpj">Смотреть в ролике Джарвиса</button>' : ''}
-        </div>
+  function open(c) {
+    $('#dlgC').textContent = `${CAT[c.n]} · ${c.tag}`;
+    $('#dlgT').textContent = c.t;
+    const media = !c.shot ? '' : c.video
+      ? `<div><div class="dlg-media"><video controls playsinline preload="metadata" poster="${c.shot}" src="${c.video}" aria-label="Ролик: ${c.alt}"></video></div><p class="note" style="margin-top:8px">Кадры настоящие, имена и цифры изменены.</p></div>`
+      : `<div><div class="dlg-media"><img src="${c.shot}" alt="${c.alt}" width="1280" height="720"></div><p class="note" style="margin-top:8px">Кадр настоящий, данные изменены.</p></div>`;
+    body.innerHTML = `${media}
+      <div class="dlg-cols">
+        <div><h4>Было</h4><p>${c.pain}</p></div>
+        <div><h4>Как работает</h4><ol>${c.steps.map(s => `<li>${s}</li>`).join('')}</ol></div>
+        <div><h4>Стало</h4><ul>${c.res.map(s => `<li>${s}</li>`).join('')}</ul></div>
+      </div>
+      <div class="dlg-acts">
+        <a class="btn primary" href="${TG_LINK}" rel="noopener">Хочу похожее у себя</a>
+        ${c.demo ? '<button type="button" class="btn" data-go="demo">Попробовать в демо</button>' : ''}
+        ${c.jarvisAt != null ? '<button type="button" class="btn jumpj">Смотреть в ролике Джарвиса</button>' : ''}
       </div>`;
-    const h = d.querySelector('.tile-h'), body = d.querySelector('.tile-body');
-    h.addEventListener('click', () => {
-      const open = !d.classList.contains('open');
-      tiles.querySelectorAll('.tile.open').forEach(o => { o.classList.remove('open'); o.querySelector('.tile-body').hidden = true; o.querySelector('.tile-h').setAttribute('aria-expanded', 'false'); o.querySelectorAll('video').forEach(v => v.pause()); });
-      if (open) { d.classList.add('open'); body.hidden = false; h.setAttribute('aria-expanded', 'true'); d.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); }
+    const g = body.querySelector('[data-go]'); if (g) g.addEventListener('click', () => { close(); openDemo(c.demo); });
+    const j = body.querySelector('.jumpj'); if (j) j.addEventListener('click', () => {
+      close(); const v = $('#jarvisVid'); v.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      try { v.currentTime = c.jarvisAt; } catch (e) {} v.play().catch(() => {});
     });
-    wireShot(d, c); onePlayer(d);
-    const jb = d.querySelector('.jumpj');
-    if (jb) jb.addEventListener('click', () => {
-      const v = $('#jarvisVid'); v.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-      try { v.currentTime = c.jarvisAt; } catch (e) {}
-      v.play().catch(() => {});
-    });
-    tiles.appendChild(d);
-  });
-  onePlayer(document.getElementById('top'));
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    document.body.style.overflow = 'hidden';
+  }
+  const close = () => { if (dlg.open) dlg.close(); };
+  dlg.addEventListener('close', () => { body.querySelectorAll('video').forEach(v => v.pause()); document.body.style.overflow = ''; });
+  $('#dlgX').addEventListener('click', close);
+  dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
+
+  ORDER.map(byN).forEach(c => box.appendChild(tile(c)));
+  // играет только один ролик за раз
+  document.addEventListener('play', e => { document.querySelectorAll('video').forEach(o => { if (o !== e.target) o.pause(); }); }, true);
 })();
 </script>
 </body>
