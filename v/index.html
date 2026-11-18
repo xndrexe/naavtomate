@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Собирается из template.html скриптом build.py — правь шаблон, не этот файл -->
-<title>Влад · На автомате — автоматизация бизнеса с ИИ</title>
-<meta name="description" content="На автомате: автоматизация бизнеса с ИИ под ключ. Написать Владу в Telegram или прислать сайт на бесплатный разбор.">
+<title>На автомате — автоматизация бизнеса с ИИ</title>
+<meta name="description" content="На автомате: автоматизация бизнеса с ИИ под ключ. Обсудить задачу в Telegram или прислать сайт на бесплатный разбор.">
 <meta name="robots" content="noindex">
-<meta property="og:title" content="Влад · На автомате">
+<meta property="og:title" content="На автомате">
 <meta property="og:description" content="Автоматизация бизнеса с ИИ под ключ">
 <meta property="og:url" content="https://xndrexe.github.io/naavtomate/v/?from=vlad">
 <meta name="theme-color" content="#171716">
@@ -29,10 +29,9 @@ main{width:min(480px,100%);margin-inline:auto;
   padding:max(24px,env(safe-area-inset-top)) 20px max(28px,env(safe-area-inset-bottom));
   min-height:100svh;display:flex;flex-direction:column}
 .who{display:flex;align-items:center;gap:12px;margin-bottom:32px}
-.ava{flex:none;width:48px;height:48px;border-radius:6px;display:grid;place-items:center;
-  background:var(--volt);color:var(--volt-ink);font-weight:700;font-size:22px}
-.who b{display:block;font-size:17px;line-height:1.3;font-weight:600}
-.who span{color:var(--muted);font-size:14px}
+/* знак бренда — тот же квадрат, что в шапке главной, только в акценте */
+.mark{flex:none;width:14px;height:14px;border-radius:3px;background:var(--volt)}
+.who b{font-size:20px;line-height:1.2;font-weight:700;letter-spacing:-.02em}
 h1{margin:0 0 20px;font-size:40px;line-height:1.02;letter-spacing:-.035em;font-weight:700}
 ul{list-style:none;margin:0 0 28px;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
 li{display:flex;gap:12px;align-items:center;font-size:17px;line-height:1.35;padding:12px 0;border-bottom:1px solid var(--line)}
@@ -60,6 +59,7 @@ li svg{flex:none;width:20px;height:20px;color:var(--volt)}
   ul{margin-bottom:20px} li{font-size:16px;padding:10px 0}
   .btn{min-height:48px;font-size:16px}
   .free{padding:12px 14px;margin-bottom:14px}
+  .more{margin-top:6px}
 }
 /* низкий экран (старый айфон 320x568): кнопки выше блока про разбор, чтобы были видны сразу */
 @media (max-height:620px) and (max-width:699px){
@@ -71,8 +71,8 @@ li svg{flex:none;width:20px;height:20px;color:var(--volt)}
 <body>
 <main>
   <div class="who">
-    <div class="ava" aria-hidden="true">В</div>
-    <div><b>Влад</b><span data-brand>На автомате</span></div>
+    <i class="mark" aria-hidden="true"></i>
+    <b data-brand>На автомате</b>
   </div>
 
   <h1>Автоматизация бизнеса с&nbsp;ИИ —&nbsp;под&nbsp;ключ</h1>
@@ -89,11 +89,10 @@ li svg{flex:none;width:20px;height:20px;color:var(--volt)}
   </div>
 
   <div class="cta">
-    <a class="btn primary" href="https://t.me/WhatisLove1230" rel="noopener">
+    <a class="btn primary" data-bot href="https://t.me/naavtomate_ai_bot?start=vlad" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 4.3 2.9 11.4c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.4-1.6zM8.6 14l9.2-5.8c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2L8.6 14z"/></svg>
-      Написать Владу</a>
-    <a class="btn soft" data-bot href="https://t.me/naavtomate_ai_bot?start=vlad" rel="noopener">Прислать сайт на разбор</a>
-    <a class="btn" href="vlad.vcf" type="text/vcard">
+      Обсудить задачу</a>
+    <a class="btn" href="contact.vcf" type="text/vcard">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 19.5c.8-3.3 3.3-5 6.5-5s5.7 1.7 6.5 5M19 8v6M16 11h6"/></svg>
       Добавить в контакты</a>
   </div>

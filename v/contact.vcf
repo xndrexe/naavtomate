@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:3.0
+N:;;;;
+FN:На автомате
+ORG:На автомате
+X-ABShowAs:COMPANY
+URL;TYPE=Telegram:https://t.me/naavtomate_ai_bot
+X-SOCIALPROFILE;TYPE=telegram:https://t.me/naavtomate_ai_bot
+URL;TYPE=WORK:https://xndrexe.github.io/naavtomate/
+NOTE:Автоматизация бизнеса с ИИ. Telegram-бот @naavtomate_ai_bot. Сайт https://xndrexe.github.io/naavtomate/
+END:VCARD
