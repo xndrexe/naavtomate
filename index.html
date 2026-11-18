@@ -187,6 +187,9 @@ section{padding:var(--gap) 0}
 .w-8{grid-column:span 6}.w-6{grid-column:span 6}
 /* подпись вшита в середину кадра аналитики: режем от центра, чтобы она не обрезалась */
 .w-6 .w-media img{object-position:center bottom}
+/* внизу кадра аналитики вшита подпись — кнопку ролика ставим в пустой правый верх */
+.w-6 .w-media .play{left:auto;bottom:auto;right:16px;top:16px}
+@media (max-width:600px){.w-6 .w-media .play{right:12px;top:12px}}
 .w-1{grid-column:span 4}.w-3{grid-column:span 5}.w-2{grid-column:span 3}
 .w-9{grid-column:span 5}.w-4{grid-column:span 3}.w-11{grid-column:span 4}
 .w-10{grid-column:span 12}
