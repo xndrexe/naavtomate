@@ -23,9 +23,9 @@
 "url":"https://t.me/naavtomate_ai_bot?start=site","sameAs":["https://github.com/xndrexe"],
 "hasOfferCatalog":{"@type":"OfferCatalog","name":"Как начать работу","itemListElement":[
 {"@type":"Offer","itemOffered":{"@type":"Service","name":"Разбор","description":"Бесплатно и письменно: по ссылке на сайт или страницу, откуда приходят клиенты, показываю, где теряются заявки и что отдать ИИ."},"price":"0","priceCurrency":"RUB"},
-{"@type":"Offer","itemOffered":{"@type":"Service","name":"Пробный запуск","description":"Одна задача на данных клиента за 2 недели, предоплата."},"price":"25000","priceCurrency":"RUB"},
-{"@type":"Offer","itemOffered":{"@type":"Service","name":"Полный запуск","description":"Доплата после пробного: задача на весь объём клиента и гарантия 2 месяца, всего 50 000 ₽."},"price":"25000","priceCurrency":"RUB"},
-{"@type":"Offer","itemOffered":{"@type":"Service","name":"Карта бизнеса","description":"Разбор всего бизнеса за 1–2 недели: что автоматизировать и в каком порядке."},"price":"30000","priceCurrency":"RUB"}]}}
+{"@type":"Offer","itemOffered":{"@type":"Service","name":"Заявки без потерь","description":"Одна задача: обращения из мессенджеров, сайта и звонков в одну базу, напоминания менеджеру. Точная цена после разбора."},"priceSpecification":{"@type":"PriceSpecification","minPrice":"20000","priceCurrency":"RUB"}},
+{"@type":"Offer","itemOffered":{"@type":"Service","name":"Бизнес под контролем в 9 утра","description":"Отчёты и панель: каждое утро продажи, остатки и деньги из систем клиента. Точная цена после разбора."},"priceSpecification":{"@type":"PriceSpecification","minPrice":"30000","priceCurrency":"RUB"}},
+{"@type":"Offer","itemOffered":{"@type":"Service","name":"Контент без своего отдела","description":"Посты и короткие ролики из материалов клиента по расписанию, первый месяц дороже."},"priceSpecification":{"@type":"UnitPriceSpecification","minPrice":"50000","priceCurrency":"RUB","unitCode":"MON"}}]}}
 </script>
 <title>На автомате · ИИ-помощники для бизнеса под ключ: заявки, почта, отчёты</title>
 <script>(()=>{try{const t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}})()</script>
@@ -402,14 +402,15 @@ tr.dim td{opacity:.4}
 .free p{color:#bdbbb4;font-size:var(--s);margin-top:4px;max-width:52ch}
 .free .btn{border-color:var(--volt)}
 .free .btn.primary:hover{background:transparent;color:var(--volt)}
-.stages{display:grid;grid-template-columns:1fr 1fr;gap:20px;position:relative}
+.stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;position:relative}
 .stage{border:2px solid var(--ink);border-radius:var(--r);padding:clamp(22px,2.6vw,36px);display:grid;gap:16px;grid-template-rows:auto auto auto 1fr auto;background:var(--bg)}
 .stage ul{align-self:start}
 .stage{grid-template-columns:minmax(0,1fr)}
 @media (max-width:400px){.stage .btn{justify-self:stretch;white-space:normal;text-align:center;padding:10px 16px}.bar .btn{white-space:normal;text-align:center}}
 .stage .lab{font-size:var(--s);color:var(--muted);display:flex;gap:10px;align-items:center}
 .stage .lab b{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:14px}
-.stage .price{font-size:var(--xl);font-weight:600;letter-spacing:-.045em;line-height:1}
+.stage .price{font-size:clamp(34px,3.4vw,48px);font-weight:600;letter-spacing:-.045em;line-height:1}
+@media (max-width:1080px){.stages{grid-template-columns:1fr}}
 .stage .price small{display:block;font-size:var(--s);letter-spacing:0;color:var(--muted);font-weight:400;margin-top:8px}
 .stage p.d{font-size:var(--b)}
 .stage ul{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:16px}
@@ -417,7 +418,6 @@ tr.dim td{opacity:.4}
 .stage li::before{content:'';position:absolute;left:0;top:6px;width:12px;height:12px;border-radius:3px;background:var(--volt);box-shadow:inset 0 0 0 2px var(--ink)}
 .stage .btn{justify-self:start;margin-top:4px}
 .stage.two{background:var(--bg2)}
-.stages::after{content:'→';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:var(--volt);border:2px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:var(--m);color:var(--volt-ink)}
 .terms{margin-top:20px;border-top:1px solid var(--line)}
 .terms summary{cursor:pointer;min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:600;list-style:none;border-bottom:1px solid var(--line)}
 .terms summary::-webkit-details-marker{display:none}
@@ -432,7 +432,6 @@ tr.dim td{opacity:.4}
 @media (max-width:860px){
   .free{grid-template-columns:1fr;padding:24px}
   .stages{grid-template-columns:1fr}
-  .stages::after{display:none}
   .terms dl{grid-template-columns:1fr;gap:4px}
   .terms dd{margin-bottom:12px}
   .mapline span{display:block;margin:4px 0 0}
@@ -702,39 +701,49 @@ tr.dim td{opacity:.4}
     </div>
     <div class="stages">
       <div class="stage">
-        <p class="lab"><b>1</b>Пробный запуск</p>
-        <p class="price">25 000 ₽<small>предоплата · 2 недели</small></p>
-        <p class="d">Одна задача на ваших настоящих заявках, письмах или отчётах.</p>
+        <p class="lab"><b>1</b>Заявки без потерь</p>
+        <p class="price">от 20 000 ₽<small>одна задача · 1–2 недели</small></p>
+        <p class="d">Обращения из мессенджеров, сайта и звонков — в одну базу.</p>
         <ul>
-          <li>старт в течение 3 рабочих дней после оплаты</li>
-          <li>не устроило — останавливаемся без доплаты, сделанное остаётся у вас</li>
-          <li>нейросеть и сервер оплачиваете напрямую, сумму называю до старта</li>
+          <li>менеджеру приходит напоминание перезвонить</li>
+          <li>вы видите, кому ещё не ответили</li>
         </ul>
-        <a class="btn" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Начать с пробного</a>
+        <a class="btn" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Обсудить заявки</a>
       </div>
-      <div class="stage two">
-        <p class="lab"><b>2</b>Полный запуск</p>
-        <p class="price">+25 000 ₽<small>итого 50 000 ₽ · если пробный понравился</small></p>
-        <p class="d">Задача работает на весь объём, каждый день.</p>
+      <div class="stage">
+        <p class="lab"><b>2</b>Бизнес под контролем в 9 утра</p>
+        <p class="price">от 30 000 ₽<small>отчёты и панель · 2–3 недели</small></p>
+        <p class="d">Каждое утро один отчёт: продажи, остатки и деньги.</p>
         <ul>
-          <li>2 месяца гарантии: чиню сбои и делаю 5 мелких правок</li>
-          <li>без абонентской платы</li>
-          <li>доступы и всё сделанное — у вас</li>
+          <li>данные из ваших систем, без ручного сбора</li>
+          <li>можно спросить своими словами: «сколько заказов за неделю?»</li>
         </ul>
-        <a class="btn" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Обсудить полный запуск</a>
+        <a class="btn" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Обсудить отчёты</a>
+      </div>
+      <div class="stage">
+        <p class="lab"><b>3</b>Контент без своего отдела</p>
+        <p class="price">от 50 000 ₽<small>в месяц · первый месяц дороже, в нём настройка</small></p>
+        <p class="d">Посты и короткие ролики из ваших материалов по расписанию.</p>
+        <ul>
+          <li>от идеи до готового, вы только принимаете</li>
+          <li>первый выпуск через 2 недели</li>
+        </ul>
+        <a class="btn" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Обсудить контент</a>
       </div>
     </div>
     <details class="terms">
-      <summary>Условия подробно</summary>
+      <summary>Условия: половина вперёд, гарантия 2 месяца</summary>
       <dl>
-        <dt>Гарантия 2 месяца</dt><dd>Бесплатно чиню сбои и поломки связок с вашими сервисами, делаю 5 мелких правок.</dd>
+        <dt>Цена</dt><dd>Везде «от»: точную называю после бесплатного разбора, до начала работ.</dd>
+        <dt>Гарантия 2 месяца</dt><dd>Бесплатно чиню сбои в сделанном и поломки связок с вашими сервисами.</dd>
+        <dt>Поддержка</dt><dd>После гарантии — от 3 000 ₽ в месяц, по желанию.</dd>
         <dt>Сторонние сервисы</dt><dd>Нейросеть и сервер оплачиваете вы напрямую, обычно несколько тысяч рублей в месяц. Точную сумму называю до старта, в цену работы они не входят.</dd>
-        <dt>Оплата</dt><dd>Работаю по предоплате. Цену новых задач называю до начала работ.</dd>
+        <dt>Оплата</dt><dd>Половина вперёд, остальное — когда примете работу.</dd>
         <dt>Кому подходит</dt><dd>Торговля, сервисы, онлайн-школы, салоны, агентства, производство.</dd>
       </dl>
     </details>
     <div class="mapline">
-      <p><b>Карта всего бизнеса</b><span>от 30 000 ₽ · 1–2 недели</span></p>
+      <p><b>Карта всего бизнеса</b><span>что отдать ИИ и в каком порядке</span></p>
       <a class="link" href="#map">Как выглядит карта</a>
     </div>
   </div>
@@ -1244,6 +1253,18 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
   const hrs = ([lo, hi]) => en()
     ? (lo === 0 ? `up to ${hi} h a month` : hi == null ? `${lo}+ h a month` : `about ${lo}–${hi} h a month`)
     : (lo === 0 ? `до ${hi} ч в месяц` : hi == null ? `от ${lo} ч в месяц` : `около ${lo}–${hi} ч в месяц`);
+  // метка для бота: calc_<номера пунктов в порядке списка>, номер — место ключа в P с 1;
+  // бот берёт латиницу, цифры, _ и -, до 32 знаков — хвост списка отрезаем
+  const KEYS = Object.keys(P);
+  const calcSrc = items => {
+    let src = 'calc';
+    for (const it of items) {
+      const next = `${src}${src === 'calc' ? '_' : '-'}${KEYS.indexOf(it.k) + 1}`;
+      if (next.length > 32) break;
+      src = next;
+    }
+    return src;
+  };
   const weight = ([lo, hi]) => hi == null ? lo * 1.5 : (lo + hi) / 2;
 
   const left = el('div', 'nv-steps'), right = el('div', 'map nv-res');
@@ -1294,7 +1315,7 @@ const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
     const counted = top.filter(it => it.h);
     if (counted.length) h += `<details class="more"><summary>${t('how')}</summary><p>${t('howp')}</p><ul>` +
       counted.map(it => `<li><b>${it.p[1 + i]}:</b> ${it.ty.f[i].replace('{v}', opt(it.ty.o[it.j]))} ≈ ${hrs(it.h)}</li>`).join('') + '</ul></details>';
-    h += `<p class="nv-cta"><a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=calc" rel="noopener">${t('cta')}</a><span class="note">${t('note')}</span></p>`;
+    h += `<p class="nv-cta"><a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=${calcSrc(items)}" rel="noopener">${t('cta')}</a><span class="note">${t('note')}</span></p>`;
     right.innerHTML = h;
   }
 
