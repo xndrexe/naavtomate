@@ -381,7 +381,6 @@ tr.dim td{opacity:.4}
 .mp-sum b small{font-size:.42em;font-weight:500;letter-spacing:0;color:var(--muted);margin-left:2px}
 .route li em{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .route li.none{flex:1 1 auto;display:block;line-height:1.45}
-@media (max-width:760px){.route .pm{display:none}}
 .mp-empty{padding:22px;color:var(--muted);font-size:var(--s)}
 @media (max-width:900px){
   .mp-top{grid-template-columns:1fr;padding:14px 14px}
@@ -398,7 +397,14 @@ tr.dim td{opacity:.4}
   .mp-own{grid-template-columns:1fr;padding:12px 14px}
   .mp-own span{display:none}
 }
-@media (max-width:400px){.route li small{display:none}.route li b{font-size:var(--xs)}.mr-q .ql{width:100%}}
+@media (max-width:760px){
+  .route{display:grid}
+  .route li:not(.none):not(.ar){grid-template-columns:3.5em minmax(0,1fr) auto;align-items:center;gap:8px}
+  .route li b{white-space:normal;overflow-wrap:anywhere}
+  .route .ar{justify-self:center;transform:rotate(90deg)}
+  .route .pm{display:none}
+}
+@media (max-width:400px){.mr-q .ql{width:100%}}
 
 /* ---------- Работы: бенто ---------- */
 .gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
