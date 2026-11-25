@@ -529,6 +529,50 @@ tr.dim td{opacity:.4}
 .vcap b{color:var(--ink);font-weight:600}
 @media (max-width:960px){.who{grid-template-columns:1fr}}
 
+/* ---------- Как я работаю, Что входит, Интеграции, Партнёрам (26.11) ---------- */
+.hand{padding:0 0 clamp(28px,3.5vw,48px)}
+.hand-in{position:relative;display:grid;grid-template-columns:minmax(0,.42fr) minmax(0,1fr);gap:16px clamp(24px,4vw,56px);align-items:start;padding:clamp(22px,3vw,36px);border-radius:var(--r);border:1px solid color-mix(in srgb,var(--volt) 40%,transparent);background:radial-gradient(90% 120% at 0% 0%,var(--hi),transparent 60%),var(--bg2);overflow:hidden}
+.hand h2{font-size:var(--l);letter-spacing:-.03em;margin-top:10px}
+.hand .me{font-size:clamp(17px,1.5vw,21px);line-height:1.55;max-width:62ch;text-wrap:pretty}
+@media (max-width:860px){.hand-in{grid-template-columns:1fr}}
+.svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.svc li{position:relative;display:grid;align-content:start;gap:8px;padding:20px;border-radius:var(--r);border:1px solid var(--line);background:linear-gradient(180deg,var(--sheen),transparent 60%),var(--bg2);overflow:hidden;transition:border-color .25s}
+.svc li:hover{border-color:var(--line2)}
+.svc .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--hi);color:var(--accent);border:1px solid color-mix(in srgb,var(--volt) 30%,transparent);margin-bottom:4px}
+.svc .ic svg.i{width:22px;height:22px}
+.svc b{font-size:var(--b);line-height:1.3}
+.svc span{font-size:var(--s);color:var(--muted);line-height:1.5}
+.svc li.go{background:linear-gradient(160deg,var(--hi),transparent 70%),var(--bg2);border-color:var(--line2)}
+.svc li.go .btn{justify-self:start;margin-top:6px}
+.svc li.jv{border-color:color-mix(in srgb,var(--volt) 45%,transparent)}
+@media (max-width:1060px){.svc{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.svc{grid-template-columns:1fr}.svc li{grid-template-columns:auto minmax(0,1fr);gap:2px 14px;padding:16px}.svc .ic{grid-row:span 2;margin:0}.svc li.go{grid-template-columns:1fr}}
+.integ{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.integ li{display:flex;align-items:center;gap:12px;min-height:64px;padding:12px 14px;border-radius:var(--r2);border:1px solid var(--line);background:var(--bg2);font-size:15px;font-weight:500;line-height:1.25}
+.integ i{flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700;letter-spacing:-.03em;background:var(--bg3);color:var(--ink);border:1px solid var(--line2)}
+.integ li.api{border-style:dashed;border-color:var(--line2);color:var(--muted)}
+.integ li.api i{background:var(--hi);color:var(--accent)}
+@media (max-width:1060px){.integ{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:760px){.integ{grid-template-columns:repeat(2,minmax(0,1fr))}.integ li{min-height:56px;padding:10px 12px;font-size:14px;gap:10px}}
+.stages{display:grid;gap:0;margin-top:20px;counter-reset:sg}
+.stages li{position:relative;display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:2px 12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line)}
+.stages li:first-child{border-top:1px solid var(--line)}
+.stages li::before{counter-increment:sg;content:counter(sg);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--hi);color:var(--accent);font-size:12px;font-weight:700;align-self:center}
+.stages b{font-size:15px;line-height:1.35;font-weight:600}
+.stages em{font-style:normal;font-size:var(--xs);font-weight:600;padding:3px 10px;border-radius:999px;background:var(--bg3);white-space:nowrap;align-self:center}
+.stages li.go em{background:var(--volt);color:var(--volt-ink)}
+.part{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.part .plan h3{font-size:var(--l)}
+.part .big{font-size:clamp(34px,3.6vw,52px);font-weight:600;letter-spacing:-.04em;line-height:1;color:var(--accent)}
+.part .big small{font-size:.36em;font-weight:500;letter-spacing:0;color:var(--muted);margin-left:8px}
+.pways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 28px;margin:14px 0 0;padding:0 4px}
+.pways p{font-size:var(--xs);color:var(--muted);line-height:1.55}
+.pways b{color:var(--ink);font-weight:600}
+.pcta{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;margin-top:18px;padding:18px 22px;border-radius:var(--r);border:1px solid var(--line2);background:linear-gradient(90deg,var(--hi),transparent 60%),var(--bg2)}
+.pcta p{font-size:var(--s);color:var(--muted);line-height:1.5;max-width:62ch}
+.pcta p b{color:var(--ink)}
+@media (max-width:860px){.part,.pways{grid-template-columns:1fr}}
+
 /* ---------- Финал ---------- */
 .final{position:relative;overflow:hidden;isolation:isolate;padding:clamp(64px,8vw,112px) 0 28px;border-top:1px solid var(--line)}
 .final::before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(50% 70% at 50% 0%,var(--glow),transparent 70%)}
@@ -560,6 +604,10 @@ tr.dim td{opacity:.4}
   <symbol id="i-coins" viewBox="0 0 24 24"><ellipse cx="12" cy="6.5" rx="7" ry="3"/><path d="M5 6.5v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/><path d="M5 11.5v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/></symbol>
   <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></symbol>
   <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 6l6 6 4-4 8 8"/><path d="M15 16h6v-6"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+  <symbol id="i-team" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19.5c.6-3.3 3-5.2 6-5.2s5.4 1.9 6 5.2"/><path d="M15.5 5.6a3 3 0 0 1 0 5.8M18 14.6c1.6.7 2.6 2.4 3 4.9"/></symbol>
+  <symbol id="i-loop" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.7"/><path d="M20 4v4.7h-4.7"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15.3"/><path d="M4 20v-4.7h4.7"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24"><rect x="4" y="7.5" width="16" height="11.5" rx="3"/><path d="M12 7.5V4.5M9 12.5v1.5M15 12.5v1.5M9.5 16.5h5"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
@@ -577,6 +625,7 @@ tr.dim td{opacity:.4}
       <a href="#cases" data-en="Work">Работы</a>
       <a href="#price" data-en="Pricing">Цена</a>
       <a href="#who" data-en="About">Обо мне</a>
+      <a href="#partners" data-en="Partners">Партнёрам</a>
     </nav>
     <button type="button" class="ibtn tl" id="themeBtn" data-theme-btn aria-label="Светлая тема" title="Светлая тема">◐</button>
     <button type="button" class="ibtn tl" id="langBtn" data-lang-btn aria-label="Switch to English">EN</button>
@@ -589,7 +638,9 @@ tr.dim td{opacity:.4}
   <a href="#map" data-en="Map">Карта</a>
   <a href="#cases" data-en="Work">Работы</a>
   <a href="#price" data-en="Pricing">Цена</a>
+  <a href="#services" data-en="Services">Что входит</a>
   <a href="#who" data-en="About">Обо мне</a>
+  <a href="#partners" data-en="Partners">Партнёрам</a>
   <div class="row">
     <button type="button" class="ibtn" data-theme-btn aria-label="Светлая тема">◐</button>
     <button type="button" class="ibtn" data-lang-btn aria-label="Switch to English">EN</button>
@@ -639,6 +690,15 @@ tr.dim td{opacity:.4}
         <span><span data-en="Taken off your staff today">Снято с сотрудников за сегодня</span> <small data-en="demo">демо</small></span>
         <b id="scN">~2,6 ч</b>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="hand" id="hand" lang="ru" aria-labelledby="hand-h">
+  <div class="wrap">
+    <div class="hand-in rv">
+      <div><p class="kick">Ведёт живой человек</p><h2 id="hand-h">Как я работаю</h2></div>
+      <p class="me">Я беру ваш бизнес в работу сам или с командой исполнителей. Разбираю, где теряются время и деньги, внедряю автоматизацию и ИИ-агентов, учу ваших людей ими пользоваться и остаюсь на связи после запуска. Захотите — подключу вам своего ИИ-ассистента Джарвиса.</p>
     </div>
   </div>
 </section>
@@ -815,6 +875,50 @@ tr.dim td{opacity:.4}
   </div>
 </section>
 
+<section id="services" lang="ru">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kick">Услуги</p>
+      <h2>Что входит</h2>
+      <p class="sub">От разбора до работы после запуска — ведёт один человек, искать подрядчика на каждую часть не нужно.</p>
+    </div>
+    <ul class="svc rv">
+      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-search"/></svg></span><b>Разбор бизнеса</b><span>Где рутина и потери, что автоматизировать первым.</span></li>
+      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-doc"/></svg></span><b>Автоматизация рутины</b><span>Заявки, почта, отчёты, документы, без ручного переноса.</span></li>
+      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-bot"/></svg></span><b>ИИ-агенты</b><span>Отвечают клиентам, разбирают входящие, готовят ответы.</span></li>
+      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-link"/></svg></span><b>Интеграции</b><span>Связываем CRM, 1С, таблицы, мессенджеры и почту.</span></li>
+      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-team"/></svg></span><b>Обучение команды</b><span>Показываю сотрудникам, как работать с новым.</span></li>
+      <li class="jv"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-jarvis"/></svg></span><b>Джарвис владельцу</b><span>Личный ИИ-ассистент: задачи, сводки, напоминания.</span></li>
+      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-loop"/></svg></span><b>Сопровождение</b><span>Слежу за работой после запуска и дорабатываю.</span></li>
+      <li class="go"><b>Не знаете, с чего начать?</b><span>Начнём с бесплатного разбора: покажу, что автоматизировать первым.</span><a class="btn primary small" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Обсудить задачу</a></li>
+    </ul>
+  </div>
+</section>
+
+<section id="integrations" lang="ru">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kick">Интеграции</p>
+      <h2>С вашими системами</h2>
+      <p class="sub">Связываем CRM, 1С, таблицы, мессенджеры и почту. Нет вашей системы в списке — подключим через API.</p>
+    </div>
+    <ul class="integ rv">
+      <li><i aria-hidden="true">Б24</i>Битрикс24</li>
+      <li><i aria-hidden="true">amo</i>amoCRM</li>
+      <li><i aria-hidden="true">1С</i>1С</li>
+      <li><i aria-hidden="true">МС</i>МойСклад</li>
+      <li><i aria-hidden="true">YC</i>YCLIENTS</li>
+      <li><i aria-hidden="true">TG</i>Telegram</li>
+      <li><i aria-hidden="true">WA</i>WhatsApp</li>
+      <li><i aria-hidden="true">MAX</i>MAX</li>
+      <li><i aria-hidden="true">Ав</i>Авито</li>
+      <li><i aria-hidden="true">@</i>Почта</li>
+      <li><i aria-hidden="true">G</i>Google-таблицы</li>
+      <li class="api"><i aria-hidden="true">API</i>Ваша система — через API</li>
+    </ul>
+  </div>
+</section>
+
 <section id="price">
   <span id="how" aria-hidden="true"></span>
   <div class="wrap">
@@ -873,6 +977,12 @@ tr.dim td{opacity:.4}
       <p class="kick">Кто делает</p>
       <h2>От разбора до сдачи</h2>
       <p class="txt">Строю ИИ-системы, которые показаны выше. Работаю со своей командой исполнителей и ИИ-агентов, за результат отвечаю лично.</p>
+      <ol class="stages" lang="ru" aria-label="Этапы и сроки">
+        <li><b>Разбор</b><em>1–3 дня, бесплатно</em></li>
+        <li><b>Сборка</b><em>1–3 недели</em></li>
+        <li><b>Проверка на ваших данных</b><em>3–5 дней</em></li>
+        <li class="go"><b>Запуск и сопровождение</b></li>
+      </ol>
       <div class="links">
         <a class="link" href="https://github.com/xndrexe" target="_blank" rel="noopener">GitHub</a>
         <a class="link" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Telegram</a>
@@ -896,6 +1006,39 @@ tr.dim td{opacity:.4}
           <a class="chip" href="https://github.com/xndrexe/doc-assistant-demo" target="_blank" rel="noopener">Помощник по документам</a>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="partners" lang="ru">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kick">Партнёрам</p>
+      <h2>Делаем ИИ-задачи под ваш бренд</h2>
+      <p class="sub">Интеграторам Битрикс24 и amoCRM, франчайзи 1С, веб- и IT-студиям. У вас уже есть клиенты, они просят «добавить ИИ», а свободных рук на такие задачи нет.</p>
+    </div>
+    <div class="part">
+      <article class="plan glowy rv" data-tilt>
+        <div class="top"><span class="lab">Познакомить</span><span class="term">разово</span></div>
+        <p class="big">10%<small>с первого оплаченного заказа</small></p>
+        <p class="d">Не хотите вести клиента сами — просто познакомьте нас.</p>
+        <ul><li>с заказа дешевле 40 000 ₽ — ровно 10%</li><li>с заказа от 40 000 ₽ — не меньше 5 000 и не больше 15 000 ₽</li></ul>
+      </article>
+      <article class="plan feat glowy rv d1" data-tilt>
+        <div class="top"><span class="lab">Под вашим брендом</span><span class="term">белая этикетка</span></div>
+        <p class="big">25%<small>остаются вам</small></p>
+        <p class="d">Цену клиенту ставите вы. Нам платите 75% нашей цены для клиента.</p>
+        <ul><li>с клиентом общаетесь вы, под своим брендом; если нужно, выходим на созвон как ваш технический специалист</li><li>делаем, сдаём вам, вы сдаёте клиенту; доступы, настройки и инструкция остаются у клиента</li><li>ваших клиентов напрямую не берём и не пишем им; можем подписать соглашение о конфиденциальности</li></ul>
+      </article>
+    </div>
+    <div class="pways">
+      <p><b>Что делаем:</b> бот заявок, разбор почты и документов, отчёт к 9 утра, связки CRM, 1С и мессенджеров.</p>
+      <p><b>Гарантия 14 дней:</b> ошибки в нашей работе правим без доплаты.</p>
+      <p><b>Оплата:</b> половина до начала, половина при сдаче. Договор, акт, чек.</p>
+    </div>
+    <div class="pcta rv">
+      <p><b>Пришлите задачу клиента своими словами.</b> За 1–2 рабочих дня ответим: что сделаем, срок, цена для вас.</p>
+      <a class="btn primary" href="https://t.me/naavtomate_ai_bot?start=partner" rel="noopener"><span>Стать партнёром</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </div>
 </section>
