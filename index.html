@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" class="still">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,7 +28,7 @@
 {"@type":"Offer","itemOffered":{"@type":"Service","name":"Бизнес под контролем в 9 утра","description":"Каждое утро один отчёт: продажи, остатки и деньги из систем клиента. Срок 2–3 недели. Сумма и срок фиксируются до старта."}},
 {"@type":"Offer","itemOffered":{"@type":"Service","name":"Джарвис владельца","description":"Команда ИИ-агентов под дела владельца и окно, где их видно: задачи словами, ход работы и готовое в одном месте, на телефоне и компьютере."}}]}}
 </script>
-<title>На автомате — рутину ваших сотрудников на ИИ-агентов</title>
+<title data-en="Na Avtomate — AI agents take routine work off your team">На автомате — рутину ваших сотрудников на ИИ-агентов</title>
 <script>(()=>{const r=document.documentElement;r.classList.add('js');try{if(localStorage.getItem('theme')==='light')r.dataset.theme='light'}catch(e){}})()</script>
 <link rel="preload" href="fonts/Geologica-normal-cyrillic-4.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -71,6 +71,9 @@ img,video{display:block;max-width:100%}
 svg.i{width:20px;height:20px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .wrap{width:min(1240px,100% - 2*var(--pad));margin-inline:auto}
 section{padding:var(--gap) 0;position:relative}
+/* Размеры до первого появления секции, чтобы якоря и прокрутка сохраняли место. */
+#map,#cases,#price,#who,.final{content-visibility:auto;contain-intrinsic-block-size:auto 620px}
+@media(max-width:620px){#map,#cases,#price,#who,.final{contain-intrinsic-block-size:auto 860px}}
 .sub{color:var(--muted);font-size:var(--b);line-height:1.5;max-width:52ch}
 .note{color:var(--muted);font-size:var(--xs);line-height:1.5}
 .kick{display:inline-flex;align-items:center;gap:8px;font-size:var(--xs);font-weight:500;color:var(--muted);letter-spacing:.02em}
@@ -155,6 +158,7 @@ section{padding:var(--gap) 0;position:relative}
 .sc-core svg.wire{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .wire path{fill:none;stroke:var(--line2);stroke-width:1.5;stroke-dasharray:4 6}
 :root:not(.still) .wire path{animation:dash 1.2s linear infinite}
+.still .sc-top b::before,.still .agent::before{animation-play-state:paused}
 @keyframes dash{to{stroke-dashoffset:-20}}
 .agent{position:relative;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 42% 34%,#e6ffad,var(--volt) 52%,#8cc229);color:var(--volt-ink);font-size:13px;font-weight:700;line-height:1.1;box-shadow:0 0 0 7px rgba(196,249,79,.08),0 0 44px rgba(196,249,79,.38);transition:transform .3s var(--ease)}
 .agent::before{content:'';position:absolute;inset:-12px;border-radius:50%;border:1px dashed color-mix(in srgb,var(--volt) 60%,transparent);animation:spin 14s linear infinite}
@@ -528,13 +532,12 @@ tr.dim td{opacity:.4}
 .final small a{color:var(--ink)}
 
 /* ---------- Появление при прокрутке ---------- */
-.js .rv{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.js .rv.in{opacity:1;transform:none}
-.js .rv.d1{transition-delay:.08s}.js .rv.d2{transition-delay:.16s}.js .rv.d3{transition-delay:.24s}
+.js .rv.in{animation:reveal .7s var(--ease) both}
+.js .rv.d1{animation-delay:.08s}.js .rv.d2{animation-delay:.16s}.js .rv.d3{animation-delay:.24s}
+@keyframes reveal{from{opacity:.55;translate:0 12px}to{opacity:1;translate:0 0}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .js .rv{opacity:1;transform:none}
 }
 </style>
 </head>
@@ -599,7 +602,7 @@ tr.dim td{opacity:.4}
         <a class="btn primary" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener"><span data-en="Discuss a task">Обсудить задачу</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         <a class="btn" href="#demo" data-en="See how it works">Посмотреть, как работает</a>
       </div>
-      <span class="en-only" data-en="The site is in Russian — message the bot in English, I reply in English."></span>
+      <span class="en-only" data-en="The demos, business map and case studies are in Russian. Message me in English through the bot."></span>
     </div>
 
     <div class="scene" id="scene" role="img" aria-label="Пример: заявки, письма и созвоны приходят к агенту и выходят готовыми делами">
@@ -668,7 +671,7 @@ tr.dim td{opacity:.4}
   </div>
 </section>
 
-<section id="demo">
+<section id="demo" lang="ru">
   <div class="wrap">
     <div class="sec-head">
       <p class="kick">Демо</p>
@@ -748,7 +751,7 @@ tr.dim td{opacity:.4}
   </div>
 </section>
 
-<section id="map">
+<section id="map" lang="ru">
   <div class="wrap">
     <div class="sec-head">
       <p class="kick">Карта</p>
@@ -780,7 +783,7 @@ tr.dim td{opacity:.4}
   </div>
 </section>
 
-<section id="cases">
+<section id="cases" lang="ru">
   <div class="wrap">
     <div class="sec-head">
       <p class="kick">Работы</p>
@@ -809,50 +812,50 @@ tr.dim td{opacity:.4}
   <span id="how" aria-hidden="true"></span>
   <div class="wrap">
     <div class="sec-head">
-      <p class="kick">Цена</p>
-      <h2>Сколько стоит</h2>
-      <p class="sub">Цена зависит от того, сколько задач забираем, сколько систем связываем (сайт, CRM, почта, 1С, мессенджеры) и со скольких сотрудников снимаем рутину.</p>
+      <p class="kick" data-en="Pricing">Цена</p>
+      <h2 data-en="What will it cost?">Сколько стоит</h2>
+      <p class="sub" data-en="The price depends on how many tasks we automate, how many systems we connect (website, CRM, email, accounting or messaging), and how many staff members get time back.">Цена зависит от того, сколько задач забираем, сколько систем связываем (сайт, CRM, почта, 1С, мессенджеры) и со скольких сотрудников снимаем рутину.</p>
     </div>
     <ol class="steps3">
-      <li class="stp rv"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-search"/></svg></span><b>Бесплатный разбор</b><span>Считаем, сколько часов в месяц сотрудники тратят на ручную работу.</span></li>
-      <li class="stp rv d1"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-doc"/></svg></span><b>Точная сумма и срок до старта</b><span>Фиксируются и по ходу не растут.</span></li>
-      <li class="stp rv d2"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-split"/></svg></span><b>Половина вперёд, гарантия 14 дней</b><span>Остальное — когда примете работу.</span></li>
+      <li class="stp rv"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-search"/></svg></span><b data-en="Free review">Бесплатный разбор</b><span data-en="We work out how many hours your team spends on manual tasks each month.">Считаем, сколько часов в месяц сотрудники тратят на ручную работу.</span></li>
+      <li class="stp rv d1"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-doc"/></svg></span><b data-en="Fixed price and timeline before we start">Точная сумма и срок до старта</b><span data-en="We agree on both upfront. They stay fixed throughout the project.">Фиксируются и по ходу не растут.</span></li>
+      <li class="stp rv d2"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-split"/></svg></span><b data-en="Half upfront, 14-day guarantee">Половина вперёд, гарантия 14 дней</b><span data-en="The rest is due when you accept the work.">Остальное — когда примете работу.</span></li>
     </ol>
     <div class="fine">
-      <p><b>Гарантия 14 дней</b> — бесплатно чиню сбои в сделанном и поломки связок с вашими сервисами.</p>
-      <p><b>Сторонние сервисы</b> — нейросеть и сервер для ваших систем оплачиваете напрямую по их тарифам. Сколько выйдет, зависит от модели и объёма работы — посчитаю на разборе, до старта. Джарвис работает на моём сервере, сумму за его месяц тоже называю до старта.</p>
+      <p><b data-en="14-day guarantee">Гарантия 14 дней</b> <span data-en="— I fix failures in the work I delivered and in its connections to your services at no charge.">— бесплатно чиню сбои в сделанном и поломки связок с вашими сервисами.</span></p>
+      <p><b data-en="Third-party services">Сторонние сервисы</b> <span data-en="— you pay the AI and hosting providers directly at their rates. I estimate the cost for your model and usage before we start. Jarvis runs on my server, and I’ll quote its monthly cost upfront too.">— нейросеть и сервер для ваших систем оплачиваете напрямую по их тарифам. Сколько выйдет, зависит от модели и объёма работы — посчитаю на разборе, до старта. Джарвис работает на моём сервере, сумму за его месяц тоже называю до старта.</span></p>
     </div>
     <!-- Цен в рублях на странице нет (Александр 25.11): сумма — после разбора. JSON-LD в head — без цен. -->
     <div class="plans">
       <article class="plan glowy rv" data-tilt>
-        <div class="top"><span class="lab">Продажи</span><span class="term">1–2 недели</span></div>
-        <h3>Заявки без потерь</h3>
-        <p class="d">Обращения из мессенджеров, сайта и звонков — в одну базу.</p>
-        <ul><li>менеджеру приходит напоминание перезвонить</li><li>вы видите, кому ещё не ответили</li></ul>
-        <p class="next"><b>Дальше можно:</b> агент сам доводит до записи или заказа.</p>
-        <a class="btn small" href="https://t.me/naavtomate_ai_bot?start=price_leads" rel="noopener">Обсудить заявки</a>
+        <div class="top"><span class="lab" data-en="Sales">Продажи</span><span class="term" data-en="1–2 weeks">1–2 недели</span></div>
+        <h3 data-en="Keep track of every lead">Заявки без потерь</h3>
+        <p class="d" data-en="Leads from messaging apps, your website and phone calls go into one list.">Обращения из мессенджеров, сайта и звонков — в одну базу.</p>
+        <ul><li data-en="your team gets a reminder to call back">менеджеру приходит напоминание перезвонить</li><li data-en="you can see who is still waiting for a reply">вы видите, кому ещё не ответили</li></ul>
+        <p class="next"><b data-en="What’s next:">Дальше можно:</b> <span data-en="an agent can handle the conversation through to a booking or order.">агент сам доводит до записи или заказа.</span></p>
+        <a class="btn small" href="https://t.me/naavtomate_ai_bot?start=price_leads" rel="noopener" data-en="Discuss your leads">Обсудить заявки</a>
       </article>
       <article class="plan glowy rv d1" data-tilt>
-        <div class="top"><span class="lab">Контроль</span><span class="term">2–3 недели</span></div>
-        <h3>Бизнес под контролем в 9 утра</h3>
-        <p class="d">Каждое утро один отчёт: продажи, остатки и деньги.</p>
-        <ul><li>данные из ваших систем, без ручного сбора</li><li>вопрос своими словами: «сколько заказов за неделю?»</li></ul>
-        <p class="next"><b>Дальше можно:</b> умная аналитика, которая сама замечает просадку и предупреждает нужного сотрудника.</p>
-        <a class="btn small" href="https://t.me/naavtomate_ai_bot?start=price_reports" rel="noopener">Обсудить отчёты</a>
+        <div class="top"><span class="lab" data-en="Reporting">Контроль</span><span class="term" data-en="2–3 weeks">2–3 недели</span></div>
+        <h3 data-en="Your business at a glance by 9 a.m.">Бизнес под контролем в 9 утра</h3>
+        <p class="d" data-en="One report every morning covering sales, stock and finances.">Каждое утро один отчёт: продажи, остатки и деньги.</p>
+        <ul><li data-en="data comes straight from your systems">данные из ваших систем, без ручного сбора</li><li data-en="ask in plain words, such as “How many orders came in this week?”">вопрос своими словами: «сколько заказов за неделю?»</li></ul>
+        <p class="next"><b data-en="What’s next:">Дальше можно:</b> <span data-en="analytics can flag a drop and alert the right person automatically.">умная аналитика, которая сама замечает просадку и предупреждает нужного сотрудника.</span></p>
+        <a class="btn small" href="https://t.me/naavtomate_ai_bot?start=price_reports" rel="noopener" data-en="Discuss your reports">Обсудить отчёты</a>
       </article>
       <article class="plan feat glowy rv d2" data-tilt>
-        <div class="top"><span class="lab">Владельцу</span><span class="term">окно владельца</span></div>
-        <h3>Джарвис владельца</h3>
-        <p class="d">Команда ИИ-агентов под ваши дела и окно, где их видно.</p>
-        <ul><li>задачи словами</li><li>ход работы и готовое — в одном месте</li><li>на телефоне и компьютере</li></ul>
-        <p class="next"><b>Ставится,</b> когда работает хотя бы одна система.</p>
-        <a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=price_jarvis" rel="noopener">Обсудить Джарвиса</a>
+        <div class="top"><span class="lab" data-en="For the owner">Владельцу</span><span class="term" data-en="Owner dashboard">окно владельца</span></div>
+        <h3 data-en="Your own Jarvis">Джарвис владельца</h3>
+        <p class="d" data-en="A team of agents for your business, with a dashboard to see what they’re doing.">Команда ИИ-агентов под ваши дела и окно, где их видно.</p>
+        <ul><li data-en="give tasks in plain words">задачи словами</li><li data-en="check progress and results in one place">ход работы и готовое — в одном месте</li><li data-en="use it on your phone or computer">на телефоне и компьютере</li></ul>
+        <p class="next"><b data-en="Available">Ставится,</b> <span data-en="once at least one system is up and running.">когда работает хотя бы одна система.</span></p>
+        <a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=price_jarvis" rel="noopener" data-en="Discuss your Jarvis">Обсудить Джарвиса</a>
       </article>
     </div>
     <div class="free rv">
       <span class="zero">0 ₽</span>
-      <div><h3>Бесплатный разбор</h3><p>Пришлите сайт или опишите, что сотрудники делают руками, — покажу, где теряются заявки и время и что отдать ИИ первым.</p></div>
-      <a class="btn primary" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Прислать на разбор</a>
+      <div><h3 data-en="Free review">Бесплатный разбор</h3><p data-en="Send your website or describe your team’s manual work. I’ll show where leads and time slip through and which tasks to automate first.">Пришлите сайт или опишите, что сотрудники делают руками, — покажу, где теряются заявки и время и что отдать ИИ первым.</p></div>
+      <a class="btn primary" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener" data-en="Request a free review">Прислать на разбор</a>
     </div>
   </div>
 </section>
@@ -923,7 +926,7 @@ document.querySelectorAll('[data-tg]').forEach(e => { e.href = TG_LINK; });
   const set = l => { if (l) r.dataset.theme = 'light'; else delete r.dataset.theme; const t = l ? 'Тёмная тема' : 'Светлая тема'; bs.forEach(b => { b.setAttribute('aria-label', t); b.title = t; }); if (mc) mc.content = l ? '#f3f4f0' : '#0c0e0c'; };
   set(r.dataset.theme === 'light');
   bs.forEach(b => b.addEventListener('click', () => { const l = r.dataset.theme !== 'light'; set(l); try { localStorage.setItem('theme', l ? 'light' : 'dark'); } catch (e) {} })); })();
-/* Английский — только первый экран и меню: иностранцу хватит, чтобы понять и написать */
+/* EN: меню, первый экран, преимущества и условия. Демо и кейсы остаются на русском. */
 (() => { const bs = [...document.querySelectorAll('[data-lang-btn]')]; const els = [...document.querySelectorAll('[data-en]')]; els.forEach(e => { e.dataset.ru = e.textContent; }); let en = false;
   bs.forEach(b => b.addEventListener('click', () => { en = !en; els.forEach(e => { e.textContent = en ? e.dataset.en : e.dataset.ru; }); document.documentElement.lang = en ? 'en' : 'ru'; bs.forEach(x => { x.textContent = en ? 'RU' : 'EN'; x.setAttribute('aria-label', en ? 'Переключить на русский' : 'Switch to English'); }); })); })();
 
@@ -1421,11 +1424,15 @@ const openDemo = id => { const b = document.getElementById(id); if (!b) return; 
     countTo(num, was, mins, fmtH, 700);
   };
   const run = v => {
+    if (v === on) return;
     on = v; document.documentElement.classList.toggle('still', !v);
+    if (v) svg.unpauseAnimations?.(); else svg.pauseAnimations?.();
     if (v && !loop) loop = (async () => { while (on) { await tick(); await sleep(1100); } loop = null; })();
   };
 
-  paint(); draw();
+  paint();
+  svg.pauseAnimations?.();
+  requestAnimationFrame(draw);
   let w = innerWidth; addEventListener('resize', () => { if (innerWidth !== w) { w = innerWidth; paint(); } draw(); });
   narrow.addEventListener('change', () => { paint(); draw(); });
   document.querySelectorAll('[data-lang-btn]').forEach(b => b.addEventListener('click', () => { paint(); draw(); }));
@@ -1433,8 +1440,12 @@ const openDemo = id => { const b = document.getElementById(id); if (!b) return; 
   if (reduce || !('IntersectionObserver' in window) || !sc.animate) return;
   const vis = () => { const r = sc.getBoundingClientRect(); return !document.hidden && r.bottom > 0 && r.top < innerHeight; };
   // крутится, только пока сцена видна и вкладка открыта
-  new IntersectionObserver(es => run(es[0].isIntersecting && !document.hidden)).observe(sc);
-  document.addEventListener('visibilitychange', () => run(vis()));
+  const observe = () => {
+    new IntersectionObserver(es => run(es[0].isIntersecting && !document.hidden)).observe(sc);
+    document.addEventListener('visibilitychange', () => run(vis()));
+  };
+  // Сначала браузер отрисовывает готовый статичный кадр, затем запускает движение.
+  addEventListener('load', () => setTimeout(observe, 900), { once: true });
 })();
 
 /* ---------- Три карточки: «Подробнее» на касание ---------- */
