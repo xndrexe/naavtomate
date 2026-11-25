@@ -72,8 +72,8 @@ svg.i{width:20px;height:20px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-
 .wrap{width:min(1240px,100% - 2*var(--pad));margin-inline:auto}
 section{padding:var(--gap) 0;position:relative}
 /* Размеры до первого появления секции, чтобы якоря и прокрутка сохраняли место. */
-#map,#cases,#price,#who,.final{content-visibility:auto;contain-intrinsic-block-size:auto 620px}
-@media(max-width:620px){#map,#cases,#price,#who,.final{contain-intrinsic-block-size:auto 860px}}
+#cases,#price,#who,.final{content-visibility:auto;contain-intrinsic-block-size:auto 620px}
+@media(max-width:620px){#cases,#price,#who,.final{contain-intrinsic-block-size:auto 860px}}
 .sub{color:var(--muted);font-size:var(--b);line-height:1.5;max-width:52ch}
 .note{color:var(--muted);font-size:var(--xs);line-height:1.5}
 .kick{display:inline-flex;align-items:center;gap:8px;font-size:var(--xs);font-weight:500;color:var(--muted);letter-spacing:.02em}
@@ -212,7 +212,7 @@ section{padding:var(--gap) 0;position:relative}
 @media (hover:hover){.glowy:hover::after{opacity:1}}
 
 /* ---------- Демо: вкладки-игрушки ---------- */
-.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:12px}
 .tab{all:unset;box-sizing:border-box;position:relative;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;align-items:center;padding:14px 16px;border-radius:var(--r);border:1px solid var(--line);background:var(--bg2);transition:border-color .2s,background .2s,transform .3s var(--ease)}
 .tab .ic{grid-row:span 2;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--bg3);color:var(--muted);transition:background .2s,color .2s}
 .tab b{font-weight:600;font-size:15px;line-height:1.25}
@@ -585,18 +585,6 @@ tr.dim td{opacity:.4}
 .crew span{font-size:var(--xs);color:var(--muted);line-height:1.45}
 .crew-n{margin-top:10px;font-size:var(--xs);color:var(--muted)}
 @media (max-width:420px){.crew ul{grid-template-columns:1fr}}
-.sph{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.sph>li{display:grid;grid-template-rows:auto 1fr auto;gap:10px;padding:20px;border-radius:var(--r);border:1px solid var(--line);background:var(--bg2)}
-.sph>li>b{font-size:var(--b)}
-.sph ul{display:grid;gap:6px}
-.sph ul li{position:relative;padding-left:16px;font-size:var(--s);color:var(--muted);line-height:1.45}
-.sph ul li::before{content:'';position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.sph a{font-size:var(--xs);font-weight:600;color:var(--accent);text-decoration:none;justify-self:start}
-.sph a:hover{text-decoration:underline}
-.sph-n{margin-top:14px;font-size:var(--s);color:var(--muted)}
-.sph-n a{color:var(--ink)}
-@media (max-width:960px){.sph{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:620px){.sph{grid-template-columns:1fr}.sph>li{padding:16px}}
 .w-ba{display:block;margin-top:6px;font-size:12.5px;line-height:1.4;color:var(--muted)}
 .w-ba s{text-decoration:none;opacity:.85}
 .w-ba em{font-style:normal;color:var(--accent);font-weight:600}
@@ -615,6 +603,64 @@ tr.dim td{opacity:.4}
 .rub-n{margin-top:10px;font-size:var(--xs);color:var(--muted)}
 @media (max-width:860px){.rub-in{grid-template-columns:repeat(3,minmax(0,1fr))}.rub output{grid-column:1/-1}}
 @media (max-width:560px){.rub-in{grid-template-columns:1fr}}
+/* ---------- 26.11 второй проход: боли, цифры, раскрытия, сферы в карте ---------- */
+.pains-s{padding-top:clamp(8px,1.5vw,20px)}
+.pain-h{font-size:var(--l);letter-spacing:-.03em;margin-bottom:16px}
+.gets-in.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.get.pain h3{font-size:var(--b);line-height:1.3}
+.get.pain .more b{color:var(--accent);font-weight:600}
+@media (max-width:1100px){.gets-in.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){
+  /* телефон: боли и цены — лентой, как работы, чтобы главная не тянулась */
+  .gets-in.four,.plans{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(-1*var(--pad));padding:0 var(--pad) 6px;scroll-padding-inline:var(--pad);scrollbar-width:none}
+  .gets-in.four>*,.plans>*{scroll-snap-align:start}
+}
+.wins{display:grid;grid-template-columns:repeat(4,minmax(0,auto));justify-content:start;gap:10px 28px;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
+.wins li{display:grid;gap:2px}
+.wins b{font-size:clamp(20px,1.9vw,26px);font-weight:600;letter-spacing:-.03em;line-height:1.1;color:var(--ink);white-space:nowrap}
+.wins span{font-size:var(--xs);color:var(--muted);line-height:1.35;max-width:16ch}
+@media (max-width:620px){.wins{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}}
+.svc li{cursor:default;outline:none}
+.svc li .d{opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s var(--ease)}
+.svc li::after{content:'+';position:absolute;right:16px;top:14px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);color:var(--muted);font-size:16px;line-height:1;transition:transform .25s,opacity .25s}
+.svc li.open .d,.svc li:focus-visible .d{opacity:1;transform:none}
+.svc li.open::after,.svc li:focus-visible::after{transform:rotate(45deg)}
+.svc li:focus-visible{border-color:var(--accent)}
+@media (hover:hover){.svc li:hover .d{opacity:1;transform:none}.svc li:hover::after{transform:rotate(45deg)}}
+@media (prefers-reduced-motion:reduce){.svc li .d{transition:none}}
+@media (max-width:560px){
+  /* телефон: «Что входит» — две колонки, описание по нажатию на всю ширину */
+  .svc{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:row dense;gap:8px}
+  .svc li{grid-template-columns:1fr;gap:8px;padding:14px 14px 16px;align-content:start}
+  .svc .ic{grid-row:auto;width:36px;height:36px}
+  .svc b{font-size:15px;padding-right:22px}
+  .svc li::after{right:10px;top:10px;width:24px;height:24px}
+  .svc li .d{display:none}
+  .svc li.open{grid-column:1/-1}
+  .svc li.open .d{display:block}
+}
+.integ-w{margin-top:clamp(22px,3vw,36px)}
+.integ-w h3{font-size:var(--b);margin-bottom:12px}
+.integ-w .integ li{min-height:52px;padding:8px 12px;font-size:14px}
+.sph-w{margin-bottom:18px}
+.sph-h{font-size:var(--s);color:var(--muted);margin-bottom:10px}
+.sph-h b{color:var(--ink)}
+.sph{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.sph button{width:100%;height:100%;display:grid;align-content:start;gap:6px;text-align:left;padding:14px;border-radius:var(--r2);border:1px solid var(--line);background:var(--bg2);color:var(--ink);font:inherit;cursor:pointer;transition:border-color .15s,background .15s}
+.sph button:hover{border-color:var(--line2)}
+.sph button[aria-pressed=true]{border-color:var(--volt);background:linear-gradient(180deg,var(--hi),transparent 80%),var(--bg2)}
+.sph b{font-size:14px;line-height:1.3}
+.sph span{font-size:12.5px;color:var(--muted);line-height:1.45}
+@media (max-width:1100px){.sph{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:620px){.sph{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:minmax(220px,72%);overflow-x:auto;scrollbar-width:none;margin-inline:calc(-1*var(--pad));padding:2px var(--pad);scroll-snap-type:x mandatory}.sph::-webkit-scrollbar{display:none}.sph li{scroll-snap-align:start}}
+.pdet{margin-top:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg2)}
+.pdet summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:12px 20px;font-size:var(--s);font-weight:600}
+.pdet summary::-webkit-details-marker{display:none}
+.pdet summary::after{content:'+';width:26px;height:26px;flex:0 0 auto;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);color:var(--muted);transition:transform .25s}
+.pdet[open] summary::after{transform:rotate(45deg)}
+.pdl{display:grid;gap:6px;padding:0 20px 6px 38px;list-style:disc}
+.pdl li{font-size:var(--s);color:var(--muted);line-height:1.5}
+.pdet .pways{margin:10px 0 16px;padding:0 20px}
 /* ---------- Финал ---------- */
 .final{position:relative;overflow:hidden;isolation:isolate;padding:clamp(64px,8vw,112px) 0 28px;border-top:1px solid var(--line)}
 .final::before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(50% 70% at 50% 0%,var(--glow),transparent 70%)}
@@ -702,6 +748,12 @@ tr.dim td{opacity:.4}
         <a class="btn primary" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener"><span data-en="Discuss a task">Обсудить задачу</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         <a class="btn" href="#demo" data-en="See how it works">Посмотреть, как работает</a>
       </div>
+      <ul class="wins" lang="ru" aria-label="Коротко о работе">
+        <li><b>1–3 дня</b><span>бесплатный разбор</span></li>
+        <li><b>1–3 недели</b><span>до первой работающей задачи</span></li>
+        <li><b>50%</b><span>оплаты — после приёмки</span></li>
+        <li><b>14 дней</b><span>гарантия на сделанное</span></li>
+      </ul>
       <span class="en-only" data-en="The demos, business map and case studies are in Russian. Message me in English through the bot."></span>
     </div>
 
@@ -746,38 +798,47 @@ tr.dim td{opacity:.4}
   </div>
 </section>
 
-<section class="gets" aria-label="Что вы получаете">
-  <div class="wrap gets-in">
-    <article class="get glowy rv" data-tilt>
+<section class="gets pains-s" lang="ru" aria-labelledby="pain-h">
+  <div class="wrap">
+    <h2 class="pain-h" id="pain-h">Знакомо?</h2>
+    <div class="gets-in four">
+    <article class="get pain glowy rv">
+      <span class="ic" aria-hidden="true"><svg class="i"><use href="#i-mic"/></svg></span>
+      <h3>Владелец сам отвечает клиентам по ночам</h3>
+      <div class="swap">
+        <ul class="tags" aria-hidden="true"><li>ночь</li><li>выходные</li><li>мессенджеры</li></ul>
+        <p class="more" id="g1"><b>Что делаем:</b> Свой Джарвис владельцу и агент на заявках: ответ клиенту за минуту, вам — сводка утром. Часы владельца — тоже деньги.</p>
+      </div>
+      <button type="button" class="get-t" aria-expanded="false" aria-controls="g1"><span>Что делаем</span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button>
+    </article>
+    <article class="get pain glowy rv d1">
       <span class="ic" aria-hidden="true"><svg class="i"><use href="#i-inbox"/></svg></span>
-      <h3 data-en="I take routine off your staff">Снимаю рутину с сотрудников</h3>
-      <p class="one" data-en="Replies to leads, email sorting, reports, reconciliations go to agents.">Ответы на заявки, разбор почты, отчёты, сверки уходят агентам.</p>
+      <h3>Заявки ждут ответа до утра</h3>
       <div class="swap">
-        <ul class="tags" aria-hidden="true"><li>заявки</li><li>почта</li><li>отчёты</li><li>сверки</li></ul>
-        <p class="more" id="g1" data-en="People do the work that needs a person.">Люди заняты тем, где нужен человек.</p>
+        <ul class="tags" aria-hidden="true"><li>сайт</li><li>мессенджеры</li><li>почта</li></ul>
+        <p class="more" id="g2"><b>Что делаем:</b> Агент отвечает на типовое сразу и ставит задачу менеджеру. Спорное ждёт подтверждения человека.</p>
       </div>
-      <button type="button" class="get-t" aria-expanded="false" aria-controls="g1"><span data-en="More">Подробнее</span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button>
+      <button type="button" class="get-t" aria-expanded="false" aria-controls="g2"><span>Что делаем</span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button>
     </article>
-    <article class="get glowy rv d1" data-tilt>
+    <article class="get pain glowy rv d2">
+      <span class="ic" aria-hidden="true"><svg class="i"><use href="#i-doc"/></svg></span>
+      <h3>Отчёты сводят руками</h3>
+      <div class="swap">
+        <ul class="tags" aria-hidden="true"><li>CRM</li><li>1С</li><li>таблицы</li></ul>
+        <p class="more" id="g3"><b>Что делаем:</b> Цифры из CRM, 1С и таблиц приходят руководителю сами, к 9 утра.</p>
+      </div>
+      <button type="button" class="get-t" aria-expanded="false" aria-controls="g3"><span>Что делаем</span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button>
+    </article>
+    <article class="get pain glowy rv d3">
       <span class="ic" aria-hidden="true"><svg class="i"><use href="#i-shield"/></svg></span>
-      <h3 data-en="No human error">Без человеческой ошибки</h3>
-      <p class="one" data-en="An agent doesn’t get tired or forget: call back, reply, send — on time.">Агент не устаёт и не забывает: перезвонить, ответить, отправить — в срок.</p>
+      <h3>Забыли перезвонить, ответить, отправить</h3>
       <div class="swap">
-        <ul class="tags" aria-hidden="true"><li>перезвонить</li><li>ответить</li><li>отправить</li></ul>
-        <p class="more" id="g2" data-en="Every action is in the log; anything disputable waits for a person to confirm.">Каждое действие видно в журнале, спорное ждёт подтверждения человека.</p>
+        <ul class="tags" aria-hidden="true"><li>звонки</li><li>счета</li><li>сроки</li></ul>
+        <p class="more" id="g4"><b>Что делаем:</b> Агент не устаёт и не забывает: перезвонить, ответить, отправить — в срок. Каждое действие видно в журнале.</p>
       </div>
-      <button type="button" class="get-t" aria-expanded="false" aria-controls="g2"><span data-en="More">Подробнее</span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button>
+      <button type="button" class="get-t" aria-expanded="false" aria-controls="g4"><span>Что делаем</span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button>
     </article>
-    <article class="get glowy rv d2" data-tilt>
-      <span class="ic" aria-hidden="true"><svg class="i"><use href="#i-jarvis"/></svg></span>
-      <h3 data-en="Your own Jarvis, for the owner">Свой Джарвис владельцу</h3>
-      <p class="one" data-en="A browser window on your phone and computer.">Окно в браузере на телефоне и компьютере.</p>
-      <div class="swap">
-        <ul class="tags" aria-hidden="true"><li>телефон</li><li>компьютер</li><li>задачи словами</li></ul>
-        <p class="more" id="g3" data-en="You give a task in plain words — the agent team does it; progress and results are in one place.">Даёте задачу словами — команда агентов делает, ход работы и готовое видно в одном месте.</p>
-      </div>
-      <button type="button" class="get-t" aria-expanded="false" aria-controls="g3"><span data-en="More">Подробнее</span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button>
-    </article>
+    </div>
   </div>
 </section>
 
@@ -786,13 +847,14 @@ tr.dim td{opacity:.4}
     <div class="sec-head">
       <p class="kick">Демо</p>
       <h2>Попробуйте сами</h2>
-      <p class="sub">Четыре рабочих сценария — нажимайте и смотрите, что делает агент. Данные условные, ничего никуда не уходит.</p>
+      <p class="sub">Четыре рабочих сценария и карта вашего бизнеса — нажимайте и смотрите, что делает агент. Данные условные, ничего никуда не уходит.</p>
     </div>
     <div class="tabs" role="tablist" aria-label="Демо" id="tabs">
       <button class="tab glowy" role="tab" id="t-mail" aria-selected="true" aria-controls="d-mail"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-mail"/></svg></span><b>Почта по полочкам</b><span class="d">12 писем разойдутся по папкам</span></button>
       <button class="tab glowy" role="tab" id="t-buy" aria-selected="false" aria-controls="d-buy" tabindex="-1"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-coins"/></svg></span><b>Деньги и заказы</b><span class="d">вопрос словами вместо таблиц</span></button>
       <button class="tab glowy" role="tab" id="t-call" aria-selected="false" aria-controls="d-call" tabindex="-1"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-mic"/></svg></span><b>Секретарь созвонов</b><span class="d">расшифровка становится задачами</span></button>
       <button class="tab glowy" role="tab" id="t-price" aria-selected="false" aria-controls="d-price" tabindex="-1"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-trend"/></svg></span><b>Сторож цен</b><span class="d">сигнал, когда рынок дешевеет</span></button>
+      <button class="tab glowy" role="tab" id="t-map" aria-selected="false" aria-controls="d-map" tabindex="-1"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-split"/></svg></span><b>Карта вашего бизнеса</b><span class="d">сколько часов снимем у вас</span></button>
     </div>
     <div class="win rv">
         <div class="demo" id="d-mail" role="tabpanel" aria-labelledby="t-mail">
@@ -854,38 +916,14 @@ tr.dim td{opacity:.4}
           <details class="more"><summary>Что в рабочей версии</summary><p>Цены в демо условные. В рабочей версии сигнал приходит в ваш рабочий мессенджер в течение часа.</p></details>
           <p class="democta"><a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=demo_price" rel="noopener">Хочу такое у себя</a></p>
         </div>
-      </div>
-    </div>
-  </div>
-    </div>
-  </div>
-</section>
 
-<section id="spheres" lang="ru">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kick">Ваша сфера</p>
-      <h2>Что обычно забираем первым</h2>
-      <p class="sub">Размер бизнеса не важен: подходит любой, где сотрудники каждый день делают одно и то же руками.</p>
-    </div>
-    <ul class="sph rv">
-      <li><b>Торговля и маркетплейсы</b><ul><li>вопросы покупателей и отзывы</li><li>остатки и закупки</li><li>отчёт по продажам каждое утро</li></ul><a href="#map" data-s="shop">Посчитать на карте</a></li>
-      <li><b>Салоны, клиники, фитнес</b><ul><li>ответы на заявки и запись ночью и в пик</li><li>отзывы: черновик ответа на каждый</li><li>утренний отчёт по выручке и загрузке</li></ul><a href="#map" data-s="book">Посчитать на карте</a></li>
-      <li><b>Обучение</b><ul><li>заявки «сколько стоит, когда старт»</li><li>оплаты и продления</li><li>итоги вебинаров и созвонов</li></ul><a href="#map" data-s="edu">Посчитать на карте</a></li>
-      <li><b>Автосервисы и ремонт</b><ul><li>пропущенные звонки и заявки</li><li>«машина готова?» — статус клиенту сам</li><li>напоминания о ТО</li></ul><a href="#map" data-s="auto">Посчитать на карте</a></li>
-      <li><b>Производство, опт, логистика</b><ul><li>заявки и расчёт КП</li><li>счета, оплаты и сроки</li><li>письма поставщиков и счета по полочкам</li></ul><a href="#map" data-s="b2b">Посчитать на карте</a></li>
-      <li><b>Агентства, юристы, бухгалтеры, IT</b><ul><li>созвоны и задачи после них</li><li>отчёты клиентам раз в неделю</li><li>почта по клиентам и темам</li></ul><a href="#map" data-s="b2b">Посчитать на карте</a></li>
-    </ul>
-    <p class="sph-n">Нет вашей сферы? <a data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Напишите, разберём под вашу</a></p>
-  </div>
-</section>
-
-<section id="map" lang="ru">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kick">Карта</p>
-      <h2>Карта вашего бизнеса</h2>
-      <p class="sub">Сколько часов ИИ снимет с сотрудников. Выберите свой бизнес и поправьте объёмы — порядок и итог пересчитаются сами.</p>
+        <div class="demo dmap" id="d-map" role="tabpanel" aria-labelledby="t-map" hidden>
+          <span id="map" class="anchor" aria-hidden="true"></span>
+          <h3>Карта вашего бизнеса</h3>
+          <p class="sub">Сколько часов ИИ снимет с сотрудников. Выберите свой бизнес и поправьте объёмы — порядок и итог пересчитаются сами.</p>
+    <div class="sph-w">
+      <p class="sph-h"><b>Ваша сфера</b> — что обычно забираем первым. Размер бизнеса не важен.</p>
+      <ul class="sph"><li><button type="button" data-s="shop" aria-pressed="false"><b>Торговля и маркетплейсы</b><span>вопросы покупателей и отзывы, остатки и закупки, отчёт по продажам каждое утро</span></button></li><li><button type="button" data-s="book" aria-pressed="false"><b>Салоны, клиники, фитнес</b><span>ответы на заявки и запись ночью и в пик, отзывы: черновик ответа на каждый, утренний отчёт по выручке и загрузке</span></button></li><li><button type="button" data-s="edu" aria-pressed="false"><b>Обучение</b><span>заявки «сколько стоит, когда старт», оплаты и продления, итоги вебинаров и созвонов</span></button></li><li><button type="button" data-s="auto" aria-pressed="false"><b>Автосервисы и ремонт</b><span>пропущенные звонки и заявки, «машина готова?» — статус клиенту сам, напоминания о ТО</span></button></li><li><button type="button" data-s="b2b" aria-pressed="false"><b>Производство, опт, логистика</b><span>заявки и расчёт КП, счета, оплаты и сроки, письма поставщиков и счета по полочкам</span></button></li><li><button type="button" data-s="b2b" aria-pressed="false"><b>Агентства, юристы, бухгалтеры, IT</b><span>созвоны и задачи после них, отчёты клиентам раз в неделю, почта по клиентам и темам</span></button></li></ul>
     </div>
     <div class="biz" id="biz" role="group" aria-label="Кому подходит">
       <span class="biz-l">Кому подходит:</span>
@@ -909,8 +947,14 @@ tr.dim td{opacity:.4}
     <div class="mpx rv" id="mapBox" aria-live="polite">
       <noscript><p class="mp-empty">Карта считается в браузере. Образец для салона: первым — ответы на заявки и запись, вторым — утренний отчёт, третьим — закупка расходников. Вашу карту соберём на бесплатном разборе.</p></noscript>
     </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
   </div>
 </section>
+
 
 <section id="cases" lang="ru">
   <div class="wrap">
@@ -945,26 +989,18 @@ tr.dim td{opacity:.4}
       <p class="sub">От разбора до работы после запуска — ведёт один человек, искать подрядчика на каждую часть не нужно.</p>
     </div>
     <ul class="svc rv">
-      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-search"/></svg></span><b>Разбор бизнеса</b><span>Где рутина и потери, что автоматизировать первым.</span></li>
-      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-doc"/></svg></span><b>Автоматизация рутины</b><span>Заявки, почта, отчёты, документы, без ручного переноса.</span></li>
-      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-bot"/></svg></span><b>ИИ-агенты</b><span>Отвечают клиентам, разбирают входящие, готовят ответы.</span></li>
-      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-link"/></svg></span><b>Интеграции</b><span>Связываем CRM, 1С, таблицы, мессенджеры и почту.</span></li>
-      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-team"/></svg></span><b>Обучение команды</b><span>Показываю сотрудникам, как работать с новым.</span></li>
-      <li class="jv"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-jarvis"/></svg></span><b>Джарвис владельцу</b><span>Личный ИИ-ассистент: задачи, сводки, напоминания. Часы владельца — тоже деньги.</span></li>
-      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-loop"/></svg></span><b>Сопровождение</b><span>Слежу за работой после запуска и дорабатываю.</span></li>
-      <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-trend"/></svg></span><b>Отчёт каждую неделю</b><span>Что сделано и сколько часов рутины снято — в цифрах, а не в обещаниях. Сводку может собирать Джарвис.</span></li>
+      <li tabindex="0"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-search"/></svg></span><b>Разбор бизнеса</b><span class="d">Где рутина и потери, что автоматизировать первым.</span></li>
+      <li tabindex="0"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-doc"/></svg></span><b>Автоматизация рутины</b><span class="d">Заявки, почта, отчёты, документы, без ручного переноса.</span></li>
+      <li tabindex="0"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-bot"/></svg></span><b>ИИ-агенты</b><span class="d">Отвечают клиентам, разбирают входящие, готовят ответы.</span></li>
+      <li tabindex="0"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-link"/></svg></span><b>Интеграции</b><span class="d">Связываем CRM, 1С, таблицы, мессенджеры и почту.</span></li>
+      <li tabindex="0"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-team"/></svg></span><b>Обучение команды</b><span class="d">Показываю сотрудникам, как работать с новым.</span></li>
+      <li class="jv" tabindex="0"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-jarvis"/></svg></span><b>Джарвис владельцу</b><span class="d">Личный ИИ-ассистент: задачи, сводки, напоминания. Часы владельца — тоже деньги.</span></li>
+      <li tabindex="0"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-loop"/></svg></span><b>Сопровождение</b><span class="d">Слежу за работой после запуска и дорабатываю.</span></li>
+      <li tabindex="0"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-trend"/></svg></span><b>Отчёт каждую неделю</b><span class="d">Что сделано и сколько часов рутины снято — в цифрах, а не в обещаниях. Сводку может собирать Джарвис.</span></li>
     </ul>
-  </div>
-</section>
-
-<section id="integrations" lang="ru">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kick">Интеграции</p>
-      <h2>С вашими системами</h2>
-      <p class="sub">Связываем CRM, 1С, таблицы, мессенджеры и почту. Нет вашей системы в списке — подключим через API.</p>
-    </div>
-    <ul class="integ rv">
+    <div class="integ-w" id="integrations">
+      <h3>Работаем с вашими системами</h3>
+      <ul class="integ">
       <li><i aria-hidden="true">Б24</i>Битрикс24</li>
       <li><i aria-hidden="true">amo</i>amoCRM</li>
       <li><i aria-hidden="true">1С</i>1С</li>
@@ -978,6 +1014,7 @@ tr.dim td{opacity:.4}
       <li><i aria-hidden="true">G</i>Google-таблицы</li>
       <li class="api"><i aria-hidden="true">API</i>Ваша система — через API</li>
     </ul>
+    </div>
   </div>
 </section>
 
@@ -1061,11 +1098,6 @@ tr.dim td{opacity:.4}
         <a class="link" data-tg href="https://t.me/naavtomate_ai_bot?start=site" rel="noopener">Telegram</a>
         <a class="link" href="https://xndrexe.github.io/" target="_blank" rel="noopener">Все работы</a>
       </div>
-      <ul class="prom" aria-label="Ваши данные — под вашим контролем">
-        <li><svg class="i" aria-hidden="true"><use href="#i-key"/></svg><b>Доступы у вас</b><span>Агенты работают в ваших аккаунтах с минимумом прав. Забрать доступ можно в любой момент.</span></li>
-        <li><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg><b>Ключи не в переписке</b><span>Пароли — в закрытом хранилище, не в коде и не в чатах.</span></li>
-        <li><svg class="i" aria-hidden="true"><use href="#i-box"/></svg><b>Всё сделанное под вас — ваше</b><span>Связки, настройки, данные и доступы принадлежат вам. Джарвис работает на моём сервере, ваши данные в нём — тоже ваши. Мои копии ключей удаляются, как только перестают быть нужны.</span></li>
-      </ul>
     </div>
     <div class="vid rv d1">
       <div class="vwrap"><video id="jarvisVid" preload="none" playsinline muted poster="shots/jarvis-poster-v2.jpg" src="jarvis-demo-v2.mp4" aria-label="Мой Джарвис: как работает команда ИИ-агентов (демо-данные)"></video><button type="button" class="vplay" id="jarvisPlay" aria-label="Смотреть ролик про Джарвиса, минута"><span></span></button></div>
@@ -1079,6 +1111,11 @@ tr.dim td{opacity:.4}
           <a class="chip" href="https://github.com/xndrexe/doc-assistant-demo" target="_blank" rel="noopener">Помощник по документам</a>
         </div>
       </div>
+      <ul class="prom" aria-label="Ваши данные — под вашим контролем">
+        <li><svg class="i" aria-hidden="true"><use href="#i-key"/></svg><b>Доступы у вас</b><span>Агенты работают в ваших аккаунтах с минимумом прав. Забрать доступ можно в любой момент.</span></li>
+        <li><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg><b>Ключи не в переписке</b><span>Пароли — в закрытом хранилище, не в коде и не в чатах.</span></li>
+        <li><svg class="i" aria-hidden="true"><use href="#i-box"/></svg><b>Всё сделанное под вас — ваше</b><span>Связки, настройки, данные и доступы принадлежат вам. Джарвис работает на моём сервере, ваши данные в нём — тоже ваши. Мои копии ключей удаляются, как только перестают быть нужны.</span></li>
+      </ul>
     </div>
   </div>
 </section>
@@ -1095,20 +1132,22 @@ tr.dim td{opacity:.4}
         <div class="top"><span class="lab">Познакомить</span><span class="term">разово</span></div>
         <p class="big">10%<small>с первого оплаченного заказа</small></p>
         <p class="d">Не хотите вести клиента сами — просто познакомьте нас.</p>
-        <ul><li>с заказа дешевле 40 000 ₽ — ровно 10%</li><li>с заказа от 40 000 ₽ — не меньше 5 000 и не больше 15 000 ₽</li></ul>
       </article>
       <article class="plan feat glowy rv d1" data-tilt>
         <div class="top"><span class="lab">Под вашим брендом</span><span class="term">белая этикетка</span></div>
         <p class="big">25%<small>остаются вам</small></p>
         <p class="d">Цену клиенту ставите вы. Нам платите 75% нашей цены для клиента.</p>
-        <ul><li>с клиентом общаетесь вы, под своим брендом; если нужно, выходим на созвон как ваш технический специалист</li><li>делаем, сдаём вам, вы сдаёте клиенту; доступы, настройки и инструкция остаются у клиента</li><li>ваших клиентов напрямую не берём и не пишем им; можем подписать соглашение о конфиденциальности</li></ul>
       </article>
     </div>
-    <div class="pways">
+    <details class="pdet">
+      <summary>Все условия: кто ведёт клиента, гарантия, оплата</summary>
+      <ul class="pdl"><li>с заказа дешевле 40 000 ₽ — ровно 10%</li><li>с заказа от 40 000 ₽ — не меньше 5 000 и не больше 15 000 ₽</li><li>с клиентом общаетесь вы, под своим брендом; если нужно, выходим на созвон как ваш технический специалист</li><li>делаем, сдаём вам, вы сдаёте клиенту; доступы, настройки и инструкция остаются у клиента</li><li>ваших клиентов напрямую не берём и не пишем им; можем подписать соглашение о конфиденциальности</li></ul>
+<div class="pways">
       <p><b>Что делаем:</b> бот заявок, разбор почты и документов, отчёт к 9 утра, связки CRM, 1С и мессенджеров.</p>
       <p><b>Гарантия 14 дней:</b> ошибки в нашей работе правим без доплаты.</p>
       <p><b>Оплата:</b> половина до начала, половина при сдаче. Договор, акт, чек.</p>
     </div>
+    </details>
     <div class="pcta rv">
       <p><b>Пришлите задачу клиента своими словами.</b> За 1–2 рабочих дня ответим: что сделаем, срок, цена для вас.</p>
       <a class="btn primary" href="https://t.me/naavtomate_ai_bot?start=partner" rel="noopener"><span>Стать партнёром</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -1121,12 +1160,6 @@ tr.dim td{opacity:.4}
 <footer class="final">
   <div class="wrap">
     <h2>Какая рутина отнимает у вас часы?</h2>
-    <ul class="pains" lang="ru">
-      <li>владелец сам отвечает клиентам по ночам</li>
-      <li>заявки ждут ответа до утра</li>
-      <li>отчёты сводят руками</li>
-      <li>сверки и счета — по выписке</li>
-    </ul>
     <div class="rub" id="rub" lang="ru">
       <p class="rub-h">Сколько стоит ваша рутина — за 1 минуту, без контактов</p>
       <div class="rub-in">
@@ -1160,6 +1193,11 @@ const TG_LINK = 'https://t.me/naavtomate_ai_bot?start=site';
 document.querySelectorAll('[data-brand]').forEach(e => { e.textContent = BRAND_NAME; });
 document.querySelectorAll('[data-brand-short]').forEach(e => { e.textContent = BRAND_NAME.split(' · ')[0]; });
 document.querySelectorAll('[data-tg]').forEach(e => { e.href = TG_LINK; });
+/* «Что входит»: раскрытие по нажатию (на ПК ещё и наведением) */
+document.querySelectorAll('.svc li').forEach(li => { const t = () => li.classList.toggle('open'); li.addEventListener('click', t); li.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t(); } }); });
+/* Ссылки «Карта» открывают вкладку карты в «Попробуйте сами» */
+document.querySelectorAll('a[href="#map"]').forEach(a => a.addEventListener('click', e => { const t = document.getElementById('t-map'); if (!t) return; e.preventDefault(); t.click(); document.getElementById('demo').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }));
+if (location.hash === '#map') { const t = document.getElementById('t-map'); if (t) { t.click(); requestAnimationFrame(() => document.getElementById('demo').scrollIntoView()); } }
 /* Итог рутины в рублях (финал) */
 (() => { const g = id => document.getElementById(id), P = g('rbP'), H = g('rbH'), R = g('rbR'); if (!P) return;
   const f = n => Math.round(n).toLocaleString('ru-RU');
@@ -1167,7 +1205,7 @@ document.querySelectorAll('[data-tg]').forEach(e => { e.href = TG_LINK; });
     g('rbS').textContent = '≈ ' + f(Math.round(hrs * r / 1000) * 1000) + ' ₽'; g('rbT').textContent = 'в месяц · ' + f(hrs) + ' ч'; };
   [P, H, R].forEach(i => i.addEventListener('input', calc)); calc(); })();
 /* «Ваша сфера» → карта с нужным бизнесом */
-document.querySelectorAll('.sph a[data-s]').forEach(a => a.addEventListener('click', () => { const b = document.querySelector('#biz .bt[data-s="' + a.dataset.s + '"]'); if (b) b.click(); }));
+document.querySelectorAll('.sph button[data-s]').forEach(a => a.addEventListener('click', () => { const b = document.querySelector('#biz .bt[data-s="' + a.dataset.s + '"]'); if (b) b.click(); document.querySelectorAll('.sph button').forEach(x => x.setAttribute('aria-pressed', x === a)); }));
 /* Тема: тёмная по умолчанию, светлая — по кнопке и запоминается */
 (() => { const bs = [...document.querySelectorAll('[data-theme-btn]')], r = document.documentElement, mc = document.querySelector('meta[name=theme-color]');
   const set = l => { if (l) r.dataset.theme = 'light'; else delete r.dataset.theme; const t = l ? 'Тёмная тема' : 'Светлая тема'; bs.forEach(b => { b.setAttribute('aria-label', t); b.title = t; }); if (mc) mc.content = l ? '#f3f4f0' : '#0c0e0c'; };
