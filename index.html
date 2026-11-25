@@ -518,13 +518,15 @@ tr.dim td{opacity:.4}
 .prom b{font-size:15px;line-height:1.35}
 .prom span{font-size:var(--s);color:var(--muted);line-height:1.5}
 .code{margin-top:18px;display:grid;gap:8px}
-.jshot{all:unset;box-sizing:border-box;display:block;width:100%;cursor:pointer;position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line2);background:#000;aspect-ratio:16/9;box-shadow:var(--shadow)}
-.jshot img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
-.jshot:hover img{transform:scale(1.02)}
-.jshot:focus-visible{outline:2px solid var(--volt);outline-offset:3px}
-.jshot span{position:absolute;left:14px;bottom:14px;padding:7px 14px;border-radius:999px;background:var(--volt);color:var(--volt-ink);font-size:var(--xs);font-weight:600}
-.jcap{font-size:var(--s);color:var(--muted);margin-top:12px;line-height:1.5;max-width:60ch}
-.jcap b{color:var(--ink);font-weight:600}
+.vwrap{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line2);background:#000;aspect-ratio:16/9;box-shadow:var(--shadow)}
+.vwrap video{display:block;width:100%;height:100%;object-fit:cover}
+.vplay{position:absolute;inset:0;display:grid;place-items:center;border:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.45));cursor:pointer}
+.vplay span{width:76px;height:76px;border-radius:50%;background:var(--volt);display:grid;place-items:center;box-shadow:0 0 0 10px rgba(196,249,79,.18),0 10px 40px rgba(0,0,0,.4);transition:transform .25s var(--ease)}
+.vplay span::before{content:'';margin-left:5px;border-left:18px solid var(--volt-ink);border-top:11px solid transparent;border-bottom:11px solid transparent}
+.vplay:hover span{transform:scale(1.07)}
+.vplay:focus-visible{outline:2px solid var(--volt);outline-offset:-4px}
+.vcap{font-size:var(--s);color:var(--muted);margin-top:12px;line-height:1.5;max-width:60ch}
+.vcap b{color:var(--ink);font-weight:600}
 @media (max-width:960px){.who{grid-template-columns:1fr}}
 
 /* ---------- Финал ---------- */
@@ -883,8 +885,8 @@ tr.dim td{opacity:.4}
       </ul>
     </div>
     <div class="vid rv d1">
-      <button type="button" class="jshot" id="jarvisShot" aria-haspopup="dialog" aria-label="Открыть кейс «Джарвис владельца»"><img src="shots/case-11.jpg" alt="Джарвис: одна задача на телефоне, компьютере и сайте и напоминание в Telegram (демо-данные)" loading="lazy" width="1280" height="720"><span data-en="How Jarvis works">Как устроен Джарвис</span></button>
-      <p class="jcap"><b>Мой Джарвис:</b> так я веду свои проекты командой ИИ-агентов. Владельцу бизнеса ставлю его Джарвиса — с агентами под его дела.</p>
+      <div class="vwrap"><video id="jarvisVid" preload="none" playsinline muted poster="shots/jarvis-poster-v2.jpg" src="jarvis-demo-v2.mp4" aria-label="Мой Джарвис: как работает команда ИИ-агентов (демо-данные)"></video><button type="button" class="vplay" id="jarvisPlay" aria-label="Смотреть ролик про Джарвиса, минута"><span></span></button></div>
+      <p class="vcap"><b>Мой Джарвис:</b> так я веду свои проекты командой ИИ-агентов. Владельцу бизнеса ставлю его Джарвиса — с агентами под его дела. 1:08</p>
       <div class="code" id="modules">
         <p class="note">Открытый код части инструментов:</p>
         <div class="chips">
@@ -922,7 +924,7 @@ tr.dim td{opacity:.4}
 const BRAND_NAME = 'На автомате';
 const TG_LINK = 'https://t.me/naavtomate_ai_bot?start=site';
 
-document.getElementById('jarvisShot').addEventListener('click', () => { const t = document.querySelector('.w-11 .w-open'); if (t) t.click(); });
+(() => { const v = document.getElementById('jarvisVid'), b = document.getElementById('jarvisPlay'); const go = () => { b.hidden = true; v.controls = true; }; b.addEventListener('click', () => { go(); v.play().catch(() => {}); }); v.addEventListener('play', go); })();
 document.querySelectorAll('[data-brand]').forEach(e => { e.textContent = BRAND_NAME; });
 document.querySelectorAll('[data-brand-short]').forEach(e => { e.textContent = BRAND_NAME.split(' · ')[0]; });
 document.querySelectorAll('[data-tg]').forEach(e => { e.href = TG_LINK; });
@@ -1716,10 +1718,10 @@ document.querySelectorAll('.get-t').forEach(b => b.addEventListener('click', () 
     { n: 4, tag: 'торговая компания', s: 'Сторож товаров и цен', demo: 't-price', alt: 'Сторож товаров: свои товары с ценой, оценками, рейтингом и графиком за 30 дней, рядом вкладки рынка и журнала (имена и цифры изменены)', t: 'Сторож товаров и цен', pain: 'Что у товара отобрали кнопку покупки, к нему подсел чужой продавец или карточку заблокировали, команда узнавала через несколько дней по падению продаж.',
       steps: ['Сервис следит за своими товарами и за теми же позициями у других продавцов', 'Замечает нового продавца, блокировку карточки, смену цены и акции', 'Каждое изменение пишет в журнал: когда, что было, что стало', 'Важное о своих товарах за час-два уходит в рабочий чат', 'По рынку — таблица и недельная сводка'],
       res: ['сигнал за час-два, а не по падению продаж', 'свои товары и цены на рынке под присмотром круглые сутки'] },
-    { n: 11, tag: 'свои системы', s: 'Джарвис владельца', one: 'Агенты, задачи и напоминания — в одном окне на ПК и телефоне.', shot: 'shots/case-11.jpg', alt: 'Одна задача на всех устройствах: список дел с галочками на телефоне, компьютере и сайте и напоминание в Telegram (демо-данные)', t: 'Джарвис: все агенты и задачи в одном окне', pain: 'Владелец сам держит в голове все задачи, напоминания и кто что делает.',
+    { n: 11, tag: 'свои системы', s: 'Джарвис владельца', one: 'Агенты, задачи и напоминания — в одном окне на ПК и телефоне.', jarvisAt: 48, shot: 'shots/case-11.jpg', alt: 'Одна задача на всех устройствах: список дел с галочками на телефоне, компьютере и сайте и напоминание в Telegram (демо-данные)', t: 'Джарвис: все агенты и задачи в одном окне', pain: 'Владелец сам держит в голове все задачи, напоминания и кто что делает.',
       steps: ['У каждого направления своя тема в рабочем чате и свой агент: помнит историю проекта, ведёт журнал «где остановились» и не путается с соседями', 'Джарвис — окно владельца на компьютере и телефоне. Он связан с оркестратором напрямую: задачу можно дать словами, разбудить или остановить агента, поменять приоритеты', 'Оркестратор отдаёт работу нужному агенту. Задачи не теряются: после перезапуска или паузы работа сама возвращается тому же агенту с того же места, срочное обгоняет фоновое', 'Агент, понявший, что задача не его, сам передаёт её соседу. Перед решениями с ценой агенты советуются: продукт, деньги, бизнес', 'Всё, где нужен человек, собирается в одном списке: дела с галочками и напоминаниями, вопросы с готовыми вариантами на кнопках, тексты людям уходят только по кнопке «Отправить»', '«Сделано» засчитывается только по следу. Код перед выпуском проверяет агент-ревьюер, экран — агент-приёмщик по снимкам', 'Регулярная сводка по всем проектам: что сделано, что стоит, чего ждём от людей'],
       res: ['владелец видит все задачи и всех агентов в одном окне', 'владельцу бизнеса ставлю его Джарвиса: команда агентов под его дела и все задачи — в одном окне'] },
-    { n: 9, tag: 'свои системы', s: 'Секретарь созвонов', one: 'Предлагает окна для переноса, после встречи — протокол и задачи.', demo: 't-call', shot: 'shots/case-9.jpg', alt: 'Секретарь созвонов: план дня с наложением, перенос встречи с кнопками ответа и протокол созвона с задачами (демо-данные)', t: 'Секретарь созвонов', pain: 'Встречи переносят и отменяют, договорённости со созвона теряются, «созвонимся на неделе» так и висит.',
+    { n: 9, tag: 'свои системы', s: 'Секретарь созвонов', one: 'Предлагает окна для переноса, после встречи — протокол и задачи.', demo: 't-call', jarvisAt: 19.5, shot: 'shots/case-9.jpg', alt: 'Секретарь созвонов: план дня с наложением, перенос встречи с кнопками ответа и протокол созвона с задачами (демо-данные)', t: 'Секретарь созвонов', pain: 'Встречи переносят и отменяют, договорённости со созвона теряются, «созвонимся на неделе» так и висит.',
       steps: ['Каждые 5 минут календари сверяются автоматически, наложения встреч видны сразу', 'О переносе, отмене или новой встрече сразу пишет в Telegram, ответить можно кнопкой', 'На просьбу о переносе предлагает 2–3 свободных окна и готовит ответ', 'Утром — план на день, напоминания за 60 и за 10 минут, в воскресенье вечером — план на неделю', 'После встречи — протокол, задачи уходят исполнителям, а текст человеку — после одобрения владельца'],
       res: ['договорённость без даты под присмотром, пока не встанет в календарь', 'секретарь — часть Джарвиса: созвон превращается в текст, решения — в задачи'] },
     { n: 10, tag: 'свои системы', s: 'Разведчик заказов', one: 'Отсеивает мусор на биржах и присылает годные заказы с откликом.', shot: 'shots/case-10.jpg', video: 'shots/case-10.mp4', alt: 'Отчёт разведчика за два дня: заказы с бирж разобраны на годные, мусор и не по профилю, к годным готов отклик, имена и площадки скрыты', t: 'Разведчик заказов с бирж', pain: 'Я беру заказы на биржах фриланса. Объявлений сотни в день, половина — спам, развод или не по профилю. Пока листаешь руками, хороший заказ забирают другие.',
@@ -1767,8 +1769,15 @@ document.querySelectorAll('.get-t').forEach(b => b.addEventListener('click', () 
       <div class="dlg-acts">
         <a class="btn primary" href="${TG_LINK}" rel="noopener">Хочу похожее у себя</a>
         ${c.demo ? '<button type="button" class="btn" data-go="demo">Попробовать в демо</button>' : ''}
+        ${c.jarvisAt != null ? '<button type="button" class="btn jumpj">Смотреть в ролике про Джарвиса</button>' : ''}
       </div>`;
     const g = body.querySelector('[data-go]'); if (g) g.addEventListener('click', () => { close(); openDemo(c.demo); });
+    const j = body.querySelector('.jumpj'); if (j) j.addEventListener('click', () => {
+      close(); const v = $('#jarvisVid'); v.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      $('#jarvisPlay').hidden = true; v.controls = true;
+      const seek = () => { try { v.currentTime = c.jarvisAt; } catch (e) {} v.play().catch(() => {}); };
+      if (v.readyState >= 1) seek(); else { v.addEventListener('loadedmetadata', seek, { once: true }); v.load(); }
+    });
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
     document.body.style.overflow = 'hidden';
   }
