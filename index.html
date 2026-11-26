@@ -182,6 +182,9 @@ section{padding:var(--gap) 0;position:relative}
   .agent::before{inset:-8px}
   .sc-step{position:static;transform:none;width:auto;text-align:left;min-height:0}
   .sc-meter{flex-wrap:wrap}
+  /* телефон: короткая сцена — по одной строке «Приходит» и «Готово», без агента и счётчика (bizauto 26.11) */
+  .sc-list{height:60px}
+  .sc-core,.sc-meter{display:none}
 }
 
 /* ---------- Три карточки «что вы получаете» ---------- */
@@ -281,6 +284,8 @@ tr.dim td{opacity:.4}
 .mh{font-size:var(--xs);font-weight:600;margin-top:10px;color:var(--muted)}
 .mh.urgent{color:var(--bad)}
 @media (max-width:560px){.mail .row{grid-template-columns:1fr}.mail .tag{grid-column:1}}
+.mails-more{display:none;margin-top:6px}
+@media (max-width:620px){.mails:not(.sorted):not(.all) .mail:nth-child(n+6){display:none}.mails:not(.sorted):not(.all)+.mails-more{display:inline-flex}}
 .call{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .pane{border:1px solid var(--line);border-radius:var(--r2);background:var(--bg);padding:16px;display:grid;gap:8px;align-content:start;font-size:14px;line-height:1.5}
 .pane h4{font-size:var(--xs);color:var(--muted);font-weight:500}
@@ -865,6 +870,7 @@ tr.dim td{opacity:.4}
           </div>
           <div class="bar" id="mailChips" aria-label="Папки"></div>
           <div class="mails" id="mails"></div>
+          <button class="btn small mails-more" id="mailMore" type="button" data-en="7 more emails">Ещё 7 писем</button>
           <details class="more"><summary>Как письма попадают в папки</summary><p>После разбора у каждого письма видно, по какому признаку оно попало в папку. Правила настраиваются под ваш бизнес.</p></details>
           <p class="democta"><a class="btn primary small" href="https://t.me/naavtomate_ai_bot?start=demo_mail" rel="noopener">Хочу такое у себя</a></p>
         </div>
@@ -1431,6 +1437,7 @@ const openDemo = id => { const b = document.getElementById(id); if (!b) return; 
       }));
     });
   }
+  $('#mailMore').addEventListener('click', () => box.classList.add('all'));
   $('#mailGo').addEventListener('click', () => {
     if (sorted || busy) return;
     sorted = true; filter = null; apply(true);
