@@ -1658,7 +1658,8 @@ const openDemo = id => { const b = document.getElementById(id); if (!b) return; 
     const g = from.cloneNode(true); g.style.cssText = `position:absolute;margin:0;left:${r.left - s.left}px;top:${r.top - s.top}px;width:${r.width}px;height:${r.height}px;opacity:1`;
     layer.appendChild(g); sc.appendChild(layer); return { g, layer, r };
   };
-  const toAgent = r => { const a = ag.getBoundingClientRect(); return `translate(${a.left + a.width / 2 - (r.left + r.width / 2)}px,${a.top + a.height / 2 - (r.top + r.height / 2)}px) scale(.22)`; };
+  // агент скрыт (телефон ≤620px): rect нулевой — без полёта, карточка гаснет и проявляется на месте
+  const toAgent = r => { if (!ag.getClientRects().length) return 'scale(.96)'; const a = ag.getBoundingClientRect(); return `translate(${a.left + a.width / 2 - (r.left + r.width / 2)}px,${a.top + a.height / 2 - (r.top + r.height / 2)}px) scale(.22)`; };
   const done = a => new Promise(res => { a.onfinish = res; a.oncancel = res; });
 
   const tick = async () => {
